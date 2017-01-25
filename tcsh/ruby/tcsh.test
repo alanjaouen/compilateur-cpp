@@ -1,0 +1,9 @@
+#! /bin/sh
+
+set -e
+
+testsdir=$top_srcdir/tests
+run=$top_builddir/tcsh/run
+
+$run $srcdir/test-front-end.rb $testsdir/good/fact.tig
+$run $srcdir/test-compiler.rb $testsdir/good/fact.tig
