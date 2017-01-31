@@ -5,9 +5,13 @@
 %name-prefix "parse"
 %define api.value.type variant
 %define api.token.constructor
+%skeleton "lalr1.cc" // The grammar is lalr1
+%expect 0            // No shift/reduce
+%define parse.error verbose
+%define parse.trace
 
-  // FIXME: Some code was deleted here (Other directives: %skeleton "lalr1.cc" %expect 0 etc).
-%error-verbose
+
+ // FIXME: Some code was deleted here (Other directives: %skeleton "lalr1.cc" %expect 0 etc).
 %defines
 %debug
 // Prefix all the tokens with TOK_ to avoid colisions.
@@ -152,8 +156,17 @@
        WHILE        "while"
        EOF 0        "end of file"
 
+%left "|"
+%left "&"
+%left "+" "-"
+%left "*" "/"
 
-  // FIXME: Some code was deleted here (Priorities/associativities).
+
+%nonassoc ">=" "<=" "=" "<>" "<" ">"
+%nonassoc THEN DO OF
+%nonassoc  ELSE
+%nonassoc ASSIGN
+
 %start program
 
 %%
@@ -165,9 +178,68 @@ program:
 ;
 
 exp:
-  INT
-   
-  // FIXME: Some code was deleted here (More rules).
+INT
+|  "nil"
+| STRING
+| ID "[" exp "]" "of" exp
+| ID "{" array "}"
+| "new" ID
+| lvalue
+| ID "(" function ")"
+
+| lvalue_dot "(" function ")"
+| "-" exp
+| op_rule
+| "(" exps ")"
+| lvalue ":=" exp
+
+| "if" exp "then" exp "else" exp
+| "if" exp "then" exp
+| "while" exp "do" exp
+| "for" ID ":=" exp "to" exp "do" exp
+| "break"
+| "let" decs "in" exps  "end"
+;
+
+array: ID "=" exp arrayrec
+| %empty
+;
+arrayrec: "," ID "=" exp arrayrec
+| %empty
+;
+function: exp function_param
+| %empty
+;
+function_param: %empty
+|"," exp function_param
+;
+
+lvalue:
+       ID
+|       lvalue_dot
+|       lvalue_bracket
+;
+
+lvalue_dot:
+       lvalue_dot "." ID
+|       lvalue_bracket "." ID
+|       ID "." ID
+;
+
+lvalue_bracket:
+       lvalue_dot "[" exp "]"
+|       lvalue_bracket "[" exp "]"
+|       ID "[" exp "]"
+;
+
+exps: exp exps_rec
+| %empty
+;
+
+exps_rec: ";" exps
+|       %empty
+;
+
 
 /*---------------.
 | Declarations.  |
@@ -175,12 +247,70 @@ exp:
 
 %token DECS "_decs";
 decs:
-  %empty                
-  // FIXME: Some code was deleted here (More rules).
+%empty
+| dec decs
+;
+dec:
+"type" ID "=" ty
+| "class" ID dec_class_def "{" classfields "}"
+| vardec
+| "function" ID "(" tyfields ")" type_dec "="exp
+| "primitive" ID "(" tyfields ")" type_dec
+| "import" STRING
+;
+type_dec:
+":" ID
+| %empty
+;
+dec_class_def:
+"extends" ID
+| %empty
+;
+vardec:
+"var" ID type_dec ":=" exp
+;
+classfields:
+vardec
+| "method" ID "(" tyfields ")" type_dec "=" exp
+;
+ty:
+ID
+| "{" tyfields "}"
+| "array" "of" ID
+| "class" dec_class_def "{" classfields "}"
+;
+tyfields:
+ID ":" ID tyfilelds_rec
+| %empty
+;
+tyfilelds_rec:
+"," ID ":" ID tyfilelds_rec
+| %empty
+;
+op_rule:
+exp op
+;
+op:
+"+" exp
+| "-" exp
+| "*" exp
+| "/" exp
+| "=" exp
+| "<>" exp
+| ">" exp
+| "<" exp
+| ">=" exp
+| "<=" exp
+| "&" exp
+| "|" exp
+;
+
+
 %%
 
 void
 parse::parser::error(const location_type& l, const std::string& m)
 {
-  // FIXME: Some code was deleted here.
+  std::cerr << m << std::endl;
+  exit(3);
 }
