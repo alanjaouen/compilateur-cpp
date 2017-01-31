@@ -11,7 +11,7 @@
 # include <regex>
 # include <string>
 # include <cerrno>
-
+# include <stdexcept>
 # include <boost/lexical_cast.hpp>
 
 # include <misc/contract.hh>
@@ -55,24 +55,118 @@ YY_FLEX_NAMESPACE_BEGIN
 
 /* Abbreviations.  */
 int             [0-9]+
-  /* FIXME: Some code was deleted here. */
+ID              [A-Za-z][A-Za-z0-9_]*|_main
+SPACE           [ \t]
+
 %%
 %{
-  // FIXME: Some code was deleted here (Local variables).
+  std::string str = "";
+  int count  = 0;
+
+  //FIXME: Some code was deleted here (Local variables).
 
   // Each time yylex is called.
   tp.location_.step();
 %}
 
+<SC_STRING>
+{
+\\[abfnrtv] { str += yytext;}
+\\[0-3][0-7][0-7] {str += yytext;}
+\\x[0-9a-fA-F][0-9a-fA-F] {str += yytext;}
+"\\" { str += yytext;}
+"\\\"" {str += yytext; }
+"\"" {
+    BEGIN(INITIAL);
+    return TOKEN_VAL(STRING, str);
+  }
+\\. {
+    std::cerr << "scan error, unexpected ";
+    std::cerr << yytext << std::endl;
+    exit(2); }
+<<EOF>> {
+    std::cerr << "scan error, unexpected ";
+    std::cerr << yytext << std::endl;
+    exit(2);
+  }
+. { str += yytext;}
+}
+
+
+<SC_COMMENT>
+{
+"/*" {count++;}
+"*/" {
+  count--;
+  if (count == 0)
+    BEGIN(INITIAL);
+  }
+<<EOF>> {
+    std::cerr << "scan error, unexpected ";
+    std::cerr << yytext << std::endl;
+    exit(2);
+   }
+}
+
  /* The rules.  */
-
-{int}         {
-                int val = 0;
-  // FIXME: Some code was deleted here (Decode, and check the value).
-                return TOKEN_VAL(INT, val);
-              }
-
-  /* FIXME: Some code was deleted here. */
+{SPACE}         { }
+"&"             { return TOKEN(AND); }
+"array"         { return TOKEN(ARRAY);     }
+":="            { return TOKEN(ASSIGN); }
+"break"         { return TOKEN(BREAK);     }
+"class"         { return TOKEN(CLASS);     }
+":"             { return TOKEN(COLON);     }
+","             { return TOKEN(COMA);      }
+"/"             { return TOKEN(DIVIDE); }
+"do"            { return TOKEN(DO);        }
+"."             { return TOKEN(DOT);       }
+"else"          { return TOKEN(ELSE);      }
+"end"           { return TOKEN(END);       }
+"="             { return TOKEN(EQ); }
+"extends"       { return TOKEN(EXTENDS);   }
+"for"           { return TOKEN(FOR);       }
+"function"      { return TOKEN(FUNCTION);  }
+">="            { return TOKEN(GE); }
+">"             { return TOKEN(GT); }
+"if"            { return TOKEN(IF);        }
+"import"        { return TOKEN(IMPORT);    }
+"in"            { return TOKEN(IN);        }
+"{"             { return TOKEN(LBRACE);    }
+"["             { return TOKEN(LBRACK);    }
+"<="            { return TOKEN(LE); }
+"let"           { return TOKEN(LET);       }
+"("             { return TOKEN(LPAREN);    }
+"<"             { return TOKEN(LT); }
+"-"             { return TOKEN(MINUS); }
+"method"        { return TOKEN(METHOD);    }
+"<>"            { return TOKEN(NE); }
+"new"           { return TOKEN(NEW);       }
+"nil"           { return TOKEN(NIL);       }
+"of"            { return TOKEN(OF);        }
+"|"             { return TOKEN(OR); }
+"+"             { return TOKEN(PLUS); }
+"primitive"     { return TOKEN(PRIMITIVE); }
+"}"             { return TOKEN(RBRACE);    }
+"]"             { return TOKEN(RBRACK);    }
+")"             { return TOKEN(RPAREN);    }
+";"             { return TOKEN(SEMI); }
+"then"          { return TOKEN(THEN);      }
+"*"             { return TOKEN(TIMES); }
+"to"            { return TOKEN(TO);        }
+"type"          { return TOKEN(TYPE);      }
+"var"           { return TOKEN(VAR);       }
+"while"         { return TOKEN(WHILE);     }
+"\""            { str = yytext; BEGIN(SC_STRING);}
+{int}
+{
+    int val = 0;
+    auto res = std::stol(yytext);
+    if (res > INT_MAX)
+      throw std::overflow_error(res + " is overfow max int");
+    val = res;
+    return TOKEN_VAL(INT, val);
+}
+. { }
 %%
 
 // Do not use %option noyywrap, because then flex generates the same
