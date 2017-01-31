@@ -3,5 +3,5 @@ my: ""
 ref: ""
 
 categories:
-  tests:
-    /tests.yaml
+  #  tests:
+  #    /tests.yaml
