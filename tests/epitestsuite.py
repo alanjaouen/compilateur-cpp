@@ -59,21 +59,26 @@ def list_category(yaml_file):
 def get_status(my, ref):
     returncode = my + ref
     if returncode == 0 or returncode == 4 or returncode == 6:
-        return 0, "my returned: " + my + "\nref returned: " + ref
+        return (0, "\tmy returned: " + str(my) +\
+                   "\n\tref returned: " + str(ref))
     elif returncode == 2:
-        return 2, "my returned: " + my + "\nref returned: " + ref
+        return (2, "\tmy returned: " + str(my) +\
+                   "\n\tref returned: " + str(ref))
     elif returncode == 3:
-        return 3, "my returned: " + my + "\nref returned: " + ref
+        return (3, "\tmy returned: " + str(my) +\
+                   "\n\tref returned: " + str(ref))
     elif returncode == 5:
-        return 5, "my returned: " + my + "\nref returned: " + ref
+        return (5, "\tmy returned: " + str(my) +\
+                   "\n\tref returned: " + str(ref))
     else:
-        return "Oups! An error occured."
+        return (1, "\tOups! An error occured. my returned: " + str(my) +\
+                   " and ref returned: " + str(ref))
 
 
 def errormsg(percent, category, mycmd, comment, msg):
     global output
     global fail
-    output += colored(percent + mycmd + ": FAIL: " + msg, 'red')
+    output += colored(percent + mycmd + ": FAIL:\n" + msg, 'red')
     fail += colored(category + ": " + mycmd, 'red') + "\n"
     return 1
 
@@ -106,7 +111,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput):
                     if sanity:
                         mycmd += "valgrind "
                     mycmd += config["my"]
-                    mycmd += " " + test
+                    mycmd += " " + category + "/"+ test
                     mycmd = ' '.join(mycmd.strip().split())
                     percent = "[" + str(int(((list(subconfig).index(test) + 1)
                                         / len(subconfig) * 100))) + "%] "
@@ -126,9 +131,10 @@ def parse_config(yaml_file, categories_list, sanity, foutput):
                     status = get_status(my.returncode, subconfig[test])
                     if status[0] != 0:
                         failed += errormsg(percent, category, mycmd,
-                                           subconfig[test], case(status[0]))
+                                           subconfig[test], status[1])
                     else:
-                        output += colored(percent + mycmd + ": PASS", 'green')
+                        output += colored(percent + mycmd + ": PASS:" +\
+                                          status[1], 'green')
                         ptest.update(1)
                     output += "\n"
                 fo.write(output)
