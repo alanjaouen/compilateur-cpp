@@ -11,7 +11,7 @@ import yaml
 
 
 def options(args):
-    parser = argparse.ArgumentParser(description="Generic testsuite")
+    parser = argparse.ArgumentParser(description="Tiger Compiler TestSuite")
     parser.add_argument("-l", "--list", action="store_true", default=False,
                         help="display the list of test categories")
     parser.add_argument("-c", "--category", metavar="CATEGORY", default=[],
@@ -21,18 +21,12 @@ def options(args):
     parser.add_argument("-s", "--sanity", action="store_true", default=False,
                         help="execute the testsuite with sanity checks " +
                         "enabled (valgrind)")
-    parser.add_argument("-v", "--verbose", action="store_true", default=False,
-                        help="activate verbose mode")
     parser.add_argument("-o", "--output", metavar="FILE", default=sys.stdout,
-                        help="write output of tests in FILE. Verbose " +
-                        "mode must be activated")
+                        help="write output of tests in FILE")
     parser.add_argument("-t", "--timeout", metavar="TIME", default=-1,
                         help="set TIME as a timeout for the tests " +
                         "(in seconds)")
     options = parser.parse_args(args)
-    if not options.verbose and options.output != sys.stdout:
-        parser.print_help()
-        sys.exit()
     global time
     time = int(options.timeout)
     if options.list:
@@ -41,10 +35,10 @@ def options(args):
         return
     if options.category != []:
         parse_config('config.yaml', options.category, options.sanity,
-                     options.verbose, options.output)
+                     options.output)
     else:
         parse_config('config.yaml', list_category('config.yaml'),
-                     options.sanity, options.verbose, options.output)
+                     options.sanity, options.output)
 
 
 def list_category(yaml_file):
@@ -63,53 +57,15 @@ def list_category(yaml_file):
 
 
 def get_status(my, ref):
-    fail = 0
-    rtnstr = ""
-    if (my.returncode > 0 and ref.returncode == 0) or \
-       (my.returncode == 0 and ref.returncode > 0):
-        strref = "Expected returncode: " + \
-                 colored(str(ref.returncode), 'green')
-        strmy = "Got: " + colored(str(my.returncode), 'red')
-        rtnstr += strref + '\n' + strmy + '\n'
-        fail += 1
-    if my.stderr[4:] != ref.stderr[4:]:
-        strref = "Expected stderr:\n" + ref.stderr.decode("utf-8")
-        d = difflib.Differ()
-        strdiff = list(d.compare(
-                       ref.stderr.decode("utf-8").splitlines(keepends=True),
-                       my.stderr.decode("utf-8").splitlines(keepends=True)))
-        rtnstr += strref + '\n'
-        rtnstr += "Differences:\n" + colored("".join(strdiff)[:-1], 'red') +\
-                  '\n'
-        fail += 2
-    if my.stdout != ref.stdout:
-        strref = "Expected stdout:\n" + ref.stdout.decode("utf-8")
-        d = difflib.Differ()
-        strdiff = list(d.compare(
-                       ref.stdout.decode("utf-8").splitlines(keepends=True),
-                       my.stdout.decode("utf-8").splitlines(keepends=True)))
-        rtnstr += strref + '\n'
-        rtnstr += "Differences:\n" + colored("".join(strdiff)[:-1], 'red') +\
-                  '\n'
-        fail += 4
-    return (fail, rtnstr)
-
-
-def case(returncode):
-    if returncode == 1:
-        return "returncode values are differents."
+    returncode = my + ref
+    if returncode == 0 or returncode == 4 or returncode == 6:
+        return 0, "my returned: " + my + "\nref returned: " + ref
     elif returncode == 2:
-        return "stderr are differents."
+        return 2, "my returned: " + my + "\nref returned: " + ref
     elif returncode == 3:
-        return "returncode values and stderr are differents."
-    elif returncode == 4:
-        return "stdout are differents."
+        return 3, "my returned: " + my + "\nref returned: " + ref
     elif returncode == 5:
-        return "stdout and returncode values are differents."
-    elif returncode == 6:
-        return "stdout and stderr are differents."
-    elif returncode == 7:
-        return "returncode values, stderr and stdout are differents."
+        return 5, "my returned: " + my + "\nref returned: " + ref
     else:
         return "Oups! An error occured."
 
@@ -117,18 +73,12 @@ def case(returncode):
 def errormsg(percent, category, mycmd, comment, msg):
     global output
     global fail
-    if comment != "":
-        output += colored(percent + mycmd + ' (' + comment + ')' + ": FAIL: " +
-                          msg, 'red')
-        fail += colored(category + ": " + mycmd + ' (' + comment + ')', 'red')\
-                + "\n"
-    else:
-        output += colored(percent + mycmd + ": FAIL: " + msg, 'red')
-        fail += colored(category + ": " + mycmd, 'red') + "\n"
+    output += colored(percent + mycmd + ": FAIL: " + msg, 'red')
+    fail += colored(category + ": " + mycmd, 'red') + "\n"
     return 1
 
 
-def parse_config(yaml_file, categories_list, sanity, verbose, foutput):
+def parse_config(yaml_file, categories_list, sanity, foutput):
     with open(yaml_file, 'r') as f:
         config = yaml.load(f)
     global fail
@@ -153,16 +103,11 @@ def parse_config(yaml_file, categories_list, sanity, verbose, foutput):
                 count = failed
                 for test in subconfig:
                     mycmd = ""
-                    refcmd = ""
                     if sanity:
                         mycmd += "valgrind "
-                        refcmd += "valgrind "
                     mycmd += config["my"]
-                    refcmd += config["ref"]
                     mycmd += " " + test
-                    refcmd += " " + test
                     mycmd = ' '.join(mycmd.strip().split())
-                    refcmd = ' '.join(refcmd.strip().split())
                     percent = "[" + str(int(((list(subconfig).index(test) + 1)
                                         / len(subconfig) * 100))) + "%] "
                     if time != -1:
@@ -178,23 +123,12 @@ def parse_config(yaml_file, categories_list, sanity, verbose, foutput):
                         my = subprocess.run(mycmd, shell=True,
                                             stdout=subprocess.PIPE,
                                             stderr=subprocess.PIPE)
-                    ref = subprocess.run(refcmd, shell=True,
-                                         stdout=subprocess.PIPE,
-                                         stderr=subprocess.PIPE)
-                    status = get_status(my, ref)
-                    if verbose:
-                        output += status[1]
+                    status = get_status(my.returncode, subconfig[test])
                     if status[0] != 0:
                         failed += errormsg(percent, category, mycmd,
                                            subconfig[test], case(status[0]))
                     else:
-                        if subconfig[test] != "":
-                            output += colored(percent + mycmd + ' (' +
-                                              subconfig[test] + ')' + ": PASS",
-                                              'green')
-                        else:
-                            output += colored(percent + mycmd + ": PASS",
-                                              'green')
+                        output += colored(percent + mycmd + ": PASS", 'green')
                         ptest.update(1)
                     output += "\n"
                 fo.write(output)
@@ -218,5 +152,5 @@ if __name__ == '__main__':
     if sys.stdout.isatty():
         options(sys.argv[1:])
     else:
-        parse_config('config.yaml', list_category('config.yaml'), False, False,
+        parse_config('config.yaml', list_category('config.yaml'), False,
                      sys.stdout)
