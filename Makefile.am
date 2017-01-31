@@ -11,7 +11,7 @@ BUILT_SOURCES =
 CLEANFILES = $(EXTRA_PROGRAMS)
 EXTRA_DIST = $(dist_TESTS)
 MAINTAINERCLEANFILES =
-TESTS = $(check_PROGRAMS) $(dist_TESTS)
+TESTS = $(check_PROGRAMS) $(dist_TESTS) tests/epitestsuite.py
 check_PROGRAMS =
 dist_TESTS =
 dist_noinst_DATA =
@@ -40,6 +40,9 @@ AM_CXXFLAGS = $(WARNING_CXXFLAGS)
 
 # Find configuration headers.
 AM_CPPFLAGS += -I$(top_builddir)
+# Added compiler option for lcov
+AM_CPPFLAGS += --coverage
+AM_LDFLAGS = --coverage
 
 include lib/local.am
 include src/local.am
