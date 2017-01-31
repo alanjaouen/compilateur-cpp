@@ -1,0 +1,4 @@
+ls: "simple ls"
+ls -l -a: ""
+ls .: ""
+lss: ""
