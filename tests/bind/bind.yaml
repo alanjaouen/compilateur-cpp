@@ -1,0 +1,8 @@
+break-outside-loop.tig: 2
+invalid-function-redefinition-1.tig: 2
+invalid-type-redefinition.tig: 2
+test17.tig: 2
+test18.tig: 2
+test19.tig: 2
+undeclared-variable.tig: 2
+unknown-record.tig: 2

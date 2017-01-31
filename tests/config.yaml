@@ -1,11 +1,15 @@
-my: ""
-
-ref: ""
-
-errors:
-  2: "Lexer encounter an error."
-  3: "Parser encounter an error."
+my: "tc"
 
 categories:
+  bad:
+    /bad.yaml
+  bind:
+    /bind.yaml
+  good:
+    /good.yaml
+  syntax:
+    /syntax.yaml
+  type:
+    /type.yaml
   #  tests:
   #    /tests.yaml
