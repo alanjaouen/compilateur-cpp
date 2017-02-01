@@ -20,7 +20,7 @@ namespace misc
   inline bool
   symbol::operator==(const symbol& rhs) const
   {
-  // FIXME: Some code was deleted here.
+    return obj_ == rhs.obj_;// FIXME: Some code was deleted here.
   }
 
   inline bool
