@@ -63,4 +63,6 @@ authors.h: AUTHORS.txt $(AUTHORS_H_GEN)
 	$(AM_V_GEN)$(AUTHORS_H_GEN) $< >$@.tmp
 	$(AM_V_at)$(top_srcdir)/build-aux/bin/move-if-change $@.tmp $@
 
-
+lcov: check
+	lcov -c -d . -o coverage.info
+	genhtml coverage.info -o html
