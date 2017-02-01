@@ -12,7 +12,7 @@ namespace misc
 {
   template <typename T, class C>
   unique<T, C>::unique(const data_type& s)
-    : obj_(&(*(new object_set_type()).insert().first))
+    : obj_(&(*object_set_instance().insert().first))
   {}
 
   template <typename T, class C>
