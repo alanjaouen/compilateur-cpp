@@ -108,7 +108,8 @@ namespace parse
     scanner_->scan_open_(*in);
     int sol = pars.parse();//a modifier !!!!!!!
     scanner_->scan_close_();
-  // FIXME: Some code was deleted here (Initialize the scanner and parser, then parse and close).
+    if (sol != 0)
+      exit(sol);
     ast_type res = ast_;
     ast_ = static_cast<ast::Exp*>(nullptr);
 
