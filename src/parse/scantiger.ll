@@ -111,6 +111,7 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
             << ": invalid identifier: `"
             << misc::escape(yytext) << "'\n";
    }
+. { }
 }
 
  /* The rules.  */

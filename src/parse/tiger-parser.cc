@@ -105,7 +105,9 @@ namespace parse
       scanner_->set_debug(1);
     if (parse_trace_p_)
       pars.set_debug_level(1);
+    scanner_->scan_open_(*in);
     int sol = pars.parse();//a modifier !!!!!!!
+    scanner_->scan_close_();
   // FIXME: Some code was deleted here (Initialize the scanner and parser, then parse and close).
     ast_type res = ast_;
     ast_ = static_cast<ast::Exp*>(nullptr);
