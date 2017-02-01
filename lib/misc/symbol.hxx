@@ -12,7 +12,9 @@ namespace misc
   inline symbol&
   symbol::operator=(const symbol& rhs)
   {
-  // FIXME: Some code was deleted here.
+    if (this != &rhs)
+      obj_ = rhs.obj_;// FIXME: Some code was deleted here.
+    return *this;
   }
 
   inline bool
