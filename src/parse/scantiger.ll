@@ -28,15 +28,17 @@
 
   // FIXME: Some code was deleted here.
 
-// Convenient shortcuts.
+
+ // Convenient shortcuts.
 #define TOKEN_VAL(Type, Value)                  \
   parser::make_ ## Type(Value, tp.location_)
 
 #define TOKEN(Type)                             \
   parser::make_ ## Type(tp.location_)
 
+#define YY_USER_ACTION tp.location_.columns(yyleng);
 
-// Flex uses `0' for end of file.  0 is not a token_type.
+ // Flex uses `0' for end of file.  0 is not a token_type.
 #define yyterminate() return TOKEN(EOF)
 
 # define CHECK_EXTENSION()                              \
@@ -57,7 +59,7 @@ YY_FLEX_NAMESPACE_BEGIN
 int             [0-9]+
 ID              [A-Za-z][A-Za-z0-9_]*|_main
 SPACE           [ \t]
-
+NEWLINE         [\n]|[\n\r]|[\r\n]
 %%
 %{
   std::string str = "";
@@ -71,7 +73,8 @@ SPACE           [ \t]
 
 <SC_STRING>
 {
-\\[abfnrtv] { str += yytext;}
+\\n {tp.location_.lines(yyleng); tp.location_.step();}
+\\[abfrtv] { str += yytext;}
 \\[0-3][0-7][0-7] {str += yytext;}
 \\x[0-9a-fA-F][0-9a-fA-F] {str += yytext;}
 "\\" { str += yytext;}
@@ -101,6 +104,7 @@ SPACE           [ \t]
   if (count == 0)
     BEGIN(INITIAL);
   }
+\\n {tp.location_.lines(yyleng); tp.location_.step();}
 <<EOF>> {
     std::cerr << "scan error, unexpected ";
     std::cerr << yytext << std::endl;
@@ -109,14 +113,15 @@ SPACE           [ \t]
 }
 
  /* The rules.  */
-{SPACE}         { }
+{NEWLINE}       { tp.location_.lines(); tp.location_.step();} // add lines to location
+{SPACE}         { tp.location_.step();}
 "&"             { return TOKEN(AND); }
 "array"         { return TOKEN(ARRAY);     }
 ":="            { return TOKEN(ASSIGN); }
 "break"         { return TOKEN(BREAK);     }
 "class"         { return TOKEN(CLASS);     }
 ":"             { return TOKEN(COLON);     }
-","             { return TOKEN(COMA);      }
+","             { return TOKEN(COMMA);      }
 "/"             { return TOKEN(DIVIDE); }
 "do"            { return TOKEN(DO);        }
 "."             { return TOKEN(DOT);       }
@@ -157,8 +162,7 @@ SPACE           [ \t]
 "var"           { return TOKEN(VAR);       }
 "while"         { return TOKEN(WHILE);     }
 "\""            { str = yytext; BEGIN(SC_STRING);}
-{int}
-{
+{int} {
     int val = 0;
     auto res = std::stol(yytext);
     if (res > INT_MAX)
@@ -166,7 +170,17 @@ SPACE           [ \t]
     val = res;
     return TOKEN_VAL(INT, val);
 }
-. { }
+{ID}            { return TOKEN_VAL(ID, yytext);/* need to convert*/  }
+"/*" { count++;
+    BEGIN(SC_COMMENT);
+}
+<<EOF>>         { yyterminate();    }
+
+.11 {
+    std::cerr << "scan error, unexpected ";
+    std::cerr << yytext << std::endl;
+    exit(2);
+  }
 %%
 
 // Do not use %option noyywrap, because then flex generates the same

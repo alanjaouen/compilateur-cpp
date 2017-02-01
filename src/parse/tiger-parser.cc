@@ -99,6 +99,16 @@ namespace parse
                  << &misc::error::exit;
       }
 
+    ::parse::parser pars(*this);
+
+    if (scan_trace_p_)
+    {
+      extern int yy_flex_debug;
+      yy_flex_debug = 1;
+    }
+    if (parse_trace_p_)
+      pars.set_debug_level(1);
+    ast_ = pars.parse();
   // FIXME: Some code was deleted here (Initialize the scanner and parser, then parse and close).
     ast_type res = ast_;
     ast_ = static_cast<ast::Exp*>(nullptr);
