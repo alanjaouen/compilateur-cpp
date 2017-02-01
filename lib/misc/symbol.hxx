@@ -26,7 +26,7 @@ namespace misc
   inline bool
   symbol::operator!=(const symbol& rhs) const
   {
-  // FIXME: Some code was deleted here.
+    return !operator==(rhs);// FIXME: Some code was deleted here.
   }
 
   inline std::ostream&
