@@ -47,7 +47,7 @@ namespace misc
   inline
   unique<T, C>::operator const data_type&() const
   {
-    
+    return this->obj_;
   }
 
   template <typename  T, class C>
