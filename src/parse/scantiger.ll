@@ -27,7 +27,8 @@
 # include <parse/parsetiger.hh>
 
   // FIXME: Some code was deleted here.
-
+  std::string str = "";
+  int count  = 0;
 
  // Convenient shortcuts.
 #define TOKEN_VAL(Type, Value)                  \
@@ -62,8 +63,7 @@ SPACE           [ \t]
 NEWLINE         [\n]|[\n\r]|[\r\n]
 %%
 %{
-  std::string str = "";
-  int count  = 0;
+
 
   //FIXME: Some code was deleted here (Local variables).
 
@@ -73,7 +73,7 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 
 <SC_STRING>
 {
-\\n {tp.location_.lines(yyleng); tp.location_.step();}
+\\n {tp.location_.lines(1); tp.location_.step();}
 \\[abfrtv] { str += yytext;}
 \\[0-3][0-7][0-7] {str += yytext;}
 \\x[0-9a-fA-F][0-9a-fA-F] {str += yytext;}
@@ -83,14 +83,15 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
     BEGIN(INITIAL);
     return TOKEN_VAL(STRING, str);
   }
-\\. {
-    std::cerr << "scan error, unexpected ";
-    std::cerr << yytext << std::endl;
-    exit(2); }
-<<EOF>> {
-    std::cerr << "scan error, unexpected ";
-    std::cerr << yytext << std::endl;
-    exit(2);
+\\. { tp.error_ << misc::error::scan
+            << tp.location_
+            << ": invalid identifier: `"
+            << misc::escape(yytext) << "'\n";
+}
+<<EOF>> { tp.error_ << misc::error::scan
+            << tp.location_
+            << ": invalid identifier: `"
+            << misc::escape(yytext) << "'\n";
   }
 . { str += yytext;}
 }
@@ -104,16 +105,16 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
   if (count == 0)
     BEGIN(INITIAL);
   }
-\\n {tp.location_.lines(yyleng); tp.location_.step();}
-<<EOF>> {
-    std::cerr << "scan error, unexpected ";
-    std::cerr << yytext << std::endl;
-    exit(2);
+\\n {tp.location_.lines(1); tp.location_.step();}
+<<EOF>> { tp.error_ << misc::error::scan
+            << tp.location_
+            << ": invalid identifier: `"
+            << misc::escape(yytext) << "'\n";
    }
 }
 
  /* The rules.  */
-{NEWLINE}       { tp.location_.lines(); tp.location_.step();} // add lines to location
+{NEWLINE}       { tp.location_.lines(1); tp.location_.step();}
 {SPACE}         { tp.location_.step();}
 "&"             { return TOKEN(AND); }
 "array"         { return TOKEN(ARRAY);     }
@@ -161,7 +162,7 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 "type"          { return TOKEN(TYPE);      }
 "var"           { return TOKEN(VAR);       }
 "while"         { return TOKEN(WHILE);     }
-"\""            { str = yytext; BEGIN(SC_STRING);}
+"\""            { str = ""; BEGIN(SC_STRING);}
 {int} {
     int val = 0;
     auto res = std::stol(yytext);
@@ -176,10 +177,11 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 }
 <<EOF>>         { yyterminate();    }
 
-.11 {
-    std::cerr << "scan error, unexpected ";
-    std::cerr << yytext << std::endl;
-    exit(2);
+. {
+   tp.error_ << misc::error::scan
+            << tp.location_
+            << ": invalid identifier: `"
+            << misc::escape(yytext) << "'\n";
   }
 %%
 
