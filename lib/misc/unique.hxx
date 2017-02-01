@@ -12,6 +12,7 @@ namespace misc
 {
   template <typename T, class C>
   unique<T, C>::unique(const data_type& s)
+    obj_()
   // FIXME: Some code was deleted here (Initializations).
   {}
 
@@ -24,7 +25,10 @@ namespace misc
   unique<T, C>::object_set_instance()
   {
     // FIXME: Some code was deleted here (Classical Singleton pattern, a la Scott Meyers').
-    return *this;
+    static object_set_type set& = nullptr;
+    if (!set)
+      set = new object_set_type(object_set_type);
+    return set;
     // die("FIXME!");
   }
 
