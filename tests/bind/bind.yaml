@@ -1,5 +1,6 @@
-break-outside-loop.tig: 2
-invalid-function-redefinition-1.tig: 2
+break-outside-loop.tig: 3
+# will be invalid latter
+invalid-function-redefinition-1.tig: 0
 invalid-type-redefinition.tig: 2
 test17.tig: 2
 test18.tig: 2
