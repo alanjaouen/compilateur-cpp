@@ -12,7 +12,7 @@ namespace misc
 {
   template <typename T, class C>
   unique<T, C>::unique(const data_type& s)
-    : obj_(&(*object_set_instance().insert().first))
+    : obj_(&(*object_set_instance().insert(s).first))
   {}
 
   template <typename T, class C>
@@ -23,9 +23,7 @@ namespace misc
   typename unique<T, C>::object_set_type&
   unique<T, C>::object_set_instance()
   {
-    static object_set_type set& = nullptr;
-    if (!set)
-      set = new object_set_type(object_set_type);
+    static object_set_type set{};
     return set;
   }
 
@@ -33,14 +31,14 @@ namespace misc
   typename unique<T, C>::object_size_type
   unique<T, C>::object_map_size()
   {
-    this->size();
+    return object_set_instance().size();
   }
 
   template <typename T, class C>
   inline const typename unique<T, C>::data_type&
   unique<T, C>::get() const
   {
-    return this->obj_;
+    return *obj_;
   }
 
   template <typename T, class C>

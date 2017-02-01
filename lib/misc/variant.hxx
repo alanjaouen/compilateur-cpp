@@ -29,7 +29,6 @@ namespace misc
     return *this;
   }
 
-
   template <typename T, typename... Ts>
   template <typename U>
   variant<T, Ts...>::operator U& ()
