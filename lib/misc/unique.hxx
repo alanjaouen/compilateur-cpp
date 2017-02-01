@@ -24,7 +24,8 @@ namespace misc
   unique<T, C>::object_set_instance()
   {
   // FIXME: Some code was deleted here (Classical Singleton pattern, a la Scott Meyers').
-    die("FIXME!");
+    return *this;
+    // die("FIXME!");
   }
 
   template <typename T, class C>

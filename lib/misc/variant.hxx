@@ -43,7 +43,7 @@ namespace misc
   template <typename U>
   variant<T, Ts...>::operator const U& () const
   {
-  // FIXME: Some code was deleted here.
+    return boost::get<U>(*this);// FIXME: Some code was deleted here.
   }
 
 } // namespace misc
