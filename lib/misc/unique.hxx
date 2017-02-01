@@ -23,7 +23,7 @@ namespace misc
   typename unique<T, C>::object_set_type&
   unique<T, C>::object_set_instance()
   {
-  // FIXME: Some code was deleted here (Classical Singleton pattern, a la Scott Meyers').
+    // FIXME: Some code was deleted here (Classical Singleton pattern, a la Scott Meyers').
     return *this;
     // die("FIXME!");
   }
@@ -32,7 +32,7 @@ namespace misc
   typename unique<T, C>::object_size_type
   unique<T, C>::object_map_size()
   {
-  // FIXME: Some code was deleted here.
+    this->size();// FIXME: Some code was deleted here.
   }
 
   template <typename T, class C>
