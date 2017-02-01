@@ -9,7 +9,7 @@ AM_DEFAULT_SOURCE_EXT = .cc
 
 BUILT_SOURCES =
 CLEANFILES = $(EXTRA_PROGRAMS)
-EXTRA_DIST = $(dist_TESTS)
+EXTRA_DIST = $(dist_TESTS) tests.epitestsuite.py
 MAINTAINERCLEANFILES =
 TESTS = $(check_PROGRAMS) $(dist_TESTS) tests/epitestsuite.py
 check_PROGRAMS =
