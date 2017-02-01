@@ -12,8 +12,7 @@ namespace misc
 {
   template <typename T, class C>
   unique<T, C>::unique(const data_type& s)
-    obj_()
-  // FIXME: Some code was deleted here (Initializations).
+    : obj_(&(*obj_.insert().first))
   {}
 
   template <typename T, class C>
@@ -29,7 +28,6 @@ namespace misc
     if (!set)
       set = new object_set_type(object_set_type);
     return set;
-    // die("FIXME!");
   }
 
   template <typename T, class C>
