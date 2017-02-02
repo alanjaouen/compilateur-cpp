@@ -177,7 +177,7 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 }
 {ID}            {
   misc::symbol identifier = misc::symbol(yytext);
-  return TOKEN_VAL(ID, identifier);/* need to convert*/  }
+  return TOKEN_VAL(ID, identifier); }
 "/*" { count++;
     BEGIN(SC_COMMENT);
 }
