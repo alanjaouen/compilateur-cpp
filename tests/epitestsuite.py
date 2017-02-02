@@ -23,7 +23,7 @@ def options(args):
                         "enabled (valgrind)")
     parser.add_argument("-o", "--output", metavar="FILE", default=sys.stdout,
                         help="write output of tests in FILE")
-    parser.add_argument("-t", "--timeout", metavar="TIME", default=-1,
+    parser.add_argument("-t", "--timeout", metavar="TIME", default=10,
                         help="set TIME as a timeout for the tests " +
                         "(in seconds)")
     options = parser.parse_args(args)
@@ -114,25 +114,20 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time):
                     mycmd = ' '.join(mycmd.strip().split())
                     percent = "[" + str(int(((list(subconfig).index(test) + 1)
                                         / len(subconfig) * 100))) + "%] "
-                    if time != -1:
-                        try:
-                            my = subprocess.run(mycmd, shell=True, timeout=time,
-                                                stdout=subprocess.PIPE,
-                                                stderr=subprocess.PIPE)
-                        except subprocess.TimeoutExpired:
-                            failed += errormsg(percent, category, mycmd,
-                                               subconfig[test], "\tTIMEOUT\n")
-                            continue
-                    else:
-                        my = subprocess.run(mycmd, shell=True,
+                    try:
+                        my = subprocess.run(mycmd, shell=True, timeout=time,
                                             stdout=subprocess.PIPE,
                                             stderr=subprocess.PIPE)
+                    except subprocess.TimeoutExpired:
+                        failed += errormsg(percent, category, mycmd,
+                                           subconfig[test], "\tTIMEOUT\n")
+                        continue
                     status = get_status(my.returncode, subconfig[test])
                     if status[0] != 0:
                         failed += errormsg(percent, category, mycmd,
                                            subconfig[test], status[1])
                     else:
-                        output += colored(percent + mycmd + ": PASS:" +\
+                        output += colored(percent + mycmd + ": PASS:\n" +\
                                           status[1], 'green')
                         ptest.update(1)
                     output += "\n"
@@ -158,4 +153,4 @@ if __name__ == '__main__':
         options(sys.argv[1:])
     else:
         parse_config('config.yaml', list_category('config.yaml'), False,
-                     sys.stdout, 60)
+                     sys.stdout, 10)
