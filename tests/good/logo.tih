@@ -1,0 +1,14 @@
+function logo (x : int, y : int) =
+(
+    let
+        import "lexer.tih"
+        import "parser.tih"
+        import "commands.tih"
+        var origin : point :=
+                point { x = x, y = y }
+        var return := ()
+    in
+        parser(lexer(), origin);
+        return
+    end
+)

@@ -1,0 +1,32 @@
+type point = {x : int, y : int}
+
+function draw_line(origin : point, finish : point) =
+    let
+        var dx : int := finish.x - origin.x
+        var dy : int := finish.y - origin.y
+        var sx : int := -1
+        var sy : int := -1
+        var err : int := 0
+        var e2 : int := 0
+    in
+        if dx < 0 then dx := - dx;
+        if dy < 0 then dy := - dy;
+        if origin.x < finish.x then sx := 1;
+        if origin.y < finish.y then sy := 1;
+        err := dx - dy;
+        while origin.x <> finish.x | origin.y <> finish.y do
+        (
+            plot(origin.x, origin.y);
+            e2 := 2 * err;
+            if e2 > - dy then
+            (
+                err := err - dy;
+                origin.x := origin.x + sx
+            );
+            if e2 < dx then
+            (
+                err := err + dx;
+                origin.y := origin.y + sy
+            )
+        )
+    end

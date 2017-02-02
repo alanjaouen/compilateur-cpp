@@ -1,0 +1,72 @@
+function get_arg(str : string) : int =
+(
+    let
+        var char : string := ""
+        var sign : string := substring(str, 0, 1)
+        var i : int := 0
+        var arg : int := 0
+    in
+        for i := streq(sign, "-") to size(str) - 1 do
+        (
+            char := substring(str, i, 1);
+            arg := arg * 10 + ord(char) - ord("0")
+        );
+        if streq(sign, "-") then
+            arg := - arg;
+        arg
+    end
+)
+
+var angle : int := 0
+
+function parser (commands : t_cmd, origin : point) : point =
+(
+    let
+        import "commands.tih"
+        var cmd : string := ""
+        var s_arg : string := ""
+        var i : int := 0
+        var arg : int := 0
+        var head : t_cmd := commands
+    in
+        while commands <> nil & commands.next <> nil do
+        (
+            cmd := commands.cmd;
+            s_arg := commands.next.cmd;
+            if streq(cmd, "]") = 1 then
+                break;
+            if streq(cmd, "forward") then
+            (
+                arg := get_arg(s_arg);
+                origin := forward(arg, origin, angle)
+            );
+            if streq(cmd, "right") then
+            (
+                arg := get_arg(s_arg);
+                angle := angle + right(arg);
+                angle := angle - 360 * (angle / 360)
+            );
+            if streq(cmd, "left") then
+            (
+                arg := get_arg(s_arg);
+                angle := angle + left(arg);
+                angle := angle - 360 * (angle / 360)
+            );
+            if streq(cmd, "repeat") then
+            (
+                arg := get_arg(s_arg);
+                for i := 0 to arg do
+                (
+                    head := commands.next.next;
+                    origin := parser(head, origin)
+                );
+                while streq(commands.next.cmd, "]") <> 1 do
+                (
+                    commands := commands.next
+                )
+            );
+            commands := commands.next.next
+        );
+        origin
+    end
+)

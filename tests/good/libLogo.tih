@@ -1,0 +1,48 @@
+/*
+	Initialize a X11 window.
+	@param width : Width of the window
+	@param height : Height of the window
+*/
+primitive init_window (width : int, height : int)
+
+/*
+	Close the window
+*/
+primitive close_window ()
+
+/*
+	Draw a point on the window.
+	@param x : Position on x-axis
+	@param y : Position on y-axis
+*/
+primitive plot (x : int, y : int)
+
+/*
+	Clear the X11 window.
+*/
+primitive clear ()
+
+/*
+	Trigonomeric constant
+*/
+var trig_cst := 1000000
+
+/*
+	This function returns the cosinus of an angle *  trig_cst
+	@param angle : angle in degree
+*/
+primitive cos (angle : int) : int
+
+/*
+	This function returns the sinus of an angle *  trig_cst
+	@param angle : angle in degree
+*/
+primitive sin (angle : int) : int
+
+/*
+	This function returns the tangent of an angle *  trig_cst
+	@param angle : angle in degree
+*/
+primitive tan (angle : int) : int
+
+type point = { x : int, y : int }

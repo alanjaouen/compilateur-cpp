@@ -1,0 +1,16 @@
+function forward (num : int, origin : point, angle : int) : point =
+(
+    let
+        var x : int := origin.x + num * cos(angle) / trig_cst
+        var y : int := origin.y + num * sin(angle) / trig_cst
+        var finish : point :=
+                point { x = x, y = y }
+    in
+        draw_line(origin, finish);
+        finish
+    end
+)
+
+function left (angle : int) : int = angle
+
+function right (angle : int) : int = -angle

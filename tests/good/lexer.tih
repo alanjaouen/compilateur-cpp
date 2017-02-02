@@ -1,0 +1,33 @@
+type t_cmd = { cmd : string, next : t_cmd }
+
+function lexer () : t_cmd =
+(
+    let
+        var char : string := getchar()
+        var commands : t_cmd :=
+            t_cmd { cmd = "", next = nil }
+        var head : t_cmd := commands
+    in
+        while streq(char, "") <> 1 do
+        (
+            while streq(char, " ") <> 1  &
+                    streq(char, "\n") <> 1 &
+                    streq(char, "[") <> 1 do
+            (
+                commands.cmd := concat(commands.cmd, char);
+                char := getchar();
+                if streq(char, "") then
+                    break
+            );
+            if streq(char, "") then
+                break;
+            char := getchar();
+            if streq(commands.cmd, "") <> 1 then
+            (
+                commands.next := t_cmd { cmd = "", next = nil };
+                commands := commands.next
+            )
+        );
+        head
+    end
+)
