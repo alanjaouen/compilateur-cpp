@@ -1,4 +1,5 @@
 comment_not_finish.tig: 2
+record.tig: 2
 string_coma_escape.tig: 2
 string_not_finish.tig: 2
 var_name.tig: 2

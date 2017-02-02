@@ -13,6 +13,7 @@ fun-vs-var.tig: 0
 if-and-if.tig: 0
 if-then-else.tig: 0
 if.tig: 0
+int-short.tig: 0
 int.tig: 0
 lexer.tih: 0
 libLogo.tih: 0
@@ -29,7 +30,9 @@ records.tig: 0
 recursive-types.tig: 0
 shadowing-functions.tig: 0
 shadowing-types-separate.tig: 0
+string-short.tig: 0
 string.tig: 0
+summarize-acu.tig: 0
 test27.tig: 0
 test30.tig: 0
 test37.tig: 0
