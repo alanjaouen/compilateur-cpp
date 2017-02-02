@@ -87,11 +87,13 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
             << tp.location_
             << ": invalid identifier: `"
             << misc::escape(yytext) << "'\n";
+  BEGIN(INITIAL);
 }
 <<EOF>> { tp.error_ << misc::error::scan
             << tp.location_
             << ": invalid identifier: `"
             << misc::escape(yytext) << "'\n";
+  BEGIN(INITIAL);
   }
 . { str += yytext;}
 }
@@ -110,6 +112,7 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
             << tp.location_
             << ": invalid identifier: `"
             << misc::escape(yytext) << "'\n";
+  BEGIN(INITIAL);
    }
 . { }
 }
@@ -172,7 +175,9 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
     val = res;
     return TOKEN_VAL(INT, val);
 }
-{ID}            { return TOKEN_VAL(ID, yytext);/* need to convert*/  }
+{ID}            {
+  misc::symbol identifier = misc::symbol(yytext);
+  return TOKEN_VAL(ID, identifier);/* need to convert*/  }
 "/*" { count++;
     BEGIN(SC_COMMENT);
 }
