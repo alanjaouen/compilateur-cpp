@@ -1,3 +1,100 @@
+2017-02-02  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	object: desugar: remove unnecessary FIXME
+
+	* src/object/desugar-visitor.cc: Here.
+
+2017-02-02  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	object: desugar: remove deprecated FIXMEs
+
+	Applying these FIXMEs would required too much work for these
+	to be worth it. In fact, everytime we check the type between
+	two elements (VarDec, MethodCallExp, ...), we need to check
+	if the static type is different from the dynamic type, in
+	which case, a cast function would be needed.
+
+	* src/object/desugar-visitor.cc: Here.
+
+2017-02-02  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: object: fix spaces
+
+	* src/type/class.cc: Here.
+
+2017-02-02  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	object: desugar: remove deprecated FIXMEs
+
+	* src/object/desugar-visitor.cc: Here.
+
+2017-02-02  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	object: desugar: clean code
+
+	* src/object/desugar-visitor.cc,
+	* src/object/desugar-visitor.hh,
+	* src/type/class.hh: Here.
+
+2017-02-02  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	object: desugar: remove legacy code
+
+	* src/object/desugar-visitor.cc,
+	* src/object/desugar-visitor.hh: Here.
+
+2017-02-02  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: scoped-map: fix braces
+
+	* lib/misc/scoped-map.hxx: Here.
+
+2017-02-02  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	gitignore: add flex++
+
+	* .gitignore: Here.
+
+2017-02-02  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: use `= default' for constructors and destructors
+
+	* src/callgraph/fundec-graph.hh,
+	* src/callgraph/fundec-graph.hxx,
+	* src/target/ia32/target.hh,
+	* src/target/mips/spim-assembly.hh,
+	* src/target/mips/target.hh,
+	* src/transform/generic-rewriter.hh,
+	* src/transform/generic-rewriter.hxx,
+	* src/transform/sequence.hh,
+	* src/transform/sequence.hxx,
+	* src/transform/test-voyager.cc,
+	* src/transform/visitor.hh,
+	* src/transform/visitor.hxx,
+	* src/translate/exp.hh,
+	* src/tree/visitor.hh,
+	* src/tree/visitor.hxx: Here.
+
+2017-01-28  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	ast: pretty-printer: enclose binding work into binding tags
+
+	* src/ast/pretty-printer.cc,
+	* src/ast/pretty-printer.hh: Here.
+
+2017-01-25  Etienne Renault  <renault@lrde.epita.fr>
+
+	Bump version number
+
+	* Makefile.am, configure.ac: here.
+
+2017-01-25  Etienne Renault  <renault@lrde.epita.fr>
+
+	Version 1.54 for 2019-tc-1.0
+
+	* NEWS.txt, configure.ac, src/version.cc.in: here.
+	* .last-cl-gen, ChangeLog, AUTHORS.txt: update.
+
 2017-01-25  Etienne Renault  <renault@lrde.epita.fr>
 
 	Version 1.54 for 2019-tc-1.0
