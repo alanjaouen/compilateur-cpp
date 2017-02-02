@@ -270,8 +270,9 @@ vardec:
 "var" ID type_dec ":=" exp
 ;
 classfields:
-vardec
-| "method" ID "(" tyfields ")" type_dec "=" exp
+classfields vardec
+| classfields "method" ID "(" tyfields ")" type_dec "=" exp
+| %empty
 ;
 ty:
 ID
