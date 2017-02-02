@@ -124,7 +124,7 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 "array"         { return TOKEN(ARRAY);     }
 ":="            { return TOKEN(ASSIGN); }
 "break"         { return TOKEN(BREAK);     }
-"class"         { return TOKEN(CLASS);     }
+"class"         { CHECK_EXTENSION(); return TOKEN(CLASS);     }
 ":"             { return TOKEN(COLON);     }
 ","             { return TOKEN(COMMA);      }
 "/"             { return TOKEN(DIVIDE); }
@@ -133,7 +133,7 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 "else"          { return TOKEN(ELSE);      }
 "end"           { return TOKEN(END);       }
 "="             { return TOKEN(EQ); }
-"extends"       { return TOKEN(EXTENDS);   }
+"extends"       { CHECK_EXTENSION(); return TOKEN(EXTENDS);   }
 "for"           { return TOKEN(FOR);       }
 "function"      { return TOKEN(FUNCTION);  }
 ">="            { return TOKEN(GE); }
@@ -148,7 +148,7 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 "("             { return TOKEN(LPAREN);    }
 "<"             { return TOKEN(LT); }
 "-"             { return TOKEN(MINUS); }
-"method"        { return TOKEN(METHOD);    }
+"method"        { CHECK_EXTENSION(); return TOKEN(METHOD);    }
 "<>"            { return TOKEN(NE); }
 "new"           { return TOKEN(NEW);       }
 "nil"           { return TOKEN(NIL);       }
