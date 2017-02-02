@@ -1,0 +1,6 @@
+while i < 10 do
+(
+    print_int (i);
+    print ("\n");
+    i := i + 1
+)

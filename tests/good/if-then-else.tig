@@ -1,0 +1,4 @@
+if grade < 10 then
+    print ("Akim will kill you\n")
+else
+    2print ("Akim is happy\n")

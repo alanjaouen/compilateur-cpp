@@ -1,0 +1,7 @@
+type t_person = { name : string, age : int }
+
+var person1 : t_person :=
+    t_person { name = "toto", age = 15 }
+
+print (person1.name);
+person1.age := 16

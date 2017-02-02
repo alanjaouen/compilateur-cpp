@@ -1,0 +1,6 @@
+type tab_of_int = array of int
+
+var tab : tab_of_int := tab_of_int[15] of 0
+
+tab[4] := 2;
+print_int (tab[4])
