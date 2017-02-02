@@ -27,7 +27,6 @@ def options(args):
                         help="set TIME as a timeout for the tests " +
                         "(in seconds)")
     options = parser.parse_args(args)
-    global time
     time = int(options.timeout)
     if options.list:
         for category in list_category('config.yaml'):
@@ -35,10 +34,10 @@ def options(args):
         return
     if options.category != []:
         parse_config('config.yaml', options.category, options.sanity,
-                     options.output)
+                     options.output, time)
     else:
         parse_config('config.yaml', list_category('config.yaml'),
-                     options.sanity, options.output)
+                     options.sanity, options.output, time)
 
 
 def list_category(yaml_file):
@@ -83,7 +82,7 @@ def errormsg(percent, category, mycmd, comment, msg):
     return 1
 
 
-def parse_config(yaml_file, categories_list, sanity, foutput):
+def parse_config(yaml_file, categories_list, sanity, foutput, time):
     with open(yaml_file, 'r') as f:
         config = yaml.load(f)
     global fail
@@ -122,7 +121,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput):
                                                 stderr=subprocess.PIPE)
                         except subprocess.TimeoutExpired:
                             failed += errormsg(percent, category, mycmd,
-                                               subconfig[test], "timeout\n")
+                                               subconfig[test], "\tTIMEOUT\n")
                             continue
                     else:
                         my = subprocess.run(mycmd, shell=True,
@@ -159,4 +158,4 @@ if __name__ == '__main__':
         options(sys.argv[1:])
     else:
         parse_config('config.yaml', list_category('config.yaml'), False,
-                     sys.stdout)
+                     sys.stdout, 60)
