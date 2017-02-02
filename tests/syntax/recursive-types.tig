@@ -1,0 +1,5 @@
+let
+  type stringlist = {head : string, tail : stringlist}
+in
+
+end

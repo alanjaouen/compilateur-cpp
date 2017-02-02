@@ -313,6 +313,6 @@ void
 parse::parser::error(const location_type& l, const std::string& m)
 {
    tp.error_ << misc::error::parse
-             << l
-             << m << "\n";
+             << l << " "
+             << m << std::endl;
 }
