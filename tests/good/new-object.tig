@@ -1,0 +1,7 @@
+class Foo
+{
+    var baz := 42
+    method baz () = print ("Foo.\n")
+}
+
+var foo : Foo := new Foo
