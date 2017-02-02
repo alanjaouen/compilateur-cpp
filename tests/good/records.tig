@@ -1,7 +1,8 @@
-type t_person = { name : string, age : int }
-
-var person1 : t_person :=
-    t_person { name = "toto", age = 15 }
-
-print (person1.name);
-person1.age := 16
+let
+  type  rectype = {name : string, age : int}
+  var rec1 := rectype {name="Nobody", age=1000}
+  var rec2 : rectype := nil
+in
+  rec1.name := "Somebody";
+  rec1
+end

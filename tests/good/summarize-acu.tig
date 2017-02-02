@@ -1,0 +1,16 @@
+let
+    type tree = { node : int, fg : tree, fd : tree }
+    function in_order ( t : tree ) =
+        if t <> nil then
+        (
+            in_order ( t.fg );
+            print_int ( t.node );
+            in_order ( t.fd )
+        )
+in
+    in_order ( tree { node = 7,
+        fg = tree { node = 4,
+        fg = tree { node = 1, fg = nil, fd = nil },
+        fd = tree { node = 6, fg = nil, fd = nil }},
+        fd = tree { node = 9, fg = nil, fd = nil }})
+end
