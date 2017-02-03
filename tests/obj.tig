@@ -1,0 +1,11 @@
+let
+  class C extends Object
+  {
+  var a := 42
+    method print() = print_int(a)
+  }
+  var c := new C
+in
+  c.a := 51;
+  c.print()
+end
