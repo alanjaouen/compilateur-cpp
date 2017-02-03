@@ -3,7 +3,7 @@ array-of-alias.tig: 0
 array.tig: 0
 arrays.tig: 0
 break-in-while.tig: 0
-class.tig: 0
+--object class.tig: 0
 commands.tih: 0
 comments-nested.tig: 0
 compare-record-and-nil.tig: 0
@@ -25,7 +25,7 @@ merge.tig: 0
 multi-class-&-function-call-in-method.tig: 0
 mutually-recursive-functions.tig: 0
 mutually-recursive-procedures.tig: 0
-new-object.tig: 0
+--object new-object.tig: 0
 parser.tih: 0
 queens.tig: 0
 record.tig: 0

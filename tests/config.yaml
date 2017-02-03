@@ -1,5 +1,3 @@
-my: "../src/tc"
-
 categories:
   bad:
     /bad.yaml
