@@ -66,3 +66,7 @@ authors.h: AUTHORS.txt $(AUTHORS_H_GEN)
 lcov:
 	lcov -c -d . -o coverage.info
 	genhtml coverage.info -o html
+
+distclean-local:
+	find . -name "*.gcno" -exec rm -rf {} \;
+	find . -name "*.gcda" -exec rm -rf {} \;
