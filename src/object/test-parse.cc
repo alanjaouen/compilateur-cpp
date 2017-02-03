@@ -2,6 +2,9 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <ast/libast.hh>
+#include <ast/exp.hh>
+#include <ast/decs-list.hh>
 #include <parse/libparse.hh>
 #include <object/libobject.hh>
 
@@ -23,6 +26,7 @@ main()
                               "   c.print()"
                               " end",
                               true);
+  std::cout << *e1 << std::endl;
   delete e1;
 
   // Alternative syntax.
@@ -38,5 +42,6 @@ main()
                               "   c.print()"
                               " end",
                               true);
+  std::cout << *e2 << std::endl;
   delete e2;
 }

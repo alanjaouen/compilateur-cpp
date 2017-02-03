@@ -14,6 +14,7 @@
 #include <parse/tasks.hh>
 #undef DEFINE_TASKS
 
+#include <ast/tasks.hh>
 #include <object/tasks.hh>
 
 namespace parse
@@ -48,6 +49,7 @@ namespace parse
       if (!result.first)
         task_error.exit();
 
+  // FIXME: Some code was deleted here.
     }
 
     void

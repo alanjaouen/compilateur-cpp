@@ -9,6 +9,7 @@
 #include <misc/symbol.hh>
 #include <misc/error.hh>
 
+#include <ast/fwd.hh>
 
 
 

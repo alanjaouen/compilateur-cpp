@@ -6,6 +6,7 @@
 
 #include <common.hh>
 
+#include <ast/tasks.hh>
 
 #define DEFINE_TASKS 1
 #include <object/tasks.hh>

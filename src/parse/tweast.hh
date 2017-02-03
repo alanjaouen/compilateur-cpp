@@ -8,16 +8,7 @@
 #include <map>
 #include <iostream>
 #include <sstream>
-// These forward declarations are provided to allow the compilation of
-// the project without the `ast' module at TC-1.  Remove them as soon
-// as this module is available (i.e., at TC-2).
-namespace ast
-{
-  class Exp;
-  class Var;
-  class NameTy;
-  class DecsList;
-} // namespace ast
+#include <ast/fwd.hh>
 #include <misc/symbol.hh>
 #include <misc/map.hh>
 #include <parse/metavar-map.hh>

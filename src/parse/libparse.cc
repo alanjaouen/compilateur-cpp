@@ -9,6 +9,8 @@
 #include <parse/tiger-parser.hh>
 #include <parse/tweast.hh>
 #include <parse/libparse.hh>
+#include <ast/decs.hh>
+#include <ast/decs-list.hh>
 
 // Define exported parse functions.
 namespace parse
@@ -35,6 +37,48 @@ namespace parse
 
     ast_type tree = tp.parse_file(fname);
 
+
+    // c++1z - std::variant
+    // ast::Exp** exp = std::get<ast::Exp*>(&tree);
+    // ast::DecsList** decs = std::get<ast::DecsList*>(&tree);
+    ast::Exp** exp = boost::get<ast::Exp*>(&tree);
+    ast::DecsList** decs = boost::get<ast::DecsList*>(&tree);
+
+    // Try to parse the program as an expression, and check that the
+    // parsing did not fail in that case.
+    if (exp && *exp)
+      {
+        Tweast in;
+
+        if (!prelude.empty())
+          {
+            // c++1z - std::variant
+            /* ast::DecsList* prelude_decs = (prelude == "builtin"
+             * ? std::get<ast::DecsList*>(tp.parse(tp.prelude()))
+             *  ...
+             */
+            ast::DecsList* prelude_decs =
+              (prelude == "builtin"
+               ? boost::get<ast::DecsList*>(tp.parse(tp.prelude()))
+               : tp.parse_import(prelude, location()));
+            if (prelude_decs)
+              in << prelude_decs;
+          }
+        in << "function _main() = (" << *exp << "; ())";
+        res = tp.parse(in);
+      }
+    // Try to parse the program as a list of declarations, and check
+    // that the parsing did not fail in that case.
+    else if (decs && *decs)
+      {
+        // Try to parse the program as a list of declarations.
+        res = *decs;
+      }
+    // Otherwise, the parsing failed, and an error will be returned as
+    // second member of the return value.
+
+    // Ensure that directory stack is not modified by parse.
+    library.pop_current_directory();
 
     // c++1z - template arguments deduction for constructors
     // return pair(res, tp.error_get());
@@ -82,5 +126,16 @@ namespace parse
     return res;
   }
 
+  // Parse a set of declarations.
+  ast::Decs*
+  parse_decs(Tweast& in)
+  {
+    ast::DecsList* dl = parse(in);
+    assertion(dl->decs_get().size() == 1);
+    ast::Decs* res = dl->decs_get().front();
+    dl->decs_get().pop_front();
+    delete dl;
+    return res;
+  }
 
 } // namespace parse

@@ -12,13 +12,7 @@
 #include <misc/file-library.hh>
 #include <parse/fwd.hh>
 
-// This forward declarations is provided to allow the compilation of
-// the project without the `ast' module at TC-1.  Remove it as soon
-// as this module is available (i.e., at TC-2).
-namespace ast
-{
-  class Decs;
-} // namespace ast
+#include <ast/fwd.hh>
 
 /// Parsing the input, delivering an ast::Ast.
 namespace parse
@@ -65,5 +59,12 @@ namespace parse
                    , bool enable_object_extensions_p = false
                    );
 
+  /// \brief Parse a set of declarations.
+  ///
+  /// Wrapper around parse::parse to return the single ast::Decs
+  /// to be found in the input (expected to contain decs_listdecs).
+  ///
+  /// Used by desugar::BoundsCheckingVisitor and object::ObjectDesugarVisitor.
+  ast::Decs* parse_decs (Tweast& in);
 
 } // namespace parse

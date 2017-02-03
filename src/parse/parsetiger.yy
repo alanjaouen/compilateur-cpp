@@ -71,6 +71,30 @@
 %token <int>            INT    "integer"
 
 
+/*--------------------------------.
+| Support for the non-terminals.  |
+`--------------------------------*/
+
+%code requires
+{
+# include <ast/fwd.hh>
+// Provide the declarations of the following classes for the
+// %destructor clauses below to work properly.
+# include <ast/exp.hh>
+# include <ast/var.hh>
+# include <ast/ty.hh>
+# include <ast/name-ty.hh>
+# include <ast/field.hh>
+# include <ast/field-init.hh>
+# include <ast/function-dec.hh>
+# include <ast/type-dec.hh>
+# include <ast/var-dec.hh>
+# include <ast/any-decs.hh>
+# include <ast/decs-list.hh>
+}
+
+  // FIXME: Some code was deleted here (Printers and destructors).
+
 
 /*-----------------------------------------.
 | Code output in the implementation file.  |
@@ -83,6 +107,8 @@
 # include <parse/tweast.hh>
 # include <misc/separator.hh>
 # include <misc/symbol.hh>
+# include <ast/all.hh>
+# include <ast/libast.hh>
 
   namespace
   {
@@ -156,6 +182,10 @@
        WHILE        "while"
        EOF 0        "end of file"
 
+
+%type <ast::Exp*> exp
+%type <ast::DecsList*> decs
+
 %left "|"
 %left "&"
 %left "+" "-"
@@ -166,19 +196,21 @@
 %nonassoc THEN DO OF
 %nonassoc  ELSE
 %nonassoc ASSIGN
+  // FIXME: Some code was deleted here (More %types).
 
 %start program
 
 %%
 program:
   /* Parsing a source program.  */
-  exp   
+  exp   { tp.ast_ = $1; }
 | /* Parsing an imported file.  */
-  decs  
+  decs  { tp.ast_ = $1; }
 ;
 
 exp:
-INT
+
+INT   { $$ = new ast::IntExp(@$, $1); }
 |  "nil"
 | STRING
 | ID "[" exp "]" "of" exp
@@ -202,13 +234,15 @@ INT
 ;
 
 array: ID "=" exp arrayrec
-| %empty
+| %empty               { $$ = new ast::DecsList(@$); }
 ;
 arrayrec: "," ID "=" exp arrayrec
-| %empty
+| %empty               { $$ = new ast::DecsList(@$); }
+
 ;
 function: exp function_param
-| %empty
+| %empty               { $$ = new ast::DecsList(@$); }
+
 ;
 function_param: %empty
 |"," exp function_param
@@ -233,13 +267,14 @@ lvalue_bracket:
 ;
 
 exps: exp exps_rec
-| %empty
+| %empty               { $$ = new ast::DecsList(@$); }
 ;
 
 exps_rec: ";" exps
-|       %empty
-;
+| %empty               { $$ = new ast::DecsList(@$); }
 
+;
+  // FIXME: Some code was deleted here (More rules).
 
 /*---------------.
 | Declarations.  |
@@ -247,7 +282,7 @@ exps_rec: ";" exps
 
 %token DECS "_decs";
 decs:
-%empty
+%empty               { $$ = new ast::DecsList(@$); }
 | dec decs
 ;
 dec:
@@ -260,11 +295,11 @@ dec:
 ;
 type_dec:
 ":" ID
-| %empty
+| %empty               { $$ = new ast::DecsList(@$); }
 ;
 dec_class_def:
 "extends" ID
-| %empty
+| %empty               { $$ = new ast::DecsList(@$); }
 ;
 vardec:
 "var" ID type_dec ":=" exp
@@ -272,7 +307,7 @@ vardec:
 classfields:
 classfields vardec
 | classfields "method" ID "(" tyfields ")" type_dec "=" exp
-| %empty
+| %empty               { $$ = new ast::DecsList(@$); }
 ;
 ty:
 ID
@@ -282,11 +317,11 @@ ID
 ;
 tyfields:
 ID ":" ID tyfilelds_rec
-| %empty
+| %empty               { $$ = new ast::DecsList(@$); }
 ;
 tyfilelds_rec:
 "," ID ":" ID tyfilelds_rec
-| %empty
+| %empty               { $$ = new ast::DecsList(@$); }
 ;
 op_rule:
 exp op
@@ -306,6 +341,7 @@ op:
 | "|" exp
 ;
 
+  // FIXME: Some code was deleted here (More rules).
 
 %%
 

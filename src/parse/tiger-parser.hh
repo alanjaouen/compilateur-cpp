@@ -11,6 +11,7 @@
 #include <common.hh>
 #include <misc/error.hh>
 #include <misc/file-library.hh>
+#include <ast/fwd.hh>
 #include <parse/parsetiger.hh>
 #include <parse/tweast.hh>
 #include <boost/filesystem.hpp>
