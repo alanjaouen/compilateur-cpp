@@ -26,6 +26,8 @@ def options(args):
     parser.add_argument("-t", "--timeout", metavar="TIME", default=10,
                         help="set TIME as a timeout for the tests " +
                         "(in seconds)")
+    parser.add_argument("--my", metavar="FILE",
+                        help="path to the binary to be tested")
     options = parser.parse_args(args)
     time = int(options.timeout)
     if options.list:
@@ -34,10 +36,10 @@ def options(args):
         return
     if options.category != []:
         parse_config('config.yaml', options.category, options.sanity,
-                     options.output, time)
+                     options.output, time, options.my)
     else:
         parse_config('config.yaml', list_category('config.yaml'),
-                     options.sanity, options.output, time)
+                     options.sanity, options.output, time, options.my)
 
 
 def list_category(yaml_file):
@@ -82,7 +84,7 @@ def errormsg(percent, category, mycmd, comment, msg):
     return 1
 
 
-def parse_config(yaml_file, categories_list, sanity, foutput, time):
+def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
     with open(yaml_file, 'r') as f:
         config = yaml.load(f)
     global fail
@@ -109,7 +111,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time):
                     mycmd = ""
                     if sanity:
                         mycmd += "valgrind "
-                    mycmd += config["my"]
+                    mycmd += my_path
                     mycmd += " " + category + "/"+ test
                     mycmd = ' '.join(mycmd.strip().split())
                     percent = "[" + str(int(((list(subconfig).index(test) + 1)
@@ -148,12 +150,11 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time):
 
 
 if __name__ == '__main__':
-
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     f = open('tigrou.ascii', 'r')
     file_content = f.read();
     print('\033[93m' + file_content+ '\033[0m')
     f.close()
-    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     if sys.stdout.isatty():
         options(sys.argv[1:])
     else:
