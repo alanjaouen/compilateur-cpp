@@ -1,4 +1,0 @@
-let var a : nil := ()
-in
-  1
-end

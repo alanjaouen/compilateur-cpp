@@ -1,7 +1,9 @@
+EXTRA_DIST = $(srcdir)
+
 check-local: epitestsuite
 
 epitestsuite: pypi-install
-	$(builddir)/epitestsuite.py
+	$(srcdir)/epitestsuite.py
 
 pypi-install:
-	$(builddir)/install.sh
+	$(srcdir)/install.sh

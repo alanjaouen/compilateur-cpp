@@ -148,6 +148,11 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time):
 
 
 if __name__ == '__main__':
+
+    f = open('tigrou.ascii', 'r')
+    file_content = f.read();
+    print('\033[93m' + file_content+ '\033[0m')
+    f.close()
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
     if sys.stdout.isatty():
         options(sys.argv[1:])

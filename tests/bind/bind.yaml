@@ -1,4 +1,5 @@
-break-outside-loop.tig: 3
+# will be invalid latter
+break-outside-loop.tig: 0
 # will be invalid latter
 invalid-function-redefinition-1.tig: 0
 # will be invalid latter

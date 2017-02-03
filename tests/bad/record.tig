@@ -1,7 +1,4 @@
 /* a record type and a record variable */
-let
   type  rectype = {name : string, age : int}
   var rec1 := nil
-in
   rec1
-end
