@@ -1,0 +1,18 @@
+let
+    function foo() : int = 0
+    function bar() : int = 1
+in
+    let
+        function foo() : int = 2
+    in
+        let
+            var stop := 0
+        in
+            let
+                function bar() : int = 3
+            in
+                0
+            end
+        end
+    end
+end

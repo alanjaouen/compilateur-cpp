@@ -1,0 +1,6 @@
+let function foo() : int = bar()
+    var stop := 0
+    function bar() : int = foo()
+in
+    0
+end
