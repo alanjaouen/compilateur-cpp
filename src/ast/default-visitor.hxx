@@ -37,7 +37,8 @@ namespace ast
   void
   GenDefaultVisitor<Const>::operator()(const_t<FieldVar>& e)
   {
-  // FIXME: Some code was deleted here.
+      e.var_get().accept(*this);
+      e.field_get().accept(*this);
   }
 
   template <template <typename> class Const>
@@ -75,7 +76,8 @@ namespace ast
   void
   GenDefaultVisitor<Const>::operator()(const_t<CallExp>& e)
   {
-  // FIXME: Some code was deleted here.
+      e.exp_get().accept(*this);
+      e.fun_get().accept(*this);
   }
 
   template <template <typename> class Const>
