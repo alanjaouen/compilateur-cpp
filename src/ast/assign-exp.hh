@@ -14,7 +14,24 @@ namespace ast
   /// AssignExp.
   class AssignExp : public Exp
   {
-  // FIXME: Some code was deleted here.
+  public:
+    AssignExp(Location& location, Var* lvalue, Exp* exp);
+    virtual ~AssignExp();
+
+    void accept(ConstVisitor& v) const override;
+    /// Accept a non-const visitor \a v.
+    void accept(Visitor& v) override;
+
+
+    const Var& var_get() const;
+    Var& var_get();
+    const Exp& exp_get() const;
+    Exp& exp_get();
+
+
+  protected:
+    Var* lvalue_;
+    Exp* exp_;
   };
 
 } // namespace ast

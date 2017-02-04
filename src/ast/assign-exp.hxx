@@ -10,7 +10,22 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+  inline const Var& AssignExp::var_get() const
+    {
+      return *lvalue_;
+    }
+  inline Var& AssignExp::var_get()
+    {
+      return *lvalue_;
+    }
+  inline const Exp& AssignExp::exp_get() const
+    {
+      return *exp_;
+    }
+  inline Exp& AssignExp::exp_get()
+    {
+      return *exp_;
+    }
 
 } // namespace ast
 
