@@ -8,8 +8,22 @@
 
 namespace ast
 {
+  StringExp::StringExp(const Location& location, std::string& str)
+    : Exp(location)
+    , str_(str)
+  {}
 
-  // FIXME: Some code was deleted here.
+  
+  void
+  StringExp::accept(ConstVisitor& v) const
+  {
+    v(*this);
+  }
 
+  void
+  StringExp::accept(Visitor& v)
+  {
+    v(*this);
+  }
 } // namespace ast
 

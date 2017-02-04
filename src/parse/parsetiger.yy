@@ -234,14 +234,14 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 ;
 
 array: ID "=" exp arrayrec
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty //               { $$ = new ast::DecsList(@$); }
 ;
 arrayrec: "," ID "=" exp arrayrec
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty   //            { $$ = new ast::DecsList(@$); }
 
 ;
 function: exp function_param
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty     //          { $$ = new ast::DecsList(@$); }
 
 ;
 function_param: %empty
@@ -267,11 +267,11 @@ lvalue_bracket:
 ;
 
 exps: exp exps_rec
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty       //        { $$ = new ast::DecsList(@$); }
 ;
 
 exps_rec: ";" exps
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty         //      { $$ = new ast::DecsList(@$); }
 
 ;
   // FIXME: Some code was deleted here (More rules).
@@ -282,7 +282,7 @@ exps_rec: ";" exps
 
 %token DECS "_decs";
 decs:
-%empty               { $$ = new ast::DecsList(@$); }
+%empty             //  { $$ = new ast::DecsList(@$); }
 | dec decs
 ;
 dec:
@@ -295,11 +295,11 @@ dec:
 ;
 type_dec:
 ":" ID
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty             //  { $$ = new ast::DecsList(@$); }
 ;
 dec_class_def:
 "extends" ID
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty               //{ $$ = new ast::DecsList(@$); }
 ;
 vardec:
 "var" ID type_dec ":=" exp
@@ -307,7 +307,7 @@ vardec:
 classfields:
 classfields vardec
 | classfields "method" ID "(" tyfields ")" type_dec "=" exp
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty               //{ $$ = new ast::DecsList(@$); }
 ;
 ty:
 ID
@@ -317,11 +317,11 @@ ID
 ;
 tyfields:
 ID ":" ID tyfilelds_rec
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty              // { $$ = new ast::DecsList(@$); }
 ;
 tyfilelds_rec:
 "," ID ":" ID tyfilelds_rec
-| %empty               { $$ = new ast::DecsList(@$); }
+| %empty              // { $$ = new ast::DecsList(@$); }
 ;
 op_rule:
 exp op
