@@ -18,7 +18,7 @@ namespace ast
     /** \name Ctor & dtor.
      ** \{ */
     /// Construct a BreakExp node.
-    BreakExp(const Location& location, Exp* test, Exp* body);
+    BreakExp(const Location& location);
     /// Destroy a BreakExp node.
     virtual ~BreakExp();
     /** \} */
