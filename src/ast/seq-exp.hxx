@@ -10,7 +10,16 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+  inline const SeqExp::seq_type&
+  SeqExp::seq_get() const
+  {
+    return seq_;
+  }
+  inline SeqExp::seq_type&
+  SeqExp::seq_get()
+  {
+    return seq_;
+  }
 
 } // namespace ast
 
