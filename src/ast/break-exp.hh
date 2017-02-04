@@ -13,7 +13,6 @@ namespace ast
   /// BreakExp.
   class BreakExp : public Exp
   {
-    // FIXME: Some code was deleted here.
   public:
     /** \name Ctor & dtor.
      ** \{ */

@@ -8,6 +8,7 @@
 
 namespace ast
 {
+
   BreakExp::BreakExp(const Location& location) : Exp(location)
   {}
 
@@ -25,8 +26,6 @@ namespace ast
   {
     v(*this);
   }
-
-  // FIXME: Some code was deleted here.
 
 } // namespace ast
 
