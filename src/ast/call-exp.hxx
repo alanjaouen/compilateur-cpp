@@ -10,7 +10,18 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+
+    inline const Exp&
+    CallExp::exp_get() const
+    {
+        return *exp_;
+    }
+    inline Exp&
+    CallExp::exp_get()
+    {
+        return *exp_;
+    }
+
 
 } // namespace ast
 
