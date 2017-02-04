@@ -3,6 +3,8 @@ categories:
     /bad.yaml
   bind:
     /bind.yaml
+  chunks:
+    /chunks.yaml
   good:
     /good.yaml
   pretty-print:
