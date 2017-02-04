@@ -8,8 +8,31 @@
 
 namespace ast
 {
+  IfExp::IfExp(Location& location, Exp* test, Exp* Bthen, Exp* Belse)
+    : Exp(location)
+    , test_(test)
+    , Bthen_(Bthen)
+    , Belse_(Belse)
+  {}
+  IfExp::~IfExp()
+  {
+    delete test_;
+    delete Bthen_;
+    if (Belse_ != nullptr)
+      delete Belse_;
+  }
+  void
+  IfExp::accept(ConstVisitor& v) const
+  {
+    v(*this);
+  }
 
-  // FIXME: Some code was deleted here.
+  void
+  IfExp::accept(Visitor& v)
+  {
+    v(*this);
+  }
 
+  
 } // namespace ast
 
