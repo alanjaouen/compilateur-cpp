@@ -5,6 +5,8 @@ categories:
     /bind.yaml
   chunks:
     /chunks.yaml
+  error-recovery:
+    /error-recovery.yaml
   good:
     /good.yaml
   pretty-print:
