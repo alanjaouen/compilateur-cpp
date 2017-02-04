@@ -26,7 +26,7 @@ namespace ast
     std::string& value_get() const;
 
   protected:
-    std::string str_;
+    std::string& str_;
   };
 
 } // namespace ast
