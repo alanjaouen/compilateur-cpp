@@ -15,12 +15,12 @@ AST:
         - field-var.cc
         - field-var.hh
         - field-var.hxx
-        - if-exp.cc
-        - if-exp.hh
-        - if-exp.hxx
-        - let-exp.cc
-        - let-exp.hh
-        - let-exp.hxx
+[x]     - if-exp.cc
+[x]     - if-exp.hh
+[x]     - if-exp.hxx
+[x]     - let-exp.cc
+[x]     - let-exp.hh
+[x]     - let-exp.hxx
         - method-call-exp.cc
         - method-call-exp.hh
         - method-call-exp.hxx
@@ -36,9 +36,9 @@ AST:
         - record-ty.cc
         - record-ty.hh
         - record-ty.hxx
-        - seq-exp.cc
-        - seq-exp.hh
-        - seq-exp.hxx
+[x]     - seq-exp.cc
+[x]     - seq-exp.hh
+[x]     - seq-exp.hxx
 [x]     - string-exp.cc
 [x]     - string-exp.hh
 [x]     - string-exp.hxx
