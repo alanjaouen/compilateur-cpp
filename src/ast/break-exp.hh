@@ -13,7 +13,24 @@ namespace ast
   /// BreakExp.
   class BreakExp : public Exp
   {
-  // FIXME: Some code was deleted here.
+    // FIXME: Some code was deleted here.
+  public:
+    /** \name Ctor & dtor.
+     ** \{ */
+    /// Construct a BreakExp node.
+    BreakExp(const Location& location, Exp* test, Exp* body);
+    /// Destroy a BreakExp node.
+    virtual ~BreakExp();
+    /** \} */
+
+    /// \name Visitors entry point.
+    /// \{ */
+    /// Accept a const visitor \a v.
+    void accept(ConstVisitor& v) const override;
+    /// Accept a non-const visitor \a v.
+    void accept(Visitor& v) override;
+    /// \}
+
   };
 
 } // namespace ast
