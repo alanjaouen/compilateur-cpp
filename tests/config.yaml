@@ -5,6 +5,8 @@ categories:
     /bind.yaml
   good:
     /good.yaml
+  pretty-print:
+    /pretty-print.yaml
   syntax:
     /syntax.yaml
   type:
