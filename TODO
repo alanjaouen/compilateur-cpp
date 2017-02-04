@@ -1,8 +1,8 @@
 AST:
 
-        - array-exp.cc
-        - array-exp.hh
-        - array-exp.hxx
+[x]     - array-exp.cc
+[x]     - array-exp.hh
+[x]     - array-exp.hxx
         - assign-exp.cc
         - assign-exp.hh
         - assign-exp.hxx
