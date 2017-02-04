@@ -27,7 +27,7 @@ namespace ast
              * \name Ctor & dtor.
              * \{ */
             /// Construct a CallExp node.
-            CallExp(const Location& location, Exp* exp); //FIXME
+            CallExp(const Location& location, Exp* exp, FunctionDec* fun);
             /// Destroy a CallExp node.
             virtual ~CallExp();
             /** \} */
@@ -48,11 +48,17 @@ namespace ast
             const Exp& exp_get() const;
             /// Return the call expression.
             Exp& exp_get();
+            /// Return the function.
+            const FunctionDec& fun_get() const;
+            /// Return the function.
+            FunctionDec& fun_get();
             /** \} */
 
         protected:
             /// The call expression.
             Exp* exp_;
+            /// The function.
+            FunctionDec* fun_;
     };
 
 } // namespace ast

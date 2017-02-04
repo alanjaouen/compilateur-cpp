@@ -21,6 +21,16 @@ namespace ast
     {
         return *exp_;
     }
+    inline const FunctionDec&
+    CallExp::fun_get() const
+    {
+        return *fun_;
+    }
+    inline FunctionDec&
+    CallExp::fun_get()
+    {
+        return *fun_;
+    }
 
 
 } // namespace ast
