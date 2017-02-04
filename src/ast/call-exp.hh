@@ -12,11 +12,48 @@
 namespace ast
 {
 
-  /// CallExp.
-  class CallExp : public Exp
-  {
-  // FIXME: Some code was deleted here.
-  };
+    /**
+     * \class ast::CallExp
+     * \brief FIXME
+     *
+     * FIXME
+     */
+
+    /// CallExp.
+    class CallExp : public Exp
+    {
+        public:
+            /**
+             * \name Ctor & dtor.
+             * \{ */
+            /// Construct a CallExp node.
+            CallExp(const Location& location, Exp* exp); //FIXME
+            /// Destroy a CallExp node.
+            virtual ~CallExp();
+            /** \} */
+
+            /**
+             * \name Visitors entry point.
+             * \{ */
+            /// Accept a const visitor \a v.
+            void accept(ConstVisitor& v) const override;
+            /// Accept a non-const visitor \a v.
+            void accept(Visitor& v) override;
+            /** \} */
+
+            /**
+             * \name Accessors.
+             * \{ */
+            /// Return the call expression.
+            const Exp& exp_get() const;
+            /// Return the call expression.
+            Exp& exp_get();
+            /** \} */
+
+        protected:
+            /// The call expression.
+            Exp* exp_;
+    };
 
 } // namespace ast
 
