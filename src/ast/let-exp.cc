@@ -9,7 +9,29 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+  LetExp::LetExp(const Location& location, DecsList* decs, SeqExp* seq)
+    : Exp(location)
+    , decs_(decs)
+    , seq_(seq)
+  {}
+
+  LetExp::~LetExp()
+  {
+    delete decs_;
+    delete seq_;
+  }
+
+  void
+  LetExp::accept(ConstVisitor& v) const
+  {
+    v(*this);
+  }
+
+  void
+  LetExp::accept(Visitor& v)
+  {
+    v(*this);
+  }
 
 } // namespace ast
 

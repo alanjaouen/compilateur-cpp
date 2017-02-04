@@ -9,8 +9,30 @@
 
 namespace ast
 {
+  inline
+  const DecsList&
+  LetExp::decs_get() const
+  {
+    return *decs_;
+  }
 
-  // FIXME: Some code was deleted here.
+  inline DecsList&
+  LetExp::decs_get()
+  {
+    return *decs_;
+  }
+
+  inline const SeqExp&
+  LetExp::seq_get() const
+  {
+    return *seq_;
+  }
+
+  inline SeqExp&
+  LetExp::seq_get()
+  {
+    return *seq_;
+  }
 
 } // namespace ast
 
