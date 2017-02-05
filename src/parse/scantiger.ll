@@ -177,6 +177,12 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 "var"           { return TOKEN(VAR);       }
 "while"         { return TOKEN(WHILE);     }
 "\""            { str = ""; BEGIN(SC_STRING);}
+"_cast"         { return TOKEN(CAST); }
+"_decs"         { return TOKEN(DECS);}
+"_exp"          { return TOKEN(EXP);}
+"_lvalue"       { return TOKEN(LVALUE);}
+"_namety"       { return TOKEN(NAMETY);}
+
 {int} {
     int val = 0;
     auto res = std::stol(yytext);

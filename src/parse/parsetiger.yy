@@ -5,8 +5,10 @@
 %name-prefix "parse"
 %define api.value.type variant
 %define api.token.constructor
-%skeleton "lalr1.cc" // The grammar is lalr1
-%expect 0            // No shift/reduce
+%skeleton "glr.cc" // The grammar is lalr1
+%glr-parser
+%expect 0           // No shift/reduce
+%expect-rr 0
 %define parse.error verbose
 %define parse.trace
 
@@ -134,54 +136,56 @@
 
 // Definition of the tokens, and their pretty-printing.
 %token AND          "&"
-       ARRAY        "array"
-       ASSIGN       ":="
-       BREAK        "break"
-       CAST         "_cast"
-       CLASS        "class"
-       COLON        ":"
-       COMMA        ","
-       DIVIDE       "/"
-       DO           "do"
-       DOT          "."
-       ELSE         "else"
-       END          "end"
-       EQ           "="
-       EXTENDS      "extends"
-       FOR          "for"
-       FUNCTION     "function"
-       GE           ">="
-       GT           ">"
-       IF           "if"
-       IMPORT       "import"
-       IN           "in"
-       LBRACE       "{"
-       LBRACK       "["
-       LE           "<="
-       LET          "let"
-       LPAREN       "("
-       LT           "<"
-       MINUS        "-"
-       METHOD       "method"
-       NE           "<>"
-       NEW          "new"
-       NIL          "nil"
-       OF           "of"
-       OR           "|"
-       PLUS         "+"
-       PRIMITIVE    "primitive"
-       RBRACE       "}"
-       RBRACK       "]"
-       RPAREN       ")"
-       SEMI         ";"
-       THEN         "then"
-       TIMES        "*"
-       TO           "to"
-       TYPE         "type"
-       VAR          "var"
-       WHILE        "while"
-       EOF 0        "end of file"
-
+ARRAY        "array"
+ASSIGN       ":="
+BREAK        "break"
+CAST         "_cast"
+CLASS        "class"
+COLON        ":"
+COMMA        ","
+DIVIDE       "/"
+DO           "do"
+DOT          "."
+ELSE         "else"
+END          "end"
+EQ           "="
+EXTENDS      "extends"
+FOR          "for"
+FUNCTION     "function"
+GE           ">="
+GT           ">"
+IF           "if"
+IMPORT       "import"
+IN           "in"
+LBRACE       "{"
+LBRACK       "["
+LE           "<="
+LET          "let"
+LPAREN       "("
+LT           "<"
+MINUS        "-"
+METHOD       "method"
+NE           "<>"
+NEW          "new"
+NIL          "nil"
+OF           "of"
+OR           "|"
+PLUS         "+"
+PRIMITIVE    "primitive"
+RBRACE       "}"
+RBRACK       "]"
+RPAREN       ")"
+SEMI         ";"
+THEN         "then"
+TIMES        "*"
+TO           "to"
+TYPE         "type"
+VAR          "var"
+WHILE        "while"
+EOF 0        "end of file"
+EXP "_exp"
+LVALUE "_LVALUE"
+NAMETY "_NAMETY"
 
 %type <ast::Exp*> exp
 %type <ast::DecsList*> decs
@@ -231,6 +235,8 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | "for" ID ":=" exp "to" exp "do" exp
 | "break"
 | "let" decs "in" exps  "end"
+
+| "_cast" "(" exp "," ty ")"
 ;
 
 array: ID "=" exp arrayrec
@@ -284,6 +290,7 @@ exps_rec: ";" exps
 decs:
 %empty             //  { $$ = new ast::DecsList(@$); }
 | dec decs
+// | "_decs" "(" INT ")" decs // A list of decs metavariable
 ;
 dec:
 "type" ID "=" ty
