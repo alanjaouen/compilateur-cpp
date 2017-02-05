@@ -27,7 +27,7 @@ AST:
 []        - object-exp.cc
 []        - object-exp.hh
 []        - object-exp.hxx
-        - op-exp.cc
+[x]     - op-exp.cc
         - pretty-printer.cc
         - pretty-printer.hh
 [x]     - record-exp.cc
