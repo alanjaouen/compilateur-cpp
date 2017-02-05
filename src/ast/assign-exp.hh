@@ -11,28 +11,55 @@
 namespace ast
 {
 
-  /// AssignExp.
-  class AssignExp : public Exp
-  {
-  public:
-    AssignExp(Location& location, Var* lvalue, Exp* exp);
-    virtual ~AssignExp();
 
-    void accept(ConstVisitor& v) const override;
-    /// Accept a non-const visitor \a v.
-    void accept(Visitor& v) override;
+    /**
+     * \class ast::AssignExp.
+     * \brief FIXME
+     *
+     * FIXME
+     */
 
+    /// AssignExp.
+    class AssignExp : public Exp
+    {
+        public:
+            /**
+             * \name Ctor & dtor.
+             * \{ */
+            /// Construct a AssignExp node.
+            AssignExp(const Location& location, Var* lvalue, Exp* exp);
+            /// Destroy a AssignExp node.
+            virtual ~AssignExp();
+            /** \} */
 
-    const Var& var_get() const;
-    Var& var_get();
-    const Exp& exp_get() const;
-    Exp& exp_get();
+            /**
+             * \name Visitors entry point.
+             * \{ */
+            /// Accept a const visitor \a v.
+            void accept(ConstVisitor& v) const override;
+            /// Accept a non-const visitor \a v.
+            void accept(Visitor& v) override;
+            /** \} */
 
+            /**
+             * \name Accessors.
+             * \{ */
+            /// Return the variable value.
+            const Var& var_get() const;
+            /// Return the variable value.
+            Var& var_get();
+            /// Return the assigned expression.
+            const Exp& exp_get() const;
+            /// Return the assigned expression.
+            Exp& exp_get();
+            /** \} */
 
-  protected:
-    Var* lvalue_;
-    Exp* exp_;
-  };
+        protected:
+            /// The variable value.
+            Var* lvalue_;
+            /// The assigned expression.
+            Exp* exp_;
+    };
 
 } // namespace ast
 
