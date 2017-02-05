@@ -79,6 +79,4 @@ namespace ast
   using TypeDecs = AnyDecs<TypeDec>;
   using VarDecs = AnyDecs<VarDec>;
   using FieldInits = AnyDecs<FieldInit>;
-    
-
 } // namespace ast
