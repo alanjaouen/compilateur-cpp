@@ -30,9 +30,9 @@ AST:
         - op-exp.cc
         - pretty-printer.cc
         - pretty-printer.hh
-        - record-exp.cc
-        - record-exp.hh
-        - record-exp.hxx
+[x]     - record-exp.cc
+[x]     - record-exp.hh
+[x]     - record-exp.hxx
         - record-ty.cc
         - record-ty.hh
         - record-ty.hxx
