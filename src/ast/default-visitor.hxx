@@ -153,7 +153,9 @@ namespace ast
   void
   GenDefaultVisitor<Const>::operator()(const_t<ArrayExp>& e)
   {
-  // FIXME: Some code was deleted here.
+      e.type_get().accept(*this);
+      e.l_exp_get().accept(*this);
+      e.r_exp_get().accept(*this);
   }
 
   template <template <typename> class Const>
@@ -176,7 +178,7 @@ namespace ast
   void
   GenDefaultVisitor<Const>::operator()(const_t<DecsList>& e)
   {
-  // FIXME: Some code was deleted here.
+      e.decs_get().accept(*this);
   }
 
   template <template <typename> class Const>
