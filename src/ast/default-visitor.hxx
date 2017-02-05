@@ -37,8 +37,8 @@ namespace ast
   void
   GenDefaultVisitor<Const>::operator()(const_t<FieldVar>& e)
   {
-      e.var_get().accept(*this);
-      e.field_get().accept(*this);
+    //e.var_get().accept(*this);
+    //e.field_get().accept(*this);
   }
 
   template <template <typename> class Const>
