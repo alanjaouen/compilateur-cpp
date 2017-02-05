@@ -10,54 +10,65 @@
 namespace ast
 {
 
-  /// DecsList.
-  class DecsList : public Ast
-  {
-  public:
-    using decs_type = std::list<Decs*>;
 
-    /// Prepend \a d.
-    void push_front(Decs* d);
-    /// Append \a d.
-    void emplace_back(Decs* d);
+    /**
+     * \class ast::DecsList.
+     * \brief FIXME
+     *
+     * FIXME
+     */
 
-    /// Splice the content of \a ds in front of this list.
-    void splice_front(DecsList& ds);
-    /// Splice the content of \a ds at the back this list.
-    void splice_back(DecsList& ds);
+    /// DecsList.
+    class DecsList : public Ast
+    {
+        public:
+            using decs_type = std::list<Decs*>;
 
-    /// Construct a DecsList node.
-    DecsList(const Location& location);
+            /// Prepend \a d.
+            void push_front(Decs* d);
+            /// Append \a d.
+            void emplace_back(Decs* d);
 
-  public:
-    /** \name Ctor & dtor.
-     ** \{ */
-    /// Construct a DecsList node.
-    DecsList(const Location& location, const DecsList::decs_type& decs);
-    /// Destroy a DecsList node.
-    virtual ~DecsList();
-    /** \} */
+            /// Splice the content of \a ds in front of this list.
+            void splice_front(DecsList& ds);
+            /// Splice the content of \a ds at the back this list.
+            void splice_back(DecsList& ds);
 
-    /// \name Visitors entry point.
-    /// \{ */
-    /// Accept a const visitor \a v.
-    void accept(ConstVisitor& v) const override;
-    /// Accept a non-const visitor \a v.
-    void accept(Visitor& v) override;
-    /// \}
+            /// Construct a DecsList node.
+            DecsList(const Location& location);
 
-    /** \name Accessors.
-     ** \{ */
-    /// Return declarations.
-    const DecsList::decs_type& decs_get() const;
-    /// Return declarations.
-    DecsList::decs_type& decs_get();
-    /** \} */
+        public:
+            /**
+             * \name Ctor & dtor.
+             * \{ */
+            /// Construct a DecsList node.
+            DecsList(const Location& location, const DecsList::decs_type& decs);
+            /// Destroy a DecsList node.
+            virtual ~DecsList();
+            /** \} */
 
-  protected:
-    /// Declarations.
-    DecsList::decs_type decs_;
-  };
+            /**
+             * \name Visitors entry point.
+             * \{ */
+            /// Accept a const visitor \a v.
+            void accept(ConstVisitor& v) const override;
+            /// Accept a non-const visitor \a v.
+            void accept(Visitor& v) override;
+            /** \} */
+
+            /**
+             * \name Accessors.
+             * \{ */
+            /// Return declarations.
+            const DecsList::decs_type& decs_get() const;
+            /// Return declarations.
+            DecsList::decs_type& decs_get();
+            /** \} */
+
+        protected:
+            /// Declarations.
+            DecsList::decs_type decs_;
+    };
 
 } // namespace ast
 
