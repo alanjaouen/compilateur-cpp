@@ -33,9 +33,9 @@ AST:
 [x]     - record-exp.cc
 [x]     - record-exp.hh
 [x]     - record-exp.hxx
-        - record-ty.cc
-        - record-ty.hh
-        - record-ty.hxx
+[x]     - record-ty.cc
+[x]     - record-ty.hh
+[x]     - record-ty.hxx
 [x]     - seq-exp.cc
 [x]     - seq-exp.hh
 [x]     - seq-exp.hxx
