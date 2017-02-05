@@ -11,27 +11,27 @@ namespace ast
 {
 
 
-    inline const Var&
-    FieldVar::var_get() const
-    {
-        return *var_;
-    }
-    inline Var&
-    FieldVar::var_get()
-    {
-        return *var_;
-    }
+  inline const Var&
+  FieldVar::lvalue_get() const
+  {
+    return *lvalue_;
+  }
+  inline Var&
+  FieldVar::lvalue_get()
+  {
+    return *lvalue_;
+  }
 
-    inline const Field&
-    FieldVar::field_get() const
-    {
-        return *field_;
-    }
-    inline Field&
-    FieldVar::field_get()
-    {
-        return *field_;
-    }
+  inline const misc::symbol&
+  FieldVar::name_get() const
+  {
+    return *name_;
+  }
+  inline misc::symbol&
+  FieldVar::name_get()
+  {
+    return *name_;
+  }
 
 } // namespace ast
 
