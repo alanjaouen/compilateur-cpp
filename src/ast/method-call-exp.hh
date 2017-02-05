@@ -12,18 +12,36 @@
 namespace ast
 {
 
-  /** \class ast::MethodCallExp
-   ** \brief Method call.
-   **
-   ** A method call is \em not a function call in the strict sense
-   ** of object-oriented programming.  Inheritance is used as a
-   ** factoring tool here.
-   */
+    /** \class ast::MethodCallExp
+     ** \brief Method call.
+     **
+     ** A method call is \em not a function call in the strict sense
+     ** of object-oriented programming.  Inheritance is used as a
+     ** factoring tool here.
+     */
 
-  class MethodCallExp : public CallExp
-  {
-  // FIXME: Some code was deleted here.
-  };
+    class MethodCallExp : public CallExp
+    {
+        public:
+            /**
+             * \name Ctor & dtor.
+             * \{ */
+            /// Construct a MethodCallExp node.
+            MethodCallExp(const Location& location, misc::symbol* name,
+                          SeqExp::seq_type* seq);
+            /// Destroy a MethodCallExp node.
+            virtual ~MethodCallExp();
+            /** \} */
+
+            /**
+             * \name Visitors entry point.
+             * \{ */
+            /// Accept a const visitor \a v.
+            void accept(ConstVisitor& v) const override;
+            /// Accept a non-const visitor \a v.
+            void accept(Visitor& v) override;
+            /** \} */
+    };
 
 } // namespace ast
 
