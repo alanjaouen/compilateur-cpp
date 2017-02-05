@@ -7,7 +7,7 @@
 %define api.token.constructor
 %skeleton "glr.cc" // The grammar is lalr1
 %glr-parser
-%expect 0           // No shift/reduce
+%expect 1           // No shift/reduce
 %expect-rr 0
 %define parse.error verbose
 %define parse.trace
@@ -184,8 +184,8 @@ VAR          "var"
 WHILE        "while"
 EOF 0        "end of file"
 EXP "_exp"
-LVALUE "_LVALUE"
-NAMETY "_NAMETY"
+LVALUE "_lvalue"
+NAMETY "_namety"
 
 %type <ast::Exp*> exp
 %type <ast::DecsList*> decs
@@ -237,6 +237,8 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | "let" decs "in" exps  "end"
 
 | "_cast" "(" exp "," ty ")"
+| "_exp" "(" INT ")"
+
 ;
 
 array: ID "=" exp arrayrec
@@ -255,13 +257,15 @@ function_param: %empty
 ;
 
 lvalue:
-       ID
+ID
 |       lvalue_dot
 |       lvalue_bracket
+|       "_cast" "(" lvalue "," ty ")"
+| "_lvalue" "(" INT ")"
 ;
 
 lvalue_dot:
-       lvalue_dot "." ID
+lvalue_dot "." ID
 |       lvalue_bracket "." ID
 |       ID "." ID
 ;
@@ -317,7 +321,7 @@ classfields vardec
 | %empty               //{ $$ = new ast::DecsList(@$); }
 ;
 ty:
-ID
+type_id
 | "{" tyfields "}"
 | "array" "of" ID
 | "class" dec_class_def "{" classfields "}"
@@ -329,6 +333,11 @@ ID ":" ID tyfilelds_rec
 tyfilelds_rec:
 "," ID ":" ID tyfilelds_rec
 | %empty              // { $$ = new ast::DecsList(@$); }
+;
+
+type_id:
+ID
+| "_namety" "(" INT ")"
 ;
 op_rule:
 exp op
