@@ -13,42 +13,55 @@
 namespace ast
 {
 
-  /// LetExp.
-  class LetExp : public Exp
-  {
-    /** \name Ctor & dtor.
-     ** \{ */
-    /// Construct a LetExp node.
-    LetExp(const Location& location, DecsList* decs, SeqExp* seq);
-    /// Destroy a LetExp node.
-    virtual ~LetExp();
-    /** \} */
 
-    /// \name Visitors entry point.
-    /// \{ */
-    /// Accept a const visitor \a v.
-    void accept(ConstVisitor& v) const override;
-    /// Accept a non-const visitor \a v.
-    void accept(Visitor& v) override;
-    /// \}
+    /**
+     * class ast::LetExp.
+     * \brief FIXME
+     *
+     * FIXME
+     */
 
-    /** \name Accessors.
-     ** \{ */
-    ///Return decs_.
-    const DecsList & decs_get() const;
-    ///Return decs_.
-    DecsList& decs_get();
-    ///Return seq_.
-    const SeqExp& seq_get() const;
-    ///Return seq_.
-    SeqExp& seq_get();
-    /** \} */
+    /// LetExp.
+    class LetExp : public Exp
+    {
+        public:
+            /**
+             * \name Ctor & dtor.
+             * \{ */
+            /// Construct a LetExp node.
+            LetExp(const Location& location, DecsList* decs, SeqExp* seq);
+            /// Destroy a LetExp node.
+            virtual ~LetExp();
+            /** \} */
 
-  protected:
-    DecsList* decs_;
-    SeqExp* seq_;
+            /**
+             * \name Visitors entry point.
+             * \{ */
+            /// Accept a const visitor \a v.
+            void accept(ConstVisitor& v) const override;
+            /// Accept a non-const visitor \a v.
+            void accept(Visitor& v) override;
+            /** \} */
 
-  };
+            /**
+             * \name Accessors.
+             * \{ */
+            /// Return the list declaration.
+            const DecsList& decs_get() const;
+            /// Return the list declaration.
+            DecsList& decs_get();
+            /// Return the sequence of expression.
+            const SeqExp& seq_get() const;
+            /// Return the sequence of expression.
+            SeqExp& seq_get();
+            /** \} */
+
+        protected:
+            /// The list declaration.
+            DecsList* decs_;
+            /// The sequence of expression.
+            SeqExp* seq_;
+    };
 
 } // namespace ast
 
