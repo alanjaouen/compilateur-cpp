@@ -76,8 +76,8 @@ namespace ast
   void
   GenDefaultVisitor<Const>::operator()(const_t<CallExp>& e)
   {
-      e.exp_get().accept(*this);
-      e.fun_get().accept(*this);
+    //e.exp_get().accept(*this);
+    //e.fun_get().accept(*this);
   }
 
   template <template <typename> class Const>
@@ -132,7 +132,6 @@ namespace ast
     e.hi_get().accept(*this);
     e.body_get().accept(*this);
   }
-
   template <template <typename> class Const>
   void
   GenDefaultVisitor<Const>::operator()(const_t<BreakExp>&)
