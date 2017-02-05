@@ -11,39 +11,62 @@
 namespace ast
 {
 
-  /// ArrayExp.
-  class ArrayExp : public Exp
-  {
-  public:
-    ArrayExp(const Location& location, NameTy* type, Exp* l_exp, Exp* r_exp);
-    virtual ~ArrayExp();
 
-    /// \name Visitors entry point.
-    /// \{ */
-    /// Accept a const visitor \a v.
-    void accept(ConstVisitor& v) const override;
-    /// Accept a non-const visitor \a v.
-    void accept(Visitor& v) override;
-    /// \}
+    /**
+     * \class ast::ArrayExp.
+     * \brief FIXME
+     *
+     * FIXME
+     */
 
-    /** \name Accessors.
-     ** \{ */
-    /// Return the name of the type.
-    const NameTy& type_get() const;
-    /// Set the name of the type.
-    NameTy& type_get();
-    ///Return l_exp
-    const Exp& l_exp_get() const;
-    Exp& l_exp_get();
-    const Exp& r_exp_get() const;
-    Exp& r_exp_get();
-    /** \} */
+    /// ArrayExp.
+    class ArrayExp : public Exp
+    {
+        public:
+            /**
+             * \name Ctor & dtor.
+             * \{ */
+            /// Construct a ArrayExp node.
+            ArrayExp(const Location& location, NameTy* type,
+                     Exp* l_exp, Exp* r_exp);
+            /// Destroy a ArrayExp node.
+            virtual ~ArrayExp();
+            /** \} */
 
-  protected:
-    NameTy* type_;
-    Exp* l_exp_;
-    Exp* r_exp_;
-  };
+            /**
+             * \name Visitors entry point.
+             * \{ */
+            /// Accept a const visitor \a v.
+            void accept(ConstVisitor& v) const override;
+            /// Accept a non-const visitor \a v.
+            void accept(Visitor& v) override;
+            /** \} */
+
+            /**
+             * \name Accessors.
+             * \{ */
+            /// Return the name of the type.
+            const NameTy& type_get() const;
+            /// Return the name of the type.
+            NameTy& type_get();
+            /// Return the left expression.
+            const Exp& l_exp_get() const;
+            /// Return the left expression.
+            Exp& l_exp_get();
+            /// Return the right expression.
+            const Exp& r_exp_get() const;
+            /// Return the right expression.
+            Exp& r_exp_get();
+            /** \} */
+
+        protected:
+            /// The name of the type.
+            NameTy* type_;
+            /// The left expression.
+            Exp* l_exp_;
+            /// The right expression.
+            Exp* r_exp_;
+    };
 
 } // namespace ast
 
