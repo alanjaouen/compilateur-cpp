@@ -10,28 +10,34 @@
 namespace ast
 {
 
+  /// Return the call expression.
+  inline const SeqExp::seq_type&
+  CallExp::seq_get() const
+  {
+    return *seq_;
+  }
 
-    inline const Exp&
-    CallExp::exp_get() const
-    {
-        return *exp_;
-    }
-    inline Exp&
-    CallExp::exp_get()
-    {
-        return *exp_;
-    }
-    inline const FunctionDec&
-    CallExp::fun_get() const
-    {
-        return *fun_;
-    }
-    inline FunctionDec&
-    CallExp::fun_get()
-    {
-        return *fun_;
-    }
+  /// Return the call expression.
+  inline SeqExp::seq_type&
+  CallExp::seq_get()
+  {
+    return *seq_;
+  }
 
+  /// Return the function name.
+  inline const misc::symbol*
+  CallExp::name_get() const
+  {
+    return name_;
+  }
+
+  /// Return the function name.
+  inline misc::symbol*
+  CallExp::name_get()
+  {
+    return name_;
+  }
+  /** \} */
 
 } // namespace ast
 

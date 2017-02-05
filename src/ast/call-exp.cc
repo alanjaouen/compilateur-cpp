@@ -10,7 +10,30 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+  CallExp::CallExp(const Location& location, misc::symbol* name,
+                   SeqExp::seq_type* seq)
+    : Exp(location)
+    , name_(name)
+    , seq_(seq)
+  {}
+
+  CallExp::~CallExp()
+  {
+    delete seq_;
+    delete name_;
+  }
+
+  void
+  CallExp::accept(ConstVisitor& v) const
+  {
+    v(*this);
+  }
+
+  void
+  CallExp::accept(Visitor& v)
+  {
+    v(*this);
+  }
 
 } // namespace ast
 
