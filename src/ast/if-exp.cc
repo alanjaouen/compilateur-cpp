@@ -8,7 +8,7 @@
 
 namespace ast
 {
-  IfExp::IfExp(Location& location, Exp* test, Exp* Bthen, Exp* Belse)
+  IfExp::IfExp(const Location& location, Exp* test, Exp* Bthen, Exp* Belse)
     : Exp(location)
     , test_(test)
     , Bthen_(Bthen)

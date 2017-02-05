@@ -45,9 +45,9 @@ namespace ast
              * \name Accessors.
              * \{ */
             /// Return the record expression.
-            const Exp& exp_get() const;
+            const NameTy& id_get() const;
             /// Return the record expression.
-            Exp& exp_get();
+            NameTy& id_get();
             /// Return the initiated field.
             const FieldInits& fini_get() const;
             /// Return the initiated field.

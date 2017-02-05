@@ -76,8 +76,8 @@ namespace ast
   void
   GenDefaultVisitor<Const>::operator()(const_t<CallExp>& e)
   {
-      e.seq_get().accept(*this);
-      e.name_get().accept(*this);
+      // e.seq_get().accept(*this);
+      // e.name_get().accept(*this);
   }
 
   template <template <typename> class Const>
@@ -92,15 +92,15 @@ namespace ast
   void
   GenDefaultVisitor<Const>::operator()(const_t<RecordExp>& e)
   {
-      e.exp_get().accept(*this);
-      e.fini_get().accept(*this);
+      // e.exp_get().accept(*this);
+  //     e.fini_get().accept(*this);
   }
 
   template <template <typename> class Const>
   void
   GenDefaultVisitor<Const>::operator()(const_t<SeqExp>& e)
   {
-      e.seq_get().accept(*this);
+      // e.seq_get().accept(*this);
   }
 
   template <template <typename> class Const>

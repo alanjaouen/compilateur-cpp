@@ -9,7 +9,7 @@
 
 namespace ast
 {
-  RecordExp::RecordExp(Location& location, NameTy* id, FieldInits* vect)
+  RecordExp::RecordExp(const Location& location, NameTy* id, FieldInits* vect)
     : Exp(location)
     , id_(id)
     , vect_(vect)

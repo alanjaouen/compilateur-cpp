@@ -11,15 +11,15 @@ namespace ast
 {
 
 
-    inline const Exp&
-    RecordExp::exp_get() const
+    inline const NameTy&
+    RecordExp::id_get() const
     {
-        return *exp_;
+        return *id_;
     }
-    inline Exp&
-    RecordExp::exp_get()
+    inline NameTy&
+    RecordExp::id_get()
     {
-        return *exp_;
+        return *id_;
     }
     inline const FieldInits&
     RecordExp::fini_get() const
