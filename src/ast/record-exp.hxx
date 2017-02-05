@@ -10,7 +10,28 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+
+    inline const Exp&
+    RecordExp::exp_get() const
+    {
+        return *exp_;
+    }
+    inline Exp&
+    RecordExp::exp_get()
+    {
+        return *exp_;
+    }
+    inline const FieldInits&
+    RecordExp::fini_get() const
+    {
+        return *vect_;
+    }
+    inline FieldInits&
+    RecordExp::fini_get()
+    {
+        return *vect_;
+    }
+
 
 } // namespace ast
 
