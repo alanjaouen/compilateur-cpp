@@ -8,14 +8,22 @@
 #include <ast/exp.hh>
 #include <ast/field-init.hh>
 #include <ast/name-ty.hh>
-
+#include <ast/any-decs.hh>
 namespace ast
 {
 
   /// RecordExp.
   class RecordExp : public Exp
   {
-  // FIXME: Some code was deleted here.
+
+  public:
+    RecordExp(Location& location, FieldInits* vect);
+    ~RecordExp();
+    void accept(Visitor& v);
+    void accept(ConstVisitor& v) const;
+    
+  private:
+    FieldInits *vect_;
   };
 
 } // namespace ast

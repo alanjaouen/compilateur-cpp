@@ -9,8 +9,22 @@
 
 namespace ast
 {
-
-  // FIXME: Some code was deleted here.
-
+  RecordExp::RecordExp(Location& location, FieldInits* vect)
+    : Exp(location)
+    , vect_(vect)
+  {}
+  RecordExp::~RecordExp()
+  {
+    // delete vect_;
+  }
+  void RecordExp::accept(Visitor& v)
+  {
+    v(*this);
+  }
+  void RecordExp::accept(ConstVisitor& v) const
+  {
+    v(*this);
+  }
+    
 } // namespace ast
 
