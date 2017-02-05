@@ -11,44 +11,61 @@
 namespace ast
 {
 
-  /// RecordTy.
-  class RecordTy : public Ty
-  {
-  public:
-    using field_list = std::list<Field*>;
 
-    RecordTy(const Location& location);
-    virtual ~RecordTy();
+    /**
+     * \class ast::RecordTy
+     * \brief FIXME
+     *
+     * FIXME
+     */
 
-    /// \name Visitors entry point.
-    /// \{ */
-    /// Accept a const visitor \a v.
-    void accept(ConstVisitor& v) const override;
-    /// Accept a non-const visitor \a v.
-    void accept(Visitor& v) override;
-    /// \}
+    /// RecordTy.
+    class RecordTy : public Ty
+    {
+        public:
+            using field_list = std::list<Field*>;
 
-    /// Prepend \a d.
-    void push_front(Field* d);
-    /// Append \a d.
-    void emplace_back(Field* d);
+            /**
+             * \name Ctor & dtor.
+             * \{ */
+            /// Construct a RecordTy node.
+            RecordTy(const Location& location);
+            /// Destroy a RecordTy node.
+            virtual ~RecordTy();
+            /** \} */
 
-    /// Splice the content of \a ds in front of this list.
-    void splice_front(RecordTy& rs);
-    /// Splice the content of \a ds at the back this list.
-    void splice_back(RecordTy& rs);
+            /**
+             * \name Visitors entry point.
+             * \{ */
+            /// Accept a const visitor \a v.
+            void accept(ConstVisitor& v) const override;
+            /// Accept a non-const visitor \a v.
+            void accept(Visitor& v) override;
+            /** \} */
 
-    /** \name Accessors.
-     ** \{ */
-    /// Return declarations.
-    const RecordTy::field_list& recs_get() const;
-    /// Return declarations.
-    RecordTy::field_list& recs_get();
-    /** \} */
+            /// Prepend \a d.
+            void push_front(Field* d);
+            /// Append \a d.
+            void emplace_back(Field* d);
 
-  protected:
-    RecordTy::field_list recs_;
-  };
+            /// Splice the content of \a ds in front of this list.
+            void splice_front(RecordTy& rs);
+            /// Splice the content of \a ds at the back this list.
+            void splice_back(RecordTy& rs);
+
+            /**
+             * \name Accessors.
+             * \{ */
+            /// Return declarations.
+            const RecordTy::field_list& recs_get() const;
+            /// Return declarations.
+            RecordTy::field_list& recs_get();
+            /** \} */
+
+        protected:
+            /// The declarations.
+            RecordTy::field_list recs_;
+    };
 
 } // namespace ast
 
