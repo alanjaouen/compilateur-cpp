@@ -12,9 +12,9 @@ AST:
 [x]     - call-exp.cc
 [x]     - call-exp.hh
 [x]     - call-exp.hxx
-        - field-var.cc
-        - field-var.hh
-        - field-var.hxx
+[x]     - field-var.cc
+[x]     - field-var.hh
+[x]     - field-var.hxx
 [x]     - if-exp.cc
 [x]     - if-exp.hh
 [x]     - if-exp.hxx
