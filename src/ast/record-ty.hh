@@ -17,7 +17,7 @@ namespace ast
   public:
     using field_list = std::list<Field*>;
 
-    RecordTy(const Location& location, );
+    RecordTy(const Location& location);
     virtual ~RecordTy();
 
     /// \name Visitors entry point.
@@ -47,7 +47,7 @@ namespace ast
     /** \} */
 
   protected:
-    RecrodTy::field_list recs_;
+    RecordTy::field_list recs_;
   };
 
 } // namespace ast

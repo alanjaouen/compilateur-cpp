@@ -12,12 +12,14 @@ namespace ast
   /** \name Accessors.
    ** \{ */
   /// Return declarations.
-  inline const RecordTy::field_list& rrecs_get() const
+  inline const RecordTy::field_list&
+  RecordTy::recs_get() const
   {
     return recs_;
   }
   /// Return declarations.
-  inline RecordTy::field_list& recs_get()
+  inline RecordTy::field_list&
+  RecordTy::recs_get()
   {
     return recs_;
   }
