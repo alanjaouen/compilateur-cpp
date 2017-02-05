@@ -9,8 +9,9 @@
 
 namespace ast
 {
-  RecordExp::RecordExp(Location& location, FieldInits* vect)
+  RecordExp::RecordExp(Location& location, NameTy* id, FieldInits* vect)
     : Exp(location)
+    , id_(id)
     , vect_(vect)
   {}
   RecordExp::~RecordExp()

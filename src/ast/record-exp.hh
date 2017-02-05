@@ -27,7 +27,7 @@ namespace ast
              * \name Ctor & dtor.
              * \{ */
             /// Construct a RecordExp node.
-            RecordExp(const Location& location, Exp* exp, FieldInits* vect);
+      RecordExp(const Location& location, NameTy* id, FieldInits* vect);
             /// Destroy a RecordExp node.
             virtual ~RecordExp();
             /** \} */
@@ -56,7 +56,7 @@ namespace ast
 
         protected:
             /// The record expression.
-            Exp* exp_;
+            NameTy* id_;
             /// The initiated field.
             FieldInits *vect_;
     };
