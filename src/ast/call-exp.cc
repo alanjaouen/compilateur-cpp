@@ -13,8 +13,8 @@ namespace ast
   CallExp::CallExp(const Location& location, misc::symbol* name,
                    SeqExp::seq_type* seq)
     : Exp(location)
-    , name_(name)
     , seq_(seq)
+    , name_(name)
   {}
 
   CallExp::~CallExp()
