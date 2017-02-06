@@ -27,7 +27,8 @@ namespace ast
      * \name Ctor & dtor.
      * \{ */
     /// Construct a MethodCallExp node.
-    MethodCallExp(const Location& location, Var::Var* lvalue);
+    MethodCallExp(const Location& location, misc::symbol* name,
+                  SeqExp::seq_type* seq, Var* lvalue);
     /// Destroy a MethodCallExp node.
     virtual ~MethodCallExp();
     /** \} */
@@ -45,14 +46,14 @@ namespace ast
      * \name Accessors.
      * \{ */
     /// Return the call expression.
-    const Var::Var& lvalue_get() const;
+    const Var& lvalue_get() const;
     /// Return the call expression.
-    Var::Var& lvalue_get();
+    Var& lvalue_get();
     /** \} */
 
 
   protected:
-    Var::Var* lvalue_;
+    Var* lvalue_;
   };
 
 } // namespace ast
