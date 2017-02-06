@@ -9,18 +9,31 @@
 namespace ast
 {
 
-  MethodCallExp::MethodCallExp(const Location& location, Var::Var* lvalue);
+  MethodCallExp::MethodCallExp(const Location& location, misc::symbol* name,
+                               SeqExp::seq_type* seq, Var* lvalue)
+    : CallExp(location, name, seq)
+    , lvalue_(lvalue)
+  {}
   /// Destroy a MethodCallExp node.
-  virtual MethodCallExp::~MethodCallExp();
+  MethodCallExp::~MethodCallExp()
+  {
+    delete lvalue_;
+  }
   /** \} */
 
   /**
    * \name Visitors entry point.
    * \{ */
   /// Accept a const visitor \a v.
-  void MethodCallExp::accept(ConstVisitor& v) const override;
+  void MethodCallExp::accept(ConstVisitor& v) const
+  {
+    v(*this);
+  }
   /// Accept a non-const visitor \a v.
-  void MethodCallExp::accept(Visitor& v) override;
+  void MethodCallExp::accept(Visitor& v)
+  {
+    v(*this);
+  }
 
 } // namespace ast
 
