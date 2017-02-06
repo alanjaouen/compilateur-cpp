@@ -38,7 +38,7 @@ namespace ast
         void
         GenObjectVisitor<Const>::operator()(const_t<MethodDecs>& e)
         {
-            e.decs_get().accept(*this);
+            e.decs_get();
         }
 
     template <template <typename> class Const>
@@ -46,16 +46,16 @@ namespace ast
         GenObjectVisitor<Const>::operator()(const_t<MethodDec>& e)
         {
             e.formals_get().accept(*this);
-            e.result_get().accept(*this);
-            e.body_get().accept(*this);
+            e.result_get()->accept(*this);
+            e.body_get()->accept(*this);
         }
 
     template <template <typename> class Const>
         void
         GenObjectVisitor<Const>::operator()(const_t<MethodCallExp>& e)
         {
-            e.seq_get().accept(*this);
-            e.name_get().accept(*this);
+            e.seq_get();
+            e.name_get();
         }
 
     template <template <typename> class Const>
