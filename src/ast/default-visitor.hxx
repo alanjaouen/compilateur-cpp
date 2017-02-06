@@ -38,7 +38,7 @@ namespace ast
         GenDefaultVisitor<Const>::operator()(const_t<FieldVar>& e)
         {
             e.lvalue_get().accept(*this);
-            e.name_get().accept(*this);
+            e.name_get();
         }
 
     template <template <typename> class Const>
@@ -76,8 +76,8 @@ namespace ast
         void
         GenDefaultVisitor<Const>::operator()(const_t<CallExp>& e)
         {
-            e.seq_get().accept(*this);
-            e.name_get().accept(*this);
+            e.seq_get();
+            e.name_get();
         }
 
     template <template <typename> class Const>
@@ -100,7 +100,7 @@ namespace ast
         void
         GenDefaultVisitor<Const>::operator()(const_t<SeqExp>& e)
         {
-            e.seq_get().accept(*this);
+            e.seq_get();
         }
 
     template <template <typename> class Const>
@@ -146,7 +146,7 @@ namespace ast
         GenDefaultVisitor<Const>::operator()(const_t<LetExp>& e)
         {
             e.decs_get().accept(*this);
-            e.seq_get().accept(*this);
+            e.seq_get();
         }
 
     template <template <typename> class Const>
@@ -178,7 +178,7 @@ namespace ast
         void
         GenDefaultVisitor<Const>::operator()(const_t<DecsList>& e)
         {
-            e.decs_get().accept(*this);
+            e.decs_get();
         }
 
     template <template <typename> class Const>
@@ -238,8 +238,8 @@ namespace ast
         GenDefaultVisitor<Const>::operator()(const_t<FunctionDec>& e)
         {
             e.formals_get().accept(*this);
-            e.result_get().accept(*this);
-            e.body_get().accept(*this);
+            e.result_get()->accept(*this);
+            e.body_get()->accept(*this);
         }
 
     template <template <typename> class Const>
@@ -266,7 +266,7 @@ namespace ast
         void
         GenDefaultVisitor<Const>::operator()(const_t<RecordTy>& e)
         {
-            e.recs_get().accept(*this);
+            e.recs_get();
         }
 
     template <template <typename> class Const>
