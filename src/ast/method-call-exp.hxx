@@ -10,7 +10,17 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+    inline const Var::Var&
+    MethodCallExp::lvalue_get() const
+    {
+      return *lvalue_;
+    }
+
+    inline Var::Var&
+    MethodCallExp::lvalue_get()
+    {
+      return *lvalue_;
+    }
 
 } // namespace ast
 
