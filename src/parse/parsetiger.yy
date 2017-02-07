@@ -186,12 +186,6 @@ EOF 0        "end of file"
 EXP "_exp"
 LVALUE "_lvalue"
 NAMETY "_namety"
-
-%type <ast::Exp*> exp
-%type <ast::DecsList*> decs
-%type <ast::NameTy*> type_id
-%type <ast::exps_type*> exps
-%type <ast::Var*> lvalue
 %left "|"
 %left "&"
 %left "+" "-"
@@ -204,6 +198,17 @@ NAMETY "_namety"
 %nonassoc ASSIGN
   // FIXME: Some code was deleted here (More %types).
 
+
+%type <ast::Exp*> exp
+%type <ast::DecsList*> decs
+%type <ast::NameTy*> type_id
+%type <ast::exps_type*> exps
+%type <ast::Var*> lvalue
+%type <ast::Dec*> dec
+%type <ast::Ty*> ty
+ //%type <misc::symbol> type_id
+%type <ast::NameTy*> type_dec
+%type <ast::VarDec*> vardec
 %start program
 
 %%
@@ -222,47 +227,43 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | type_id "[" exp "]" "of" exp { $$ = new ast::ArrayExp(@$, $1, $3, $6);}
 | type_id "{" array "}" {}
 | "new" type_id
-| lvalue { $$ = new ast::Var(@$);}
+| lvalue { }
 | ID "(" function ")"
 
 | lvalue_dot "(" function ")"
-| "-" exp
+| "-" exp {$$ = new ast::OpExp(@$, new ast::IntExp(@$, 0), ast::OpExp::Oper::sub, $2);}
 | op_rule
-| "(" exps ")"
+| "(" exps ")" //{$$ = $2;}
 | lvalue ":=" exp {$$ = new ast::AssignExp(@$, $1, $3);}
 
 | "if" exp "then" exp "else" exp {$$ = new ast::IfExp(@$, $2, $4, $6); }
 | "if" exp "then" exp {$$ = new ast::IfExp(@$, $2, $4); } 
 | "while" exp "do" exp {$$ = new ast::WhileExp(@$, $2, $4);}
-| "for" ID ":=" exp "to" exp "do" exp { $$ = new ast::ForExp(@$, new ast::VarDec(@2, $2, nullptr, $4), $6, $8)}
+| "for" ID ":=" exp "to" exp "do" exp { $$ = new ast::ForExp(@$, new ast::VarDec(@2, $2, nullptr, $4), $6, $8);}
 | "break" { $$ = new ast::BreakExp(@$);}
 | "let" decs "in" exps  "end" {$$ = new ast::LetExp(@$, $2, $4); }
 
-| "_cast" "(" exp "," ty ")"
+| "_cast" "(" exp "," ty ")" { $$ = new ast::CastExp(@$, $3, $5);}
 | "_exp" "(" INT ")"
 
 ;
 
-array: ID "=" exp arrayrec
+array: ID "=" exp
+| ID "=" exp ","  array
 | %empty //               { $$ = new ast::DecsList(@$); }
 ;
-arrayrec: "," ID "=" exp arrayrec
-| %empty   //            { $$ = new ast::DecsList(@$); }
 
-;
-function: exp function_param
+function: exp 
+| exp "," function
 | %empty     //          { $$ = new ast::DecsList(@$); }
 
-;
-function_param: %empty
-|"," exp function_param
 ;
 
 lvalue:
 ID
 | lvalue_dot
 | lvalue_bracket
-| "_cast" "(" lvalue "," ty ")"
+| "_cast" "(" lvalue "," ty ")" {$$ = new ast::CastVar(@$, $3, $5);}
 | "_lvalue" "(" INT ")"
 ;
 
@@ -278,14 +279,11 @@ lvalue_bracket:
 |       ID "[" exp "]"
 ;
 
-exps: exp exps_rec
+exps: exp {$$ = new ast::exps_type(); $$->insert($$->begin(), $1); }
+| exp ";" exps {}
 | %empty       //        { $$ = new ast::DecsList(@$); }
 ;
 
-exps_rec: ";" exps
-| %empty         //      { $$ = new ast::DecsList(@$); }
-
-;
   // FIXME: Some code was deleted here (More rules).
 
 /*---------------.
@@ -304,10 +302,10 @@ dec:
 | vardec
 | "function" ID "(" vardecs ")" type_dec "="exp
 | "primitive" ID "(" vardecs ")" type_dec
-| "import" STRING
+| "import" STRING //{$$ = tp.parse_import($2, @2);}
 ;
 type_dec:
-":" type_id
+":" type_id { $$ = $2; }
 | %empty             //  { $$ = new ast::DecsList(@$); }
 ;
 dec_class_def:
@@ -315,7 +313,7 @@ dec_class_def:
 | %empty               //{ $$ = new ast::DecsList(@$); }
 ;
 vardec:
-"var" ID type_dec ":=" exp
+"var" ID type_dec ":=" exp { $$ = new ast::VarDec(@$, $2, $3, $5); }
 ;
 classfields:
 classfields vardec
@@ -332,19 +330,19 @@ type_id
 //use field
 tyfields:
 ID ":" type_id 
-|"," ID ":" type_id tyfields
+|ID ":" type_id "," tyfields
 | %empty              // { $$ = new ast::DecsList(@$); }
 ;
 // use vardec
 vardecs:
 ID ":" type_id 
-|"," ID ":" type_id vardecs
+|ID ":" type_id "," vardecs 
 | %empty              // { $$ = new ast::DecsList(@$); }
 ;
 
 
 type_id:
-ID
+ID {$$ = new ast::NameTy(@$, $1);}
 | "_namety" "(" INT ")"
 ;
 op_rule:

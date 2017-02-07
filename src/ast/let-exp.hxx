@@ -22,16 +22,16 @@ namespace ast
     return *decs_;
   }
 
-  inline const SeqExp&
+  inline const exps_type&
   LetExp::seq_get() const
   {
-    return *seq_;
+    return *vect_;
   }
 
-  inline SeqExp&
+  inline exps_type&
   LetExp::seq_get()
   {
-    return *seq_;
+    return *vect_;
   }
 
 } // namespace ast
