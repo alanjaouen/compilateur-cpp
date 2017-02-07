@@ -38,6 +38,10 @@ namespace ast
             void operator()(const ForExp& e) override;
             void operator()(const VarDec& e) override;
             void operator()(const NameTy& e) override;
+            void operator()(const IntExp& e) override;
+            void operator()(const ArrayExp& e) override;
+            void operator()(const ArrayTy& e) override;
+            void operator()(const ClassTy& e) override;
             // FIXME: Some code was deleted here.
             /// \}
 

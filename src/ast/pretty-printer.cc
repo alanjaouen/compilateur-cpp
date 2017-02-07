@@ -76,7 +76,7 @@ namespace ast
         {
             ostr_ << "(if " << e.test_get() << misc::incindent
                 << "then " << e.then_get();
-            if (e.else_get() != nullptr)
+            if (e.else_get() != nullptr) // void!
                 ostr_ << misc::incindent
                     << "else " << e.else_get() << ')' << misc::decindent;
             else
@@ -96,8 +96,10 @@ namespace ast
     void
         PrettyPrinter::operator()(const FunctionDec& e)
         {
-            ostr_ << "function " << e.formals_get() << ':' << e.result_get()
-                    << '=' << misc::incindent
+            ostr_ << "function " << "NAME" << e.formals_get();
+            if (e.result_get() != nullptr)
+                ostr_ << " : " << e.result_get();
+            ostr_ << " = " << misc::incindent
                 << '(' << e.body_get() << ')' << misc::decindent;
         }
 
@@ -112,19 +114,49 @@ namespace ast
         {
             ostr_ << "(for " << e.vardec_get() << " to " << e.hi_get() << " do"
                     << misc::incindent
-                << e.body_get() << ");" << misc::decindent;
+                << e.body_get() << ")" << misc::decindent;
         }
 
     void
         PrettyPrinter::operator()(const VarDec& e)
         {
-            ostr_ << e.type_name_get() << " : " << e.init_get();
+            ostr_ << "var " << "NAME" << " : " << e.type_name_get() << " := "
+                << e.init_get();
         }
 
     void
         PrettyPrinter::operator()(const NameTy& e)
         {
             ostr_ << e.name_get();
+        }
+
+    void
+        PrettyPrinter::operator()(const IntExp& e)
+        {
+            ostr_ << e.value_get();
+        }
+
+    // FIXME
+    /*void
+        PrettyPrinter::operator()(const ArrayExp& e)
+        {
+            ostr_ << e.l_exp_get() << " := " << e.r_exp_get() << ';'
+                    << misc::decindent;
+        }
+
+    void
+        PrettyPrinter::operator()(const ArrayTy& e)
+        {
+            ostr_ << "type " << "NAME" << " = array of " << e.base_type_get()
+                    << '\n';
+        }*/
+
+    void
+        PrettyPrinter::operator()(const ClassTy& e)
+        {
+            ostr_ << "type " << "NAME" << " = class [ extends " << e.super_get()
+                << " ]\n{" << misc::incindent
+                << e.decs_get() << misc::decindent << "}";
         }
 
     // FIXME: Some code was deleted here.
