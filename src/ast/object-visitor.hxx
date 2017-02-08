@@ -38,14 +38,21 @@ namespace ast
         void
         GenObjectVisitor<Const>::operator()(const_t<MethodDecs>& e)
         {
-            e.accept(*this);
+            for (auto& method : e.decs_get())
+            {
+                for (auto& var : method->formals_get().decs_get())
+                    var->accept(*this);
+                method->result_get()->accept(*this);
+                method->body_get()->accept(*this);
+            }
         }
 
     template <template <typename> class Const>
         void
         GenObjectVisitor<Const>::operator()(const_t<MethodDec>& e)
         {
-            e.formals_get().accept(*this);
+            for (auto& var : e.formals_get().decs_get())
+                var->accept(*this);
             e.result_get()->accept(*this);
             e.body_get()->accept(*this);
         }
@@ -54,7 +61,9 @@ namespace ast
         void
         GenObjectVisitor<Const>::operator()(const_t<MethodCallExp>& e)
         {
-            e.accept(*this);
+            e.lvalue_get().accept(*this);
+            for (auto& exp : e.seq_get())
+                exp->accept(*this);
         }
 
     template <template <typename> class Const>
