@@ -29,8 +29,8 @@ namespace ast
              * \name Ctor & dtor.
              * \{ */
             /// Construct a CallExp node.
-            CallExp(const Location& location, misc::symbol* name,
-                    SeqExp::seq_type* seq);
+            CallExp(const Location& location, misc::symbol& name,
+                    exps_type* seq);
             /// Destroy a CallExp node.
             virtual ~CallExp();
             /** \} */
@@ -48,20 +48,20 @@ namespace ast
              * \name Accessors.
              * \{ */
             /// Return the call expression.
-            const SeqExp::seq_type& seq_get() const;
+            const exps_type& seq_get() const;
             /// Return the call expression.
-            SeqExp::seq_type& seq_get();
+            exps_type& seq_get();
             /// Return the function name.
-            const misc::symbol* name_get() const;
+            const misc::symbol& name_get() const;
             /// Return the function name.
-            misc::symbol* name_get();
+            misc::symbol& name_get();
             /** \} */
 
         protected:
             /// The call expression.
-            SeqExp::seq_type* seq_;
+            exps_type* seq_;
             //The function name.
-            misc::symbol* name_;
+            misc::symbol& name_;
     };
 
 } // namespace ast

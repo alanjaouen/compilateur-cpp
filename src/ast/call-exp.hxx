@@ -11,28 +11,28 @@ namespace ast
 {
 
   /// Return the call expression.
-  inline const SeqExp::seq_type&
+  inline const exps_type&
   CallExp::seq_get() const
   {
     return *seq_;
   }
 
   /// Return the call expression.
-  inline SeqExp::seq_type&
+  inline exps_type&
   CallExp::seq_get()
   {
     return *seq_;
   }
 
   /// Return the function name.
-  inline const misc::symbol*
+  inline const misc::symbol&
   CallExp::name_get() const
   {
     return name_;
   }
 
   /// Return the function name.
-  inline misc::symbol*
+  inline misc::symbol&
   CallExp::name_get()
   {
     return name_;

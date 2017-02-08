@@ -212,7 +212,7 @@ NAMETY "_namety"
 %type <ast::NameTy*> type_dec
 %type <ast::VarDec*> vardec
 %type <ast::fieldinits_type*> array
-
+%type <ast::exps_type*> function
 %start program
 
 %%
@@ -230,9 +230,9 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | STRING { $$ = new ast::StringExp(@$, $1); }
 | type_id "[" exp "]" "of" exp { $$ = new ast::ArrayExp(@$, $1, $3, $6);}
 | type_id "{" array "}" { $$ = new ast::RecordExp(@$, $1, $3);}
-| "new" type_id
+| "new" type_id {}
 | lvalue { }
-| ID "(" function ")"
+| ID "(" function ")" { $$ = new ast::CallExp(@$, $1, $3);}
 
 | lvalue_dot "(" function ")"
 | "-" exp {$$ = new ast::OpExp(@$, new ast::IntExp(@$, 0), ast::OpExp::Oper::sub, $2);}
@@ -257,9 +257,9 @@ array: ID "=" exp { $$ =  new ast::fieldinits_type(); $$->insert($$->begin(), ne
 | %empty   { $$ = new ast::fieldinits_type(); }
 ;
 
-function: exp 
-| exp "," function
-| %empty     //          { $$ = new ast::DecsList(@$); }
+function: exp {$$ = new ast::exps_type(); $$->insert($$->begin(), $1);}
+| exp "," function { $3->insert($3->begin(), $1);}
+| %empty  { $$ = new ast::exps_type(); }
 
 ;
 
