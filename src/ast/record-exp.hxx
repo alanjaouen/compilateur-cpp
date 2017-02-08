@@ -21,12 +21,12 @@ namespace ast
     {
         return *id_;
     }
-    inline const FieldInits&
+    inline const fieldinits_type&
     RecordExp::fini_get() const
     {
         return *vect_;
     }
-    inline FieldInits&
+    inline fieldinits_type&
     RecordExp::fini_get()
     {
         return *vect_;

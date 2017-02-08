@@ -206,9 +206,13 @@ NAMETY "_namety"
 %type <ast::Var*> lvalue
 %type <ast::Dec*> dec
 %type <ast::Ty*> ty
+
+
  //%type <misc::symbol> type_id
 %type <ast::NameTy*> type_dec
 %type <ast::VarDec*> vardec
+%type <ast::fieldinits_type*> array
+
 %start program
 
 %%
@@ -225,7 +229,7 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 |  "nil" { $$ = new ast::NilExp(@$); }
 | STRING { $$ = new ast::StringExp(@$, $1); }
 | type_id "[" exp "]" "of" exp { $$ = new ast::ArrayExp(@$, $1, $3, $6);}
-| type_id "{" array "}" {}
+| type_id "{" array "}" { $$ = new ast::RecordExp(@$, $1, $3);}
 | "new" type_id
 | lvalue { }
 | ID "(" function ")"
@@ -248,9 +252,9 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 
 ;
 
-array: ID "=" exp
-| ID "=" exp ","  array
-| %empty //               { $$ = new ast::DecsList(@$); }
+array: ID "=" exp { $$ =  new ast::fieldinits_type(); $$->insert($$->begin(), new ast::FieldInit(@$, $1, $3));}
+| ID "=" exp ","  array {$5->insert($5->begin(), new ast::FieldInit(@1, $1, $3));}
+| %empty   { $$ = new ast::fieldinits_type(); }
 ;
 
 function: exp 
@@ -280,8 +284,8 @@ lvalue_bracket:
 ;
 
 exps: exp {$$ = new ast::exps_type(); $$->insert($$->begin(), $1); }
-| exp ";" exps {}
-| %empty       //        { $$ = new ast::DecsList(@$); }
+| exp ";" exps {$3->insert($3->begin(), $1);}
+| %empty   { $$ = new ast::exps_type(); }
 ;
 
   // FIXME: Some code was deleted here (More rules).
