@@ -21,9 +21,9 @@ AST:
 [x]     - let-exp.cc
 [x]     - let-exp.hh
 [x]     - let-exp.hxx
-[]        - method-call-exp.cc
-[]        - method-call-exp.hh
-[]        - method-call-exp.hxx
+[x]     - method-call-exp.cc
+[x]     - method-call-exp.hh
+[x]     - method-call-exp.hxx
 []        - object-exp.cc
 []        - object-exp.hh
 []        - object-exp.hxx
