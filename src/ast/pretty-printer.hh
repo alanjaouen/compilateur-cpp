@@ -31,7 +31,7 @@ namespace ast
             void operator()(const SubscriptVar& e) override;
             void operator()(const CastVar& e) override;
             void operator()(const CastExp& e) override;
-            void operator()(const IfExp& e) override;
+            //void operator()(const IfExp& e) override;
             void operator()(const LetExp& e) override;
             void operator()(const FunctionDec& e) override;
             void operator()(const Exp& e);
@@ -42,6 +42,9 @@ namespace ast
             void operator()(const ArrayExp& e) override;
             void operator()(const ArrayTy& e) override;
             void operator()(const ClassTy& e) override;
+            void operator()(const MethodDec& e) override;
+            void operator()(const MethodCallExp& e) override;
+            void operator()(const Dec& e);
             // FIXME: Some code was deleted here.
             /// \}
 
