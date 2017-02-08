@@ -14,26 +14,15 @@ namespace ast
   class SeqExp : public Exp
   {
   public:
-    using seq_type = std::list<Exp*>;
 
-    /// Prepend \a d.
-    void push_front(Exp* e);
-    /// Append \a d.
-    void emplace_back(Exp* e);
-
-    /// Splice the content of \a ds in front of this list.
-    void splice_front(SeqExp& es);
-    /// Splice the content of \a ds at the back this list.
-    void splice_back(SeqExp& es);
-
-    /// Construct a SeqExp node.
-    SeqExp(const Location& location);
+    // /// Construct a SeqExp node.
+    // SeqExp(const Location& location);
 
   public:
     /** \name Ctor & dtor.
      ** \{ */
     /// Construct a SeqExp node.
-    SeqExp(const Location& location, const SeqExp::seq_type& seq);
+    SeqExp(const Location& location, exps_type& seq);
     /// Destroy a SeqExp node.
     virtual ~SeqExp();
     /** \} */
@@ -49,13 +38,13 @@ namespace ast
     /** \name Accessors.
      ** \{ */
     /// Return declarations.
-    const SeqExp::seq_type& seq_get() const;
+    const exps_type& seq_get() const;
     /// Return declarations.
-    SeqExp::seq_type& seq_get();
+    exps_type& seq_get();
     /** \} */
   protected:
-        /// Declarations.
-    SeqExp::seq_type seq_;
+    /// Declarations.
+    exps_type& seq_;
 
   };
 

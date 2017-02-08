@@ -1,4 +1,4 @@
-↓/**
+/**
  ** \file ast/method-call-exp.hh
  ** \brief Declaration of ast::MethodCallExp.
  */

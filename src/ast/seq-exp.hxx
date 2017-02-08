@@ -10,12 +10,12 @@
 namespace ast
 {
 
-  inline const SeqExp::seq_type&
+  inline const exps_type&
   SeqExp::seq_get() const
   {
     return seq_;
   }
-  inline SeqExp::seq_type&
+  inline exps_type&
   SeqExp::seq_get()
   {
     return seq_;
