@@ -10,12 +10,13 @@
 namespace ast
 {
 
-  RecordTy::RecordTy(const Location& location)
+  RecordTy::RecordTy(const Location& location, fields_type* vect)
     : Ty(location)
+    , vect_(vect)
   {}
   RecordTy::~RecordTy()
   {
-    misc::deep_clear(recs_);
+    delete vect_;
   }
   /// \name Visitors entry point.
   /// \{ */
@@ -30,31 +31,6 @@ namespace ast
     v(*this);
   }
   /// \}
-
-  /// Prepend \a d.
-  void RecordTy::push_front(Field* d)
-  {
-    recs_.emplace_front(d);
-    location_.begin = d->location_get().begin;
-  }
-  /// Append \a d.
-  void RecordTy::emplace_back(Field* d)
-  {
-        recs_.emplace_back(d);
-    location_.end = d->location_get().end;
-  }
-
-  /// Splice the content of \a ds in front of this list.
-  void RecordTy::splice_front(RecordTy& rs)
-  {
-    recs_.splice(recs_.begin(), rs.recs_get());
-  }
-
-  /// Splice the content of \a ds at the back this list.
-  void RecordTy::splice_back(RecordTy& rs)
-  {
-    recs_.splice(recs_.end(), rs.recs_get());
-  }
 
 
 } // namespace ast

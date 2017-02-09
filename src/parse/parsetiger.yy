@@ -211,7 +211,7 @@ NAMETY "_namety"
 %type <ast::fieldinits_type*> array
 %type <ast::exps_type*> function
 %type <ast::VarDecs*> vardecs
-
+%type <ast::fields_type*> tyfields
 
 %start program
 
@@ -235,13 +235,24 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | ID "(" function ")" { $$ = new ast::CallExp(@$, $1, $3);}
 
 | lvalue_dot "(" function ")"
-| "-" exp {$$ = new ast::OpExp(@$, new ast::IntExp(@$, 0), ast::OpExp::Oper::sub, $2);}
-| op_rule
+| "-" exp      {$$ = new ast::OpExp(@$, new ast::IntExp(@$, 0), ast::OpExp::Oper::sub, $2);}
+| exp "+" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::add, $3);}
+| exp "-" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::sub, $3);}
+| exp "*" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::mul, $3);}
+| exp "/" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::div, $3);}
+| exp "=" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::eq, $3);}
+| exp "<>" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::ne, $3);}
+| exp ">" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::gt, $3);}
+| exp "<" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::lt, $3);}
+| exp ">=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::ge, $3);}
+| exp "<=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::le, $3);}
+| exp "&" exp  
+| exp "|" exp
 | "(" exps ")" {$$ = new ast::SeqExp(@$, $2);}
 | lvalue ":=" exp {$$ = new ast::AssignExp(@$, $1, $3);}
 
 | "if" exp "then" exp "else" exp {$$ = new ast::IfExp(@$, $2, $4, $6); }
-| "if" exp "then" exp {$$ = new ast::IfExp(@$, $2, $4); }
+| "if" exp "then" exp {$$ = new ast::IfExp(@$, $2, $4, new ast::NilExp(@$)); }
 | "while" exp "do" exp {$$ = new ast::WhileExp(@$, $2, $4);}
 | "for" ID ":=" exp "to" exp "do" exp { $$ = new ast::ForExp(@$, new ast::VarDec(@2, $2, nullptr, $4), $6, $8);}
 | "break" { $$ = new ast::BreakExp(@$);}
@@ -264,7 +275,7 @@ function: exp {$$ = new ast::exps_type(); $$->insert($$->begin(), $1);}
 ;
 
 lvalue:
-ID
+ID {$$ = new ast::SimpleVar(@$, $1);}
 | lvalue_dot
 | lvalue_bracket
 | "_cast" "(" lvalue "," ty ")" {$$ = new ast::CastVar(@$, $3, $5);}
@@ -340,53 +351,46 @@ classfields vardec
 | %empty               //{ $$ = new ast::DecsList(@$); }
 ;
 ty:
-type_id
-| "{" tyfields "}"
-| "array" "of" ID
+type_id {$$ = $1;}
+| "{" tyfields "}" {$$ = new ast::RecordTy(@$, $2);}
+| "array" "of" type_id {$$ = $3;}
 | "class" dec_class_def "{" classfields "}"
 ;
 
 //use field
 tyfields:
-ID ":" type_id 
+ID ":" type_id {
+  auto* tab = new ast::fields_type();
+  auto* res = new ast::Field(@$, $1, $3);
+  tab->insert(tab->begin(), res);
+  $$ = tab;
+}
 |ID ":" type_id "," tyfields
-| %empty              // { $$ = new ast::DecsList(@$); }
+{
+  auto* res = new ast::Field(@$, $1, $3);
+  $5->insert($5->begin(), res);
+  $$ = $5;
+}
+| %empty  { $$ = new ast::fields_type(); }
 ;
 // use vardec
 vardecs:
 ID ":" type_id {auto* tab = new ast::VarDecs(@$);
-  auto a = ast::VarDec(@$, $1, $3, nullptr);
+  auto a = ast::VarDec(@$, $1, $3, new ast::NilExp(@$));
   $$ = tab;}
 |ID ":" type_id "," vardecs
 {
-  auto a = ast::VarDec(@$, $1, $3, nullptr);
+  auto a = ast::VarDec(@$, $1, $3, new ast::NilExp(@$));
   $5->push_front(a);
   $$ = $5;
 }
-| %empty              // { $$ = new ast::DecsList(@$); }
+| %empty  { $$ = new ast::VarDecs(@$); }
 ;
 
 
 type_id:
 ID {$$ = new ast::NameTy(@$, $1);}
 | "_namety" "(" INT ")"
-;
-op_rule:
-exp op
-;
-op:
-"+" exp
-| "-" exp
-| "*" exp
-| "/" exp
-| "=" exp
-| "<>" exp
-| ">" exp
-| "<" exp
-| ">=" exp
-| "<=" exp
-| "&" exp
-| "|" exp
 ;
 
   // FIXME: Some code was deleted here (More rules).

@@ -23,13 +23,13 @@ namespace ast
     class RecordTy : public Ty
     {
         public:
-            using field_list = std::list<Field*>;
+
 
             /**
              * \name Ctor & dtor.
              * \{ */
             /// Construct a RecordTy node.
-            RecordTy(const Location& location);
+      RecordTy(const Location& location, fields_type* vect);
             /// Destroy a RecordTy node.
             virtual ~RecordTy();
             /** \} */
@@ -43,28 +43,18 @@ namespace ast
             void accept(Visitor& v) override;
             /** \} */
 
-            /// Prepend \a d.
-            void push_front(Field* d);
-            /// Append \a d.
-            void emplace_back(Field* d);
-
-            /// Splice the content of \a ds in front of this list.
-            void splice_front(RecordTy& rs);
-            /// Splice the content of \a ds at the back this list.
-            void splice_back(RecordTy& rs);
-
             /**
              * \name Accessors.
              * \{ */
             /// Return declarations.
-            const RecordTy::field_list& recs_get() const;
+            const fields_type& recs_get() const;
             /// Return declarations.
-            RecordTy::field_list& recs_get();
+            fields_type& recs_get();
             /** \} */
 
         protected:
             /// The declarations.
-            RecordTy::field_list recs_;
+            fields_type* vect_;
     };
 
 } // namespace ast
