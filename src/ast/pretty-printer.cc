@@ -97,7 +97,7 @@ void PrettyPrinter::operator()(const CallExp& e)
 {
   ostr_ << e.name_get() << '(';
   for (auto& exp : e.seq_get())
-    ostr_ << exp;
+    ostr_ << *exp;
   ostr_ << ')';
 }
 
@@ -152,8 +152,7 @@ void PrettyPrinter::operator()(const BreakExp&)
 void PrettyPrinter::operator()(const LetExp& e)
 {
   ostr_ << "let" << misc::incindent << e.decs_get() << misc::decindent << "in"
-        << misc::incindent << e.seq_get() << misc::decindent << "end;"
-        << misc::decindent;
+        << misc::incindent << e.seq_get() << misc::decindent << "end;";
 }
 
 void PrettyPrinter::operator()(const TypeDec& e)
@@ -186,8 +185,8 @@ void PrettyPrinter::operator()(const FunctionDec& e)
     ostr_ << "primitive ";
   ostr_ << e.name_get() << '(' << e.formals_get() << ')';
   if (e.result_get() != nullptr)
-    ostr_ << " : " << e.result_get();
-  ostr_ << " = " << misc::incindent << '(' << e.body_get() << ')'
+    ostr_ << " : " << *e.result_get();
+  ostr_ << " = " << misc::incindent << '(' << *e.body_get() << ')'
         << misc::decindent;
 }
 
