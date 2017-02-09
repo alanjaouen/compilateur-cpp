@@ -213,6 +213,8 @@ NAMETY "_namety"
 %type <ast::VarDecs*> vardecs
 %type <ast::fields_type*> tyfields
 
+
+%destructor {delete $$;} <ast::Exp*> <ast::DecsList*> <ast::NameTy*> <ast::exps_type*> <ast::Var*> <ast::Decs*> <ast::Ty*> 
 %start program
 
 %%
@@ -246,8 +248,10 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | exp "<" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::lt, $3);}
 | exp ">=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::ge, $3);}
 | exp "<=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::le, $3);}
-| exp "&" exp  
-| exp "|" exp
+| exp "&" exp  {
+  $$ = tp.parse(::parse::Tweast() << "if" << $1 << "then" << $3 << "else" << 0);
+  }
+| exp "|" exp { $$ = tp.parse(::parse::Tweast() << "if" << $1 << "then" << 1 << "else" << $3);}
 | "(" exps ")" {$$ = new ast::SeqExp(@$, $2);}
 | lvalue ":=" exp {$$ = new ast::AssignExp(@$, $1, $3);}
 
