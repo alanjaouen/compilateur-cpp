@@ -112,7 +112,12 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
                     if sanity:
                         mycmd += "valgrind "
                     mycmd += my_path
-                    mycmd += " " + category + "/"+ test
+                    if test.startswith("--", 0, 2):
+                        line = test.split()
+                        mycmd += " " + line[0]
+                        mycmd += " " + category + "/" + line[1]
+                    else:
+                        mycmd += " " + category + "/"+ test
                     mycmd = ' '.join(mycmd.strip().split())
                     percent = "[" + str(int(((list(subconfig).index(test) + 1)
                                         / len(subconfig) * 100))) + "%] "
