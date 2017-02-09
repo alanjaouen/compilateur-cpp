@@ -22,7 +22,7 @@ namespace ast
     /** \name Ctor & dtor.
      ** \{ */
     /// Construct a SeqExp node.
-    SeqExp(const Location& location, exps_type& seq);
+    SeqExp(const Location& location, exps_type* seq);
     /// Destroy a SeqExp node.
     virtual ~SeqExp();
     /** \} */
@@ -44,7 +44,7 @@ namespace ast
     /** \} */
   protected:
     /// Declarations.
-    exps_type& seq_;
+    exps_type* seq_;
 
   };
 

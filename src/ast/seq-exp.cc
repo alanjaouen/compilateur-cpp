@@ -41,14 +41,14 @@ namespace ast
   // {}
 
   SeqExp::SeqExp(const Location& location,
-                 exps_type& seq)
+                 exps_type* seq)
     : Exp(location)
     , seq_(seq)
   {}
 
   SeqExp::~SeqExp()
   {
-    misc::deep_clear(seq_);
+    delete seq_;
   }
 
   void

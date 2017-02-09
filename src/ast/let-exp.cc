@@ -9,7 +9,7 @@
 namespace ast
 {
 
-  LetExp::LetExp(const Location& location, DecsList* decs, exps_type* vect)
+  LetExp::LetExp(const Location& location, DecsList* decs, Exp* vect)
     : Exp(location)
     , decs_(decs)
     , vect_(vect)

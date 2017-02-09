@@ -29,7 +29,7 @@ namespace ast
              * \name Ctor & dtor.
              * \{ */
             /// Construct a CallExp node.
-            CallExp(const Location& location, misc::symbol& name,
+            CallExp(const Location& location, misc::symbol name,
                     exps_type* seq);
             /// Destroy a CallExp node.
             virtual ~CallExp();
@@ -61,7 +61,7 @@ namespace ast
             /// The call expression.
             exps_type* seq_;
             //The function name.
-            misc::symbol& name_;
+            misc::symbol name_;
     };
 
 } // namespace ast

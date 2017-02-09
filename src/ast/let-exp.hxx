@@ -22,13 +22,13 @@ namespace ast
     return *decs_;
   }
 
-  inline const exps_type&
+  inline const Exp&
   LetExp::seq_get() const
   {
     return *vect_;
   }
 
-  inline exps_type&
+  inline Exp&
   LetExp::seq_get()
   {
     return *vect_;

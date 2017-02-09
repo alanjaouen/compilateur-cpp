@@ -204,15 +204,15 @@ NAMETY "_namety"
 %type <ast::NameTy*> type_id
 %type <ast::exps_type*> exps
 %type <ast::Var*> lvalue
-%type <ast::Dec*> dec
+%type <ast::Decs*> dec
 %type <ast::Ty*> ty
-
-
- //%type <misc::symbol> type_id
 %type <ast::NameTy*> type_dec
-%type <ast::VarDec*> vardec
+%type <ast::VarDecs*> vardec
 %type <ast::fieldinits_type*> array
 %type <ast::exps_type*> function
+%type <ast::VarDecs*> vardecs
+
+
 %start program
 
 %%
@@ -231,21 +231,21 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | type_id "[" exp "]" "of" exp { $$ = new ast::ArrayExp(@$, $1, $3, $6);}
 | type_id "{" array "}" { $$ = new ast::RecordExp(@$, $1, $3);}
 | "new" type_id {}
-| lvalue { }
+| lvalue { $$ = $1;}
 | ID "(" function ")" { $$ = new ast::CallExp(@$, $1, $3);}
 
 | lvalue_dot "(" function ")"
 | "-" exp {$$ = new ast::OpExp(@$, new ast::IntExp(@$, 0), ast::OpExp::Oper::sub, $2);}
 | op_rule
-| "(" exps ")" //{$$ = $2;}
+| "(" exps ")" {$$ = new ast::SeqExp(@$, $2);}
 | lvalue ":=" exp {$$ = new ast::AssignExp(@$, $1, $3);}
 
 | "if" exp "then" exp "else" exp {$$ = new ast::IfExp(@$, $2, $4, $6); }
-| "if" exp "then" exp {$$ = new ast::IfExp(@$, $2, $4); } 
+| "if" exp "then" exp {$$ = new ast::IfExp(@$, $2, $4); }
 | "while" exp "do" exp {$$ = new ast::WhileExp(@$, $2, $4);}
 | "for" ID ":=" exp "to" exp "do" exp { $$ = new ast::ForExp(@$, new ast::VarDec(@2, $2, nullptr, $4), $6, $8);}
 | "break" { $$ = new ast::BreakExp(@$);}
-| "let" decs "in" exps  "end" {$$ = new ast::LetExp(@$, $2, $4); }
+| "let" decs "in" exps  "end" {$$ = new ast::LetExp(@$, $2, new ast::SeqExp(@$,$4)); }
 
 | "_cast" "(" exp "," ty ")" { $$ = new ast::CastExp(@$, $3, $5);}
 | "_exp" "(" INT ")"
@@ -283,7 +283,7 @@ lvalue_bracket:
 |       ID "[" exp "]"
 ;
 
-exps: exp {$$ = new ast::exps_type(); $$->insert($$->begin(), $1); }
+exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ = tab;}
 | exp ";" exps {$3->insert($3->begin(), $1);}
 | %empty   { $$ = new ast::exps_type(); }
 ;
@@ -299,25 +299,40 @@ decs:
 %empty             //  { $$ = new ast::DecsList(@$); }
 | dec decs
 | "_decs" "(" INT ")" decs // A list of decs metavariable
+| "import" STRING {$$ = tp.parse_import($2, @2);}
 ;
 dec:
-"type" ID "=" ty
+"type" ID "=" ty {
+
+  auto* a = new ast::TypeDecs(@$);
+  auto b = ast::TypeDec(@$, $2, $4);
+  a->push_front(b);
+  $$ = a;
+}
 | "class" ID dec_class_def "{" classfields "}"
-| vardec
-| "function" ID "(" vardecs ")" type_dec "="exp
+| vardec {$$ = $1;}
+| "function" ID "(" vardecs ")" type_dec "=" exp {
+  auto* tab = new ast::FunctionDecs(@$);
+  auto b = ast::FunctionDec(@$, $2, $4, $6, $8);
+  tab->push_front(b);
+  $$ = tab;
+  }
 | "primitive" ID "(" vardecs ")" type_dec
-| "import" STRING //{$$ = tp.parse_import($2, @2);}
 ;
 type_dec:
 ":" type_id { $$ = $2; }
-| %empty             //  { $$ = new ast::DecsList(@$); }
+| %empty    { $$ = nullptr; }
 ;
 dec_class_def:
 "extends" type_id
-| %empty               //{ $$ = new ast::DecsList(@$); }
+| %empty //{ $$ = nullptr; }
 ;
 vardec:
-"var" ID type_dec ":=" exp { $$ = new ast::VarDec(@$, $2, $3, $5); }
+"var" ID type_dec ":=" exp { auto* a = new ast::VarDecs(@$);
+  auto b = ast::VarDec(@$, $2, $3, $5);
+  a->push_front(b);
+  $$ = a;
+}
 ;
 classfields:
 classfields vardec
@@ -339,8 +354,15 @@ ID ":" type_id
 ;
 // use vardec
 vardecs:
-ID ":" type_id 
-|ID ":" type_id "," vardecs 
+ID ":" type_id {auto* tab = new ast::VarDecs(@$);
+  auto a = ast::VarDec(@$, $1, $3, nullptr);
+  $$ = tab;}
+|ID ":" type_id "," vardecs
+{
+  auto a = ast::VarDec(@$, $1, $3, nullptr);
+  $5->push_front(a);
+  $$ = $5;
+}
 | %empty              // { $$ = new ast::DecsList(@$); }
 ;
 

@@ -29,7 +29,7 @@ namespace ast
              * \name Ctor & dtor.
              * \{ */
             /// Construct a LetExp node.
-            LetExp(const Location& location, DecsList* decs, exps_type* vect);
+            LetExp(const Location& location, DecsList* decs, Exp* vect);
             /// Destroy a LetExp node.
             virtual ~LetExp();
             /** \} */
@@ -51,16 +51,16 @@ namespace ast
             /// Return the list declaration.
             DecsList& decs_get();
             /// Return the sequence of expression.
-            const exps_type& seq_get() const;
+            const Exp& seq_get() const;
             /// Return the sequence of expression.
-            exps_type& seq_get();
+            Exp& seq_get();
             /** \} */
 
         protected:
             /// The list declaration.
             DecsList* decs_;
             /// The sequence of expression.
-            exps_type* vect_;
+            Exp* vect_;
     };
 
 } // namespace ast
