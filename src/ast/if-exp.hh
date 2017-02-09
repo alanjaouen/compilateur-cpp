@@ -51,9 +51,9 @@ namespace ast
             /// Return instructions executed in the then..
             Exp& then_get();
             /// Return instructions executed in the else clause.
-            const Exp& else_get() const;
+            const Exp* else_get() const;
             /// Return instructions executed in the else clause.
-            Exp& else_get();
+            Exp* else_get();
             /** \} */
 
         protected:
