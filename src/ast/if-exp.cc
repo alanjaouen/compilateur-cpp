@@ -32,7 +32,6 @@ namespace ast
   {
     v(*this);
   }
-
   
 } // namespace ast
 

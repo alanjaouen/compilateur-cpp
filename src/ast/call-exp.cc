@@ -10,8 +10,8 @@
 namespace ast
 {
 
-  CallExp::CallExp(const Location& location, misc::symbol* name,
-                   SeqExp::seq_type* seq)
+  CallExp::CallExp(const Location& location, misc::symbol name,
+                   exps_type* seq)
     : Exp(location)
     , seq_(seq)
     , name_(name)
@@ -20,7 +20,6 @@ namespace ast
   CallExp::~CallExp()
   {
     delete seq_;
-    delete name_;
   }
 
   void

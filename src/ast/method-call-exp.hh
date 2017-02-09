@@ -27,8 +27,8 @@ namespace ast
      * \name Ctor & dtor.
      * \{ */
     /// Construct a MethodCallExp node.
-    MethodCallExp(const Location& location, misc::symbol* name,
-                  SeqExp::seq_type* seq, Var* lvalue);
+    MethodCallExp(const Location& location, misc::symbol& name,
+                  ast::exps_type* seq, Var* lvalue);
     /// Destroy a MethodCallExp node.
     virtual ~MethodCallExp();
     /** \} */

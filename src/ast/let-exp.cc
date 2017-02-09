@@ -9,16 +9,16 @@
 namespace ast
 {
 
-  LetExp::LetExp(const Location& location, DecsList* decs, SeqExp* seq)
+  LetExp::LetExp(const Location& location, DecsList* decs, Exp* vect)
     : Exp(location)
     , decs_(decs)
-    , seq_(seq)
+    , vect_(vect)
   {}
 
   LetExp::~LetExp()
   {
     delete decs_;
-    delete seq_;
+    delete vect_;
   }
 
   void

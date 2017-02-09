@@ -33,16 +33,16 @@ namespace ast
     return *Bthen_;
   }
 
-  inline const Exp&
+  inline const Exp*
   IfExp::else_get() const
   {
-    return *Belse_;
+    return Belse_;
   }
 
-  inline Exp&
+  inline Exp*
   IfExp::else_get()
   {
-    return *Belse_;
+    return Belse_;
   }
 
 } // namespace ast

@@ -27,7 +27,7 @@ namespace ast
              * \name Ctor & dtor.
              * \{ */
             /// Construct a RecordExp node.
-      RecordExp(const Location& location, NameTy* id, FieldInits* vect);
+      RecordExp(const Location& location, NameTy* id, fieldinits_type* vect);
             /// Destroy a RecordExp node.
             virtual ~RecordExp();
             /** \} */
@@ -49,16 +49,16 @@ namespace ast
             /// Return the record expression.
             NameTy& id_get();
             /// Return the initiated field.
-            const FieldInits& fini_get() const;
+            const fieldinits_type& fini_get() const;
             /// Return the initiated field.
-            FieldInits& fini_get();
+            fieldinits_type& fini_get();
             /** \} */
 
         protected:
             /// The record expression.
             NameTy* id_;
             /// The initiated field.
-            FieldInits *vect_;
+            fieldinits_type* vect_;
     };
 
 } // namespace ast
