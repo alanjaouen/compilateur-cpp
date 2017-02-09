@@ -27,7 +27,7 @@ namespace ast
      * \name Ctor & dtor.
      * \{ */
     /// Construct a FieldVar node.
-    FieldVar(const Location& location, Var* lvalue, misc::symbol* name);
+    FieldVar(const Location& location, Var* lvalue, misc::symbol& name);
     /// Destroy a FieldVar node.
     virtual ~FieldVar();
     /** /} */
@@ -58,7 +58,7 @@ namespace ast
     /// The field variable.
     Var* lvalue_;
     /// The field of the variable.
-    misc::symbol* name_;
+    misc::symbol& name_;
   };
 
 } // namespace ast

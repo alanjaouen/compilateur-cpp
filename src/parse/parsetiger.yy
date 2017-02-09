@@ -212,7 +212,8 @@ NAMETY "_namety"
 %type <ast::exps_type*> function
 %type <ast::VarDecs*> vardecs
 %type <ast::fields_type*> tyfields
-
+%type <ast::Var*> lvalue_bracket
+%type <ast::Var*> lvalue_dot
 
 %destructor {delete $$;} <ast::Exp*> <ast::DecsList*> <ast::NameTy*> <ast::exps_type*> <ast::Var*> <ast::Decs*> <ast::Ty*>  <ast::fieldinits_type*> <ast::VarDecs*> <ast::fields_type*> <ast::CallExp*> <ast::FunctionDec*>
 
@@ -233,11 +234,11 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | STRING { $$ = new ast::StringExp(@$, $1); }
 | type_id "[" exp "]" "of" exp { $$ = new ast::ArrayExp(@$, $1, $3, $6);}
 | type_id "{" array "}" { $$ = new ast::RecordExp(@$, $1, $3);}
-| "new" type_id {}
+| "new" type_id
 | lvalue { $$ = $1;}
 | ID "(" function ")" { $$ = new ast::CallExp(@$, $1, $3);}
 
-| lvalue_dot "(" function ")"
+| lvalue_dot "(" function ")" //{$$ = new ast::MethodCallExp()}
 | "-" exp      {$$ = new ast::OpExp(@$, new ast::IntExp(@$, 0), ast::OpExp::Oper::sub, $2);}
 | exp "+" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::add, $3);}
 | exp "-" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::sub, $3);}
@@ -265,7 +266,6 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 
 | "_cast" "(" exp "," ty ")" { $$ = new ast::CastExp(@$, $3, $5);}
 | "_exp" "(" INT ")"
-
 ;
 
 array: ID "=" exp { $$ =  new ast::fieldinits_type(); $$->insert($$->begin(), new ast::FieldInit(@$, $1, $3));}
@@ -276,27 +276,29 @@ array: ID "=" exp { $$ =  new ast::fieldinits_type(); $$->insert($$->begin(), ne
 function: exp {$$ = new ast::exps_type(); $$->insert($$->begin(), $1);}
 | exp "," function { $3->insert($3->begin(), $1);}
 | %empty  { $$ = new ast::exps_type(); }
-
 ;
 
 lvalue:
 ID {$$ = new ast::SimpleVar(@$, $1);}
-| lvalue_dot
-| lvalue_bracket
+| lvalue_dot {$$ = $1;}
+| lvalue_bracket {$$ = $1;}
 | "_cast" "(" lvalue "," ty ")" {$$ = new ast::CastVar(@$, $3, $5);}
 | "_lvalue" "(" INT ")"
 ;
 
+//field-var
 lvalue_dot:
-lvalue_dot "." ID
-|       lvalue_bracket "." ID
-|       ID "." ID
+lvalue_dot "." ID { auto a = new ast::FieldVar(@$, $1, $3);
+  $$ = a;}
+|       lvalue_bracket "." ID { $$ = new ast::FieldVar(@$, $1, $3); }
+|       ID "." ID { $$ = new ast::FieldVar(@$, new ast::SimpleVar(@1, $1), $3); }
 ;
 
+//subscript-var
 lvalue_bracket:
-       lvalue_dot "[" exp "]"
-|       lvalue_bracket "[" exp "]"
-|       ID "[" exp "]"
+lvalue_dot "[" exp "]" { $$ = new ast::SubscriptVar(@$, $1, $3); }
+|       lvalue_bracket "[" exp "]" { $$ = new ast::SubscriptVar(@$, $1, $3); }
+|       ID "[" exp "]" { $$ = new ast::SubscriptVar(@$, new ast::SimpleVar(@1, $1), $3); }
 ;
 
 exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ = tab;}
@@ -313,7 +315,7 @@ exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ 
 %token DECS "_decs";
 decs:
 %empty             //  { $$ = new ast::DecsList(@$); }
-| dec decs
+| dec decs {$2->push_front($1); $$ = $2;}
 | "_decs" "(" INT ")" decs // A list of decs metavariable
 | "import" STRING {$$ = tp.parse_import($2, @2);}
 ;

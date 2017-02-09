@@ -9,7 +9,7 @@
 namespace ast
 {
 
-  FieldVar::FieldVar(const Location& location, Var* lvalue, misc::symbol* name)
+  FieldVar::FieldVar(const Location& location, Var* lvalue, misc::symbol& name)
     : Var(location)
     , lvalue_(lvalue)
     , name_(name)
@@ -18,7 +18,6 @@ namespace ast
   FieldVar::~FieldVar()
   {
     delete lvalue_;
-    delete name_;
   }
   /** /} */
 
