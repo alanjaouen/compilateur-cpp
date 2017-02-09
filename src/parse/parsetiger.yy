@@ -214,7 +214,8 @@ NAMETY "_namety"
 %type <ast::fields_type*> tyfields
 
 
-%destructor {delete $$;} <ast::Exp*> <ast::DecsList*> <ast::NameTy*> <ast::exps_type*> <ast::Var*> <ast::Decs*> <ast::Ty*> 
+%destructor {delete $$;} <ast::Exp*> <ast::DecsList*> <ast::NameTy*> <ast::exps_type*> <ast::Var*> <ast::Decs*> <ast::Ty*>  <ast::fieldinits_type*> <ast::VarDecs*> <ast::fields_type*> <ast::CallExp*> <ast::FunctionDec*>
+
 %start program
 
 %%

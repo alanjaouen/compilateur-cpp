@@ -10,35 +10,6 @@
 
 namespace ast
 {
-  // void
-  // SeqExp::push_front(Exp* e)
-  // {
-  //   seq_.emplace_front(e);
-  //   location_.begin = e->location_get().begin;
-  // }
-
-  // void
-  // SeqExp::emplace_back(Exp* e)
-  // {
-  //   seq_.emplace_back(e);
-  //   location_.begin = e->location_get().end;
-  // }
-
-  // void
-  // SeqExp::splice_front(SeqExp& es)
-  // {
-  //   seq_.splice(seq_.begin(), es.seq_get());
-  // }
-
-  // void
-  // SeqExp::splice_back(SeqExp& es)
-  // {
-  //   seq_.splice(seq_.end(), es.seq_get());
-  // }
-
-  // SeqExp::SeqExp(const Location& location)
-  //   : Exp(location)
-  // {}
 
   SeqExp::SeqExp(const Location& location,
                  exps_type* seq)
@@ -48,6 +19,8 @@ namespace ast
 
   SeqExp::~SeqExp()
   {
+    for (auto a : *seq_)
+      delete a;
     delete seq_;
   }
 

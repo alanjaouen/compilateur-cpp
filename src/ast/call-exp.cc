@@ -19,6 +19,8 @@ namespace ast
 
   CallExp::~CallExp()
   {
+    for (auto a : *seq_)
+      delete a;
     delete seq_;
   }
 
