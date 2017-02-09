@@ -252,7 +252,7 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | lvalue ":=" exp {$$ = new ast::AssignExp(@$, $1, $3);}
 
 | "if" exp "then" exp "else" exp {$$ = new ast::IfExp(@$, $2, $4, $6); }
-| "if" exp "then" exp {$$ = new ast::IfExp(@$, $2, $4, new ast::NilExp(@$)); }
+| "if" exp "then" exp {$$ = new ast::IfExp(@$, $2, $4, nullptr); }
 | "while" exp "do" exp {$$ = new ast::WhileExp(@$, $2, $4);}
 | "for" ID ":=" exp "to" exp "do" exp { $$ = new ast::ForExp(@$, new ast::VarDec(@2, $2, nullptr, $4), $6, $8);}
 | "break" { $$ = new ast::BreakExp(@$);}
@@ -376,11 +376,11 @@ ID ":" type_id {
 // use vardec
 vardecs:
 ID ":" type_id {auto* tab = new ast::VarDecs(@$);
-  auto a = ast::VarDec(@$, $1, $3, new ast::NilExp(@$));
+  auto a = ast::VarDec(@$, $1, $3, nullptr);
   $$ = tab;}
 |ID ":" type_id "," vardecs
 {
-  auto a = ast::VarDec(@$, $1, $3, new ast::NilExp(@$));
+  auto a = ast::VarDec(@$, $1, $3, nullptr);
   $5->push_front(a);
   $$ = $5;
 }

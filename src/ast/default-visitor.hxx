@@ -116,7 +116,7 @@ namespace ast
         {
             e.test_get().accept(*this);
             e.then_get().accept(*this);
-            e.else_get().accept(*this);
+            e.else_get()->accept(*this);
         }
 
     template <template <typename> class Const>
