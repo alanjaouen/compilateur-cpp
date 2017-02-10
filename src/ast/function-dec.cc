@@ -20,7 +20,7 @@ namespace ast
 
   FunctionDec::~FunctionDec()
   {
-    // delete formals_;
+    delete formals_;
     delete result_;
     delete body_;
   }

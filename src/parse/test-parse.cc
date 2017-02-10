@@ -15,8 +15,10 @@ main()
 {
   ast::Exp* e = parse::parse("a + b");
   std::cout << *e << std::endl;
-  e = parse::parse("let "
+  delete e;
+  ast::Exp* f = parse::parse("let "
                    " function f(a : int, b : string) : int = a "
                    "in a end");
-  std::cout << *e << std::endl;
+  std::cout << *f << std::endl;
+  delete f;
 }
