@@ -1,0 +1,7 @@
+Fuzzing:
+    - selection
+        - random
+        - categorie
+    - creation fichier -> tempfile.NamedTemporaryFile()
+        - generation
+        - call
