@@ -53,11 +53,27 @@ class InterTestSuite(cmd.Cmd):
             os.system('clear')
             print(*tags, sep='\n')
             count = input("How many random tests should be created? ")
-            print(count)
+            for i in range(int(count)):
+                global categories
+                for cat in tags:
+                    print(rstr.xeger(categories[cat]()))
         else:
             os.system('clear')
 
 
+def literals():
+    return "([a-z])\w{2,10}|(nil)|([0-9]{1,4})"
+
+
+def array_record():
+    return "type ([a-z])\w{2,10} = (\{[a-z]\w{2,10} : string(, [a-z]\w{2,10}" +\
+            " : int){0,3}\}){0,1}"
+
 if __name__ == '__main__':
     locale.setlocale(locale.LC_ALL, '')
+    global categories
+    categories = {
+        "Literals" : literals,
+        "Array and record" : array_record
+    }
     InterTestSuite().cmdloop()
