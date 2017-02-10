@@ -25,11 +25,7 @@ class InterTestSuite(cmd.Cmd):
                 choices=[("(1)", "Random"),
                          ("(2)", "Select from a list")])
         if code == d.OK:
-            if tag == "(1)":
-                os.system('clear')
-                count = input("How many random tests should be created? ")
-                print(count)
-            else:
+            if tag == "(2)":
                 code, tags = d.checklist("For which categories?",
                         choices=[("Literals", "", False),
                                  ("Array and record", "", False),
@@ -42,9 +38,24 @@ class InterTestSuite(cmd.Cmd):
                                  ("Type", "", False),
                                  ("Class", "", False),
                                  ("Control structures", "", False)])
-                if code == d.OK:
+                if code != d.OK:
                     os.system('clear')
-                    print(*tags, sep='\n')
+                    return
+                if not tags:
+                    os.system('clear')
+                    print("You didn't choose anything.")
+                    return
+            else:
+                tags = ("Literals", "Array and record",
+                        "Variables, field, elements", "Object", "Function",
+                        "Method", "Operations", "Assignement", "Type",
+                        "Class", "Control structures")
+            os.system('clear')
+            print(*tags, sep='\n')
+            count = input("How many random tests should be created? ")
+            print(count)
+        else:
+            os.system('clear')
 
 
 if __name__ == '__main__':
