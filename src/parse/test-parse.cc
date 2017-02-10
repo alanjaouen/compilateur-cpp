@@ -28,4 +28,10 @@ in \
 end");
   std::cout << *g << std::endl;
   delete g;
+//    ast::Exp* g = parse::parse("let \
+// 	var a:= 0 \
+// in \
+// end");
+//   std::cout << *g << std::endl;
+//   delete g;
 }

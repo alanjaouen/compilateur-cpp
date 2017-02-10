@@ -268,7 +268,7 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | "let" decs "in" exps  "end" {$$ = new ast::LetExp(@$, $2, new ast::SeqExp(@$,$4)); }
 
 | "_cast" "(" exp "," ty ")" { $$ = new ast::CastExp(@$, $3, $5);}
-| "_exp" "(" INT ")" //{$$ = new ast::MetavarExp(@$, $3);}
+| "_exp" "(" INT ")" {$$ = metavar<ast::Exp>(tp, $3);}
 ;
 
 array: ID "=" exp { $$ =  new ast::fieldinits_type(); $$->insert($$->begin(), new ast::FieldInit(@$, $1, $3));}
@@ -287,7 +287,7 @@ ID {$$ = new ast::SimpleVar(@$, $1);}
 | lvalue_dot {$$ = $1;}
 | lvalue_bracket {$$ = $1;}
 | "_cast" "(" lvalue "," ty ")" {$$ = new ast::CastVar(@$, $3, $5);}
-| "_lvalue" "(" INT ")" //{$$ = new ast::Metavariable($3);}
+| "_lvalue" "(" INT ")" {$$ = metavar<ast::Var>(tp, $3);}
 ;
 
 //field-var
@@ -320,7 +320,7 @@ exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ 
 decs:
 %empty   { $$ = new ast::DecsList(@$); }
 | dec decs {$2->push_front($1); $$ = $2;}
-| "_decs" "(" INT ")" decs // A list of decs metavariable
+| "_decs" "(" INT ")" decs {$$ = metavar<ast::DecsList>(tp, $3);}
 | "import" STRING decs {auto a  = tp.parse_import($2, @2);
   $3->splice_front(*a);
   $$ = $3;
@@ -343,6 +343,12 @@ dec:
   $$ = tab;
   }
 | "primitive" ID "(" vardecs ")" type_dec
+{
+  auto* tab = new ast::FunctionDecs(@$);
+  auto* prim = new ast::FunctionDec(@$, $2, $4, $6, nullptr);
+  tab->push_front(*prim);
+  $$ = tab;
+}
 ;
 type_dec:
 ":" type_id { $$ = $2; }
@@ -406,7 +412,7 @@ ID ":" type_id {auto* tab = new ast::VarDecs(@$);
 
 type_id:
 ID {$$ = new ast::NameTy(@$, $1);}
-| "_namety" "(" INT ")"
+| "_namety" "(" INT ")" {$$ = metavar<ast::NameTy>(tp, $3);}
 ;
 
   // FIXME: Some code was deleted here (More rules).
