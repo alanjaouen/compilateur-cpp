@@ -31,15 +31,17 @@ class InterTestSuite(cmd.Cmd):
                 print(count)
             else:
                 code, tags = d.checklist("For which categories?",
-                        choices=[("Bad", "", False),
-                                 ("Bind", "", False),
-                                 ("Chunks", "", False),
-                                 ("Error recovery", "", False),
-                                 ("Good", "", True),
-                                 ("Pretty print", "", False),
-                                 ("Syntax", "", False),
+                        choices=[("Literals", "", False),
+                                 ("Array and record", "", False),
+                                 ("Variables, field, elements", "", False),
+                                 ("Object", "", False),
+                                 ("Function", "", False),
+                                 ("Method", "", False),
+                                 ("Operations", "", False),
+                                 ("Assignment", "", False),
                                  ("Type", "", False),
-                                 ("Tests", "", False)])
+                                 ("Class", "", False),
+                                 ("Control structures", "", False)])
                 if code == d.OK:
                     os.system('clear')
                     print(*tags, sep='\n')
