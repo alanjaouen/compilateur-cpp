@@ -262,7 +262,8 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | "if" exp "then" exp "else" exp {$$ = new ast::IfExp(@$, $2, $4, $6); }
 | "if" exp "then" exp {$$ = new ast::IfExp(@$, $2, $4, nullptr); }
 | "while" exp "do" exp {$$ = new ast::WhileExp(@$, $2, $4);}
-| "for" ID ":=" exp "to" exp "do" exp { $$ = new ast::ForExp(@$, new ast::VarDec(@2, $2, nullptr, $4), $6, $8);}
+| "for" ID ":=" exp "to" exp "do" exp { $$ = new ast::ForExp
+      (@$, new ast::VarDec(@2, $2, nullptr, $4), $6, $8);}
 | "break" { $$ = new ast::BreakExp(@$);}
 | "let" decs "in" exps  "end" {$$ = new ast::LetExp(@$, $2, new ast::SeqExp(@$,$4)); }
 
@@ -320,7 +321,10 @@ decs:
 %empty   { $$ = new ast::DecsList(@$); }
 | dec decs {$2->push_front($1); $$ = $2;}
 | "_decs" "(" INT ")" decs // A list of decs metavariable
-| "import" STRING {$$ = tp.parse_import($2, @2);}
+| "import" STRING decs {auto a  = tp.parse_import($2, @2);
+  $3->splice_front(*a);
+  $$ = $3;
+  }
 ;
 dec:
 "type" ID "=" ty {

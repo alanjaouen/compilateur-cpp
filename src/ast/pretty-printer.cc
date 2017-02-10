@@ -140,7 +140,7 @@ void PrettyPrinter::operator()(const WhileExp& e)
 void PrettyPrinter::operator()(const ForExp& e)
 {
   ostr_ << "(for " << e.vardec_get().name_get()
-        << " := " << e.vardec_get().init_get() << " to " << e.hi_get() << " do"
+        << " := " << *e.vardec_get().init_get() << " to " << e.hi_get() << " do"
         << misc::incindent << e.body_get() << ")" << misc::decindent;
 }
 
@@ -173,8 +173,9 @@ void PrettyPrinter::operator()(const VarDec& e)
 {
   ostr_ << "var " << e.name_get();
   if (e.type_name_get() != nullptr)
-    ostr_ << " : " << e.type_name_get();
-  ostr_ << " := " << e.init_get();
+    ostr_ << " : " << *e.type_name_get();
+  if (e.init_get() != nullptr)
+    ostr_ << " := " << *e.init_get();
 }
 
 void PrettyPrinter::operator()(const FunctionDec& e)
