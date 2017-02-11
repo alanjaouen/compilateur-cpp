@@ -83,12 +83,17 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 
 <SC_STRING>
 {
-\\n {tp.location_.lines(1); tp.location_.step();}
-\\[abfrtv] { str += yytext;}
-\\[0-3][0-7][0-7] {str += yytext;}
-\\x[0-9a-fA-F][0-9a-fA-F] {str += yytext;}
-"\\" { str += yytext;}
-"\\\"" {str += yytext; }
+\\n {tp.location_.lines(1); tp.location_.step(); str += '\n';}
+\a { str += '\a' ;}
+\b { str += '\b';}
+\f { str += '\f';}
+\r { str += '\r';}
+\t { str += '\t';}
+\v { str += '\v';}
+\\[0-3][0-7][0-7] {str += strtol(yytext + 1, 0, 8);}
+\\x[0-9a-fA-F][0-9a-fA-F] {str += strtol(yytext + 2, 0, 16);}
+"\\" { str += '\\';}
+"\\\"" {str += '\"'; }
 "\"" {
     BEGIN(INITIAL);
     return TOKEN_VAL(STRING, str);
