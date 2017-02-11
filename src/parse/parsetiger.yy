@@ -215,6 +215,7 @@ NAMETY "_namety"
 %type <ast::SubscriptVar*> lvalue_bracket
 %type <ast::FieldVar*> lvalue_dot
 %type <ast::DecsList*> classfields
+%type <ast::NameTy*> dec_class_def
 %destructor {delete $$;} <ast::Exp*> <ast::DecsList*> <ast::NameTy*> <ast::exps_type*> <ast::Var*> <ast::Decs*> <ast::Ty*>  <ast::fieldinits_type*> <ast::VarDecs*> <ast::fields_type*>
 
 %start program
@@ -234,7 +235,7 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | STRING { $$ = new ast::StringExp(@$, $1); }
 | type_id "[" exp "]" "of" exp { $$ = new ast::ArrayExp(@$, $1, $3, $6);}
 | type_id "{" array "}" { $$ = new ast::RecordExp(@$, $1, $3);}
-| "new" type_id //{ $$ = new ast::ClassTy(@$, $2, nullptr);}
+| "new" type_id { $$ = new ast::ObjectExp(@$, $2);}
 | lvalue { $$ = $1;}
 | ID "(" function ")" { $$ = new ast::CallExp(@$, $1, $3);}
 
@@ -329,15 +330,21 @@ decs:
   $$ = $3;
   }
 ;
+
 dec:
 "type" ID "=" ty {
-
   auto* a = new ast::TypeDecs(@$);
   auto* b = new ast::TypeDec(@$, $2, $4);
   a->push_front(*b);
   $$ = a;
 }
-| "class" ID dec_class_def "{" classfields "}"
+| "class" ID dec_class_def "{" classfields "}" {
+  auto* a = new ast::ClassTy(@$, $3, $5);
+  auto* b = new ast::TypeDec(@$, $2, a);
+  auto* c = new ast::TypeDecs(@$);
+  c->push_front(*b);
+  $$ = c;
+  }
 | vardec {$$ = $1;}
 | "function" ID "(" vardecs ")" type_dec "=" exp {
   auto* tab = new ast::FunctionDecs(@$);
@@ -371,8 +378,8 @@ type_dec:
 | %empty    { $$ = nullptr; }
 ;
 dec_class_def:
-"extends" type_id
-| %empty //{ $$ = nullptr; }
+"extends" type_id { $$ = $2; }
+| %empty { $$ = nullptr; }
 ;
 vardec:
 "var" ID type_dec ":=" exp { auto* a = new ast::VarDecs(@$);
@@ -382,12 +389,18 @@ vardec:
 }
 ;
 classfields:
-classfields vardec //{$1->emplace_back($2);}
+classfields vardec {$1->emplace_back($2); $$ = $1;}
 | classfields "method" ID "(" vardecs ")" type_dec "=" exp
-  //{}
+  {
+    auto* a = new ast::MethodDec(@$, $3, $5, $7, $9);
+    auto* b = new ast::MethodDecs(@$);
+    b->push_front(*a);
+    $1->emplace_back(b);
+    $$ = $1;
+  }
 | classfields "method" ID "(" ")" type_dec "=" exp
-  //{}
-| %empty//{ $$ = new ast::DecsList(@$); }
+{}
+| %empty { $$ = new ast::DecsList(@$); }
 ;
 ty:
 type_id {$$ = $1;}

@@ -65,7 +65,6 @@ void GenObjectVisitor<Const>::operator()(const_t<MethodCallExp>& e)
 template <template <typename> class Const>
 void GenObjectVisitor<Const>::operator()(const_t<ObjectExp>& e)
 {
-  e.exp_get().accept(*this);
   e.type_get().accept(*this);
 }
 
