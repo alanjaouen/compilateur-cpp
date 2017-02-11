@@ -24,34 +24,38 @@ public:
 
   /// Visit methods.
   /// \{
-  void operator()(const NilExp&) override;
-  void operator()(const IntExp& e) override;
-  void operator()(const StringExp& e) override;
   void operator()(const ArrayExp& e) override;
-  void operator()(const RecordExp& e) override;
-  void operator()(const ObjectExp& e) override;
-  void operator()(const SimpleVar& e) override;
-  void operator()(const FieldVar& e) override;
-  void operator()(const SubscriptVar& e) override;
-  void operator()(const CastVar& e) override;
-  void operator()(const CastExp& e) override;
-  void operator()(const CallExp& e) override;
-  void operator()(const MethodCallExp& e) override;
-  void operator()(const OpExp& e) override;
+  void operator()(const ArrayTy& e) override;
   void operator()(const AssignExp& e) override;
-  void operator()(const IfExp& e) override;
-  void operator()(const WhileExp& e) override;
-  void operator()(const ForExp& e) override;
   void operator()(const BreakExp&) override;
-  void operator()(const LetExp& e) override;
-  void operator()(const TypeDec& e) override;
+  void operator()(const CallExp& e) override;
+  void operator()(const CastExp& e) override;
+  void operator()(const CastVar& e) override;
   void operator()(const ClassTy& e) override;
-  void operator()(const VarDec& e) override;
+  void operator()(const FieldVar& e) override;
+  void operator()(const ForExp& e) override;
   void operator()(const FunctionDec& e) override;
+  void operator()(const IfExp& e) override;
+  void operator()(const IntExp& e) override;
+  void operator()(const LetExp& e) override;
+  void operator()(const MethodCallExp& e) override;
   void operator()(const MethodDec& e) override;
   void operator()(const NameTy& e) override;
+  void operator()(const NilExp&) override;
+  void operator()(const ObjectExp& e) override;
+  void operator()(const OpExp& e) override;
+  void operator()(const RecordExp& e) override;
   void operator()(const RecordTy& e) override;
-  void operator()(const ArrayTy& e) override;
+  void operator()(const SimpleVar& e) override;
+  void operator()(const StringExp& e) override;
+  void operator()(const SubscriptVar& e) override;
+  void operator()(const TypeDec& e) override;
+  void operator()(const VarDec& e) override;
+  void operator()(const WhileExp& e) override;
+  void operator()(const Field& e) override;
+  void operator()(const FieldInit& e) override;
+  void operator()(const SeqExp& e) override;
+  
   /// \}
 
 private:
