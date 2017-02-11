@@ -14,11 +14,8 @@ class InterTestSuite(cmd.Cmd):
         return True
 
 
-    def do_token_gen(self, regex):
-        print(rstr.xeger(regex))
-
-
     def do_fuzzing(self, line):
+        """fuzzing\n\tRandom testing built on regex string generation"""
         d = Dialog(dialog="dialog")
         d.set_background_title("Tiger Compiler TestSuite")
         code, tag = d.menu("Which type of fuzzing do you wanna do?",
@@ -67,7 +64,7 @@ def literals():
 
 def array_record():
     return "type ([a-z])\w{2,10} = (\{[a-z]\w{2,10} : string(, [a-z]\w{2,10}" +\
-            " : int){0,3}\}){0,1}"
+            " : int){0,3}\}){1}"
 
 if __name__ == '__main__':
     locale.setlocale(locale.LC_ALL, '')
