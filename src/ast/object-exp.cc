@@ -9,16 +9,24 @@
 namespace ast
 {
 
-  ObjectExp::ObjectExp(const Location& location, Exp* exp, NameTy* type)
+  ObjectExp::ObjectExp(const Location& location, NameTy* type)
     : Exp(location)
-    , exp_(exp)
     , type_(type)
   {}
 
   ObjectExp::~ObjectExp()
   {
-    delete exp_;
     delete type_;
+  }
+
+  void ObjectExp::accept(ConstVisitor& v) const
+  {
+    v(*this);
+  }
+
+  void ObjectExp::accept(Visitor& v)
+  {
+    v(*this);
   }
 
 } // namespace ast

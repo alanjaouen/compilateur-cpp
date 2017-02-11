@@ -27,7 +27,7 @@ namespace ast
              * \name Ctor & dtor.
              * \{ */
             /// Construct an ObjectExp node.
-            ObjectExp(const Location& location, Exp* exp, NameTy* type);
+            ObjectExp(const Location& location, NameTy* type);
             /// Destroy an ObjectExp node.
             virtual ~ObjectExp();
             /** \} */
@@ -44,10 +44,6 @@ namespace ast
             /**
              * \name Accessors.
              * \{ */
-            /// Return the expression.
-            const Exp& exp_get() const;
-            /// Return the expression.
-            Exp& exp_get();
             /// Return the type of the expression.
             const NameTy& type_get() const;
             /// Return the type of the expression.
@@ -55,8 +51,6 @@ namespace ast
             /** \} */
 
         protected:
-            /// The expression.
-            Exp* exp_;
             /// The type of the expression.
             NameTy* type_;
     };
