@@ -57,7 +57,12 @@ void PrettyPrinter::operator()(const RecordExp& e)
 {
   ostr_ << e.id_get().name_get() << '{';
   for (const auto& exp : e.fini_get())
-    ostr_ << exp->name_get() << '=' << exp->init_get() << ',';
+  {
+    if (exp != e.fini_get().back())
+      ostr_ << exp->name_get() << '=' << exp->init_get() << ',';
+    else
+      ostr_ << exp->name_get() << '=' << exp->init_get();
+  }
   ostr_ << '}';
 }
 
