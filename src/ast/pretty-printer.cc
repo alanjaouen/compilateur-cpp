@@ -192,9 +192,9 @@ void PrettyPrinter::operator()(const FunctionDec& e)
         << misc::decendl << ')';
 }
 
-void PrettyPrinter::operator()(const FunctionDec& e)
+void PrettyPrinter::operator()(const MethodDec& e)
 {
-  ostr_ << "method "
+  ostr_ << "method ";
   ostr_ << e.name_get() << '(' << e.formals_get() << ')';
   if (e.result_get() != nullptr)
     ostr_ << " : " << *e.result_get();
@@ -220,4 +220,13 @@ void PrettyPrinter::operator()(const ArrayTy& e)
   ostr_ << "array of " << e.base_type_get().name_get();
 }
 
+void PrettyPrinter::operator()(const SeqExp& e)
+{
+  ostr_ << "(" << misc::incendl;
+  for (auto& exp : e.seq_get())
+    ostr_ << *exp << misc::iendl;
+  ostr_ << ")" << misc::decendl;
+}
+  
+  
 } // namespace ast

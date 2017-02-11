@@ -52,10 +52,10 @@ public:
   void operator()(const TypeDec& e) override;
   void operator()(const VarDec& e) override;
   void operator()(const WhileExp& e) override;
-  void operator()(const Field& e) override;
-  void operator()(const FieldInit& e) override;
+  // void operator()(const Field& e) override;
+  // void operator()(const FieldInit& e) override;
   void operator()(const SeqExp& e) override;
-  
+    
   /// \}
 
 private:
