@@ -323,8 +323,9 @@ decs:
   $5->splice_front(*a);
   $$ = $5;
   }
-| "import" STRING decs {auto a  = tp.parse_import($2, @2);
-  $3->splice_front(*a);
+| "import" STRING decs {auto* a  = tp.parse_import($2, @2);
+  if (a != nullptr)
+    $3->splice_front(*a);
   $$ = $3;
   }
 ;

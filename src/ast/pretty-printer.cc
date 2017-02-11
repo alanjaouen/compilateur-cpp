@@ -162,7 +162,7 @@ void PrettyPrinter::operator()(const TypeDec& e)
 
 void PrettyPrinter::operator()(const ClassTy& e)
 {
-  ostr_ << "class [ extends " << e.super_get().name_get() << " ]" << misc::iendl
+  ostr_ << "class extends " << e.super_get().name_get() << misc::iendl
         << "{" << misc::incendl;
   for (auto& var : e.decs_get().decs_get())
     ostr_ << var;
@@ -246,8 +246,8 @@ void PrettyPrinter::operator()(const SeqExp& e)
 {
   for (auto& exp : e.seq_get())
   {
-    if (exp != e.seq_get().back())
-      ostr_ << *exp << ";" << misc::iendl;
+    if (exp != e.seq_get()[e.seq_get().size() - 1])
+      ostr_ << *exp  << ";" << misc::iendl;
     else
       ostr_ << *exp << misc::iendl;
   }
