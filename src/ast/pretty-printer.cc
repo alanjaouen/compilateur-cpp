@@ -111,7 +111,7 @@ void PrettyPrinter::operator()(const MethodCallExp& e)
 }
 
 void PrettyPrinter::operator()(const OpExp& e)
-{ 
+{
   ostr_ << e.left_get() << ' ';
   ostr_ << str(e.oper_get()) << ' ' << e.right_get();
 }

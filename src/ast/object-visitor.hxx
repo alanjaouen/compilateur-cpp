@@ -38,7 +38,7 @@ void GenObjectVisitor<Const>::operator()(const_t<MethodDecs>& e)
 {
   for (auto& method : e.decs_get())
   {
-    e.accept(*this);
+    method->accept(*this);
   }
 }
 

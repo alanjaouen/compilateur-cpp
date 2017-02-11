@@ -410,7 +410,7 @@ type_id {$$ = $1;}
 | "{" tyfields "}" {$$ = new ast::RecordTy(@$, $2);}
 | "{"  "}" {$$ = new ast::RecordTy(@$, new ast::fields_type());}
 | "array" "of" type_id {$$ = $3;}
-| "class" dec_class_def "{" classfields "}"
+| "class" dec_class_def "{" classfields "}" { $$ = new ast::ClassTy(@$, $2, $4); }
 ;
 
 //use field
