@@ -253,8 +253,8 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | exp "<" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::lt, $3);}
 | exp ">=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::ge, $3);}
 | exp "<=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::le, $3);}
-| exp "&" exp  { $$ = tp.parse(::parse::Tweast() << "if " << *$1 << " then " << *$3 << " else " << 0);}
-| exp "|" exp  { $$ = tp.parse(::parse::Tweast() << "if " << *$1 << " then " << 1 << " else " << *$3);}
+| exp "&" exp  { $$ = tp.parse(::parse::Tweast() << "if " << *$1 << " then " << *$3 << " <> 0" << " else " << 0);}
+| exp "|" exp  { $$ = tp.parse(::parse::Tweast() << "if " << *$1 << " then " << 1 << " else " << *$3 << " <> 0");}
 | "(" exps ")" {$$ = new ast::SeqExp(@$, $2);}
 | lvalue ":=" exp {$$ = new ast::AssignExp(@$, $1, $3);}
 
