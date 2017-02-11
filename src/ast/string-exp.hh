@@ -16,17 +16,18 @@ namespace ast
   {
   public:
     /// construct a Stringexp node.
-    StringExp(const Location& location, std::string& str);
+    StringExp(const Location& location, std::string str);
     /// destroy a StringExp node
     virtual ~StringExp() = default;
 
     /// Accept a const visitor \a v
     void accept(ConstVisitor& v) const override;
     void accept(Visitor& v) override;
-    std::string& value_get() const;
+    const std::string value_get() const;
+    std::string value_get();
 
   protected:
-    std::string& str_;
+    std::string str_;
   };
 
 } // namespace ast

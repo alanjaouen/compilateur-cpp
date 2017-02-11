@@ -9,8 +9,13 @@
 
 namespace ast
 {
-  inline std::string&
+  const inline std::string
   StringExp::value_get() const
+  {
+    return str_;
+  }
+  inline std::string
+  StringExp::value_get()
   {
     return str_;
   }

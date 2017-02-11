@@ -8,7 +8,7 @@
 
 namespace ast
 {
-  StringExp::StringExp(const Location& location, std::string& str)
+  StringExp::StringExp(const Location& location, std::string str)
     : Exp(location)
     , str_(str)
   {}
