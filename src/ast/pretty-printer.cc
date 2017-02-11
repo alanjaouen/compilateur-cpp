@@ -142,7 +142,7 @@ void PrettyPrinter::operator()(const ForExp& e)
 {
   ostr_ << "for " << e.vardec_get().name_get()
         << " := " << *e.vardec_get().init_get() << " to " << e.hi_get() << " do"
-        << misc::incendl << "("<< e.body_get() << " )" << misc::decendl;
+        << misc::incendl << e.body_get() << misc::decendl;
 }
 
 void PrettyPrinter::operator()(const BreakExp&)
@@ -188,8 +188,9 @@ void PrettyPrinter::operator()(const FunctionDec& e)
   ostr_ << e.name_get() << '(' << e.formals_get() << ')';
   if (e.result_get() != nullptr)
     ostr_ << " : " << *e.result_get();
-  ostr_ << " = " << misc::iendl << '(' << misc::incendl << *e.body_get()
-        << misc::decendl << ')';
+  if (e.body_get() != nullptr)
+    ostr_ << " =" << misc::iendl << '(' << misc::incendl << *e.body_get()
+          << misc::decendl << ')';
 }
 
 void PrettyPrinter::operator()(const MethodDec& e)
