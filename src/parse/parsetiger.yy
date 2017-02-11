@@ -320,7 +320,10 @@ exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ 
 decs:
 %empty   { $$ = new ast::DecsList(@$); }
 | dec decs {$2->push_front($1); $$ = $2;}
-| "_decs" "(" INT ")" decs {$$ = metavar<ast::DecsList>(tp, $3);}
+| "_decs" "(" INT ")" decs {auto* a = metavar<ast::DecsList>(tp, $3);
+  $5->splice_front(*a);
+  $$ = $5;
+  }
 | "import" STRING decs {auto a  = tp.parse_import($2, @2);
   $3->splice_front(*a);
   $$ = $3;
@@ -342,10 +345,23 @@ dec:
   tab->push_front(*b);
   $$ = tab;
   }
+| "function" ID "(" ")" type_dec "=" exp {
+  auto* tab = new ast::FunctionDecs(@$);
+  auto* b = new ast::FunctionDec(@$, $2, new ast::VarDecs(@$), $5, $7);
+  tab->push_front(*b);
+  $$ = tab;
+  }
 | "primitive" ID "(" vardecs ")" type_dec
 {
   auto* tab = new ast::FunctionDecs(@$);
   auto* prim = new ast::FunctionDec(@$, $2, $4, $6, nullptr);
+  tab->push_front(*prim);
+  $$ = tab;
+}
+| "primitive" ID "(" ")" type_dec
+{
+  auto* tab = new ast::FunctionDecs(@$);
+  auto* prim = new ast::FunctionDec(@$, $2, new ast::VarDecs(@$), $5, nullptr);
   tab->push_front(*prim);
   $$ = tab;
 }
@@ -369,11 +385,14 @@ classfields:
 classfields vardec //{$1->emplace_back($2);}
 | classfields "method" ID "(" vardecs ")" type_dec "=" exp
   //{}
+| classfields "method" ID "(" ")" type_dec "=" exp
+  //{}
 | %empty//{ $$ = new ast::DecsList(@$); }
 ;
 ty:
 type_id {$$ = $1;}
 | "{" tyfields "}" {$$ = new ast::RecordTy(@$, $2);}
+| "{"  "}" {$$ = new ast::RecordTy(@$, new ast::fields_type());}
 | "array" "of" type_id {$$ = $3;}
 | "class" dec_class_def "{" classfields "}"
 ;
@@ -392,7 +411,6 @@ ID ":" type_id {
   $5->insert($5->begin(), res);
   $$ = $5;
 }
-| %empty  { $$ = new ast::fields_type(); }
 ;
 // use vardec
 vardecs:
@@ -406,16 +424,15 @@ ID ":" type_id {auto* tab = new ast::VarDecs(@$);
   $5->push_front(*a);
   $$ = $5;
 }
-| %empty  { $$ = new ast::VarDecs(@$); }
+//| %empty  { $$ = new ast::VarDecs(@$); }
 ;
+
 
 
 type_id:
 ID {$$ = new ast::NameTy(@$, $1);}
 | "_namety" "(" INT ")" {$$ = metavar<ast::NameTy>(tp, $3);}
 ;
-
-  // FIXME: Some code was deleted here (More rules).
 
 %%
 

@@ -187,8 +187,9 @@ void PrettyPrinter::operator()(const FunctionDec& e)
   ostr_ << e.name_get() << '(' << e.formals_get() << ')';
   if (e.result_get() != nullptr)
     ostr_ << " : " << *e.result_get();
-  ostr_ << " = " << misc::incendl << '(' << *e.body_get() << ')'
-        << misc::decendl;
+  if (e.body_get() != nullptr)
+    ostr_ << " = " << misc::incendl << '(' << *e.body_get() << ')' << misc::decindent;
+  ostr_ << misc::iendl;
 }
 
 void PrettyPrinter::operator()(const MethodDec& e)
@@ -209,8 +210,12 @@ void PrettyPrinter::operator()(const RecordTy& e)
 {
   ostr_ << '{';
   for (auto& field : e.recs_get())
-    ostr_ << field->name_get() << " : " << field->type_name_get() << " , ";
-  ostr_ << '}';
+  {
+    ostr_ << field->name_get() << " : " << field->type_name_get();
+    if (field != e.recs_get().back())
+        ostr_ << " , ";
+  }
+    ostr_ << '}';
 }
 
 void PrettyPrinter::operator()(const ArrayTy& e)
