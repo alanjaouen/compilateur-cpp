@@ -190,7 +190,6 @@ void PrettyPrinter::operator()(const FunctionDec& e)
     ostr_ << " : " << *e.result_get();
   ostr_ << " = " << misc::iendl << '(' << misc::incendl << *e.body_get()
         << misc::decendl << ')';
-        
 }
 
 void PrettyPrinter::operator()(const FunctionDec& e)
@@ -201,7 +200,6 @@ void PrettyPrinter::operator()(const FunctionDec& e)
     ostr_ << " : " << *e.result_get();
   ostr_ << " = " << misc::iendl << '(' << misc::incendl << *e.body_get()
         << misc::decendl << ')';
-        
 }
 
 void PrettyPrinter::operator()(const NameTy& e)

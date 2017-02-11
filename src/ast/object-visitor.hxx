@@ -38,10 +38,7 @@ void GenObjectVisitor<Const>::operator()(const_t<MethodDecs>& e)
 {
   for (auto& method : e.decs_get())
   {
-    for (auto& var : method->formals_get().decs_get())
-      var->accept(*this);
-    method->result_get()->accept(*this);
-    method->body_get()->accept(*this);
+    e.accept(*this);
   }
 }
 
@@ -50,8 +47,10 @@ void GenObjectVisitor<Const>::operator()(const_t<MethodDec>& e)
 {
   for (auto& var : e.formals_get().decs_get())
     var->accept(*this);
-  e.result_get()->accept(*this);
-  e.body_get()->accept(*this);
+  if (e.result_get() != nullptr)
+    e.result_get()->accept(*this);
+  if (e.body_get() != nullptr)
+    e.body_get()->accept(*this);
 }
 
 template <template <typename> class Const>

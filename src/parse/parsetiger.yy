@@ -396,8 +396,13 @@ classfields vardec {$1->emplace_back($2); $$ = $1;}
     $1->emplace_back(b);
     $$ = $1;
   }
-| classfields "method" ID "(" ")" type_dec "=" exp
-{}
+| classfields "method" ID "(" ")" type_dec "=" exp {
+  auto* a = new ast::MethodDec(@$, $3, nullptr, $6, $8);
+  auto* b = new ast::MethodDecs(@$);
+  b->push_front(*a);
+  $1->emplace_back(b);
+  $$ = $1;
+  }
 | %empty { $$ = new ast::DecsList(@$); }
 ;
 ty:
