@@ -9,7 +9,17 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+  ObjectExp::ObjectExp(const Location& location, Exp* exp, NameTy* type)
+    : Exp(location)
+    , exp_(exp)
+    , type_(type)
+  {}
+
+  ObjectExp::~ObjectExp()
+  {
+    delete exp_;
+    delete type_;
+  }
 
 } // namespace ast
 
