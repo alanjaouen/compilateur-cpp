@@ -317,15 +317,13 @@ lvalue_bracket:
 lvalue_dot "[" exp "]" { $$ = new ast::SubscriptVar(@$, $1, $3); }
 |       lvalue_bracket "[" exp "]" { $$ = new ast::SubscriptVar(@$, $1, $3); }
 |       ID "[" exp "]" { $$ = new ast::SubscriptVar(@$, new ast::SimpleVar(@1, $1), $3); }
+|       ID "[" error "]" { $$ = new ast::SubscriptVar(@$, new ast::SimpleVar(@1, "err"), nullptr); }
 ;
 
 exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ = tab;}
 | exp ";" exps {$3->insert($3->begin(), $1); $$ = $3;}
 | exp error exps {$3->insert($3->begin(), $1); $$ = $3;}
 ;
-
-
-  // FIXME: Some code was deleted here (More rules).
 
 /*---------------.
 | Declarations.  |
