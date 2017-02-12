@@ -83,13 +83,13 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 
 <SC_STRING>
 {
-\\n {tp.location_.lines(1); tp.location_.step(); str += '\n';}
-\a { str += '\a' ;}
-\b { str += '\b';}
-\f { str += '\f';}
-\r { str += '\r';}
-\t { str += '\t';}
-\v { str += '\v';}
+\\n {tp.location_.lines(1); tp.location_.step(); str += "\n";}
+\\a { str += '\a' ;}
+\\b { str += '\b';}
+\\f { str += '\f';}
+\\r { str += '\r';}
+\\t { str += '\t';}
+\\v { str += '\v';}
 \\[0-3][0-7][0-7] {str += strtol(yytext + 1, 0, 8);}
 \\x[0-9a-fA-F][0-9a-fA-F] {str += strtol(yytext + 2, 0, 16);}
 "\\" { str += '\\';}
@@ -100,13 +100,13 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
   }
 \\. { tp.error_ << misc::error::scan
             << tp.location_
-            << ": invalid identifier: `"
+            << ": invalid identifier: '"
             << misc::escape(yytext) << "'\n";
   BEGIN(INITIAL);
 }
 <<EOF>> { tp.error_ << misc::error::scan
             << tp.location_
-            << ": invalid identifier: `"
+            << ": invalid identifier: '"
             << misc::escape(yytext) << "'\n";
   BEGIN(INITIAL);
   }
@@ -125,7 +125,7 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 \\n {tp.location_.lines(1); tp.location_.step();}
 <<EOF>> { tp.error_ << misc::error::scan
             << tp.location_
-            << ": invalid identifier: `"
+            << ": invalid identifier: '"
             << misc::escape(yytext) << "'\n";
   BEGIN(INITIAL);
    }

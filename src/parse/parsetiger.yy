@@ -254,6 +254,10 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | exp "<" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::lt, $3);}
 | exp ">=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::ge, $3);}
 | exp "<=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::le, $3);}
+
+| error "*" exp {$$ = new ast::OpExp(@$, new ast::IntExp(@1, -1), ast::OpExp::Oper::le, $3);}
+
+
 | exp "&" exp { $$ = new ast::IfExp(@$, $1, new ast::OpExp(@$, $3, ast::OpExp::Oper::ne, new ast::IntExp(@$, 0)), new ast::IntExp(@$, 0));}
 
   //{ $$ = tp.parse(::parse::Tweast() << " if " << *$1 << " then " << *$3 << " <> 0 " << " else 0");}
@@ -263,12 +267,16 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | "(" exps ")" {$$ = new ast::SeqExp(@$, $2);}
 | "("  ")" {$$ = new ast::SeqExp(@$, new ast::exps_type());}
 | lvalue ":=" exp {$$ = new ast::AssignExp(@$, $1, $3);}
+| error ":=" exp {$$ = new ast::AssignExp(@$, new ast::SimpleVar(@$, "err"), $3);}
 
 | "if" exp "then" exp "else" exp {$$ = new ast::IfExp(@$, $2, $4, $6); }
 | "if" exp "then" exp {$$ = new ast::IfExp(@$, $2, $4, nullptr); }
 | "while" exp "do" exp {$$ = new ast::WhileExp(@$, $2, $4);}
+| "while" error "do" exp {$$ = new ast::WhileExp(@$, new ast::SimpleVar(@$, "err"), $4);}
 | "for" ID ":=" exp "to" exp "do" exp { $$ = new ast::ForExp
       (@$, new ast::VarDec(@2, $2, nullptr, $4), $6, $8);}
+| "for" error ":=" exp "to" exp "do" exp { $$ = new ast::ForExp
+      (@$, new ast::VarDec(@2, "err", nullptr, $4), $6, $8);}
 | "break" { $$ = new ast::BreakExp(@$);}
 | "let" decs "in" exps  "end" {$$ = new ast::LetExp(@$, $2, new ast::SeqExp(@$,$4)); }
 | "let" decs "in"   "end" {$$ = new ast::LetExp(@$, $2, new ast::SeqExp(@$,new ast::exps_type())); }
@@ -313,6 +321,7 @@ lvalue_dot "[" exp "]" { $$ = new ast::SubscriptVar(@$, $1, $3); }
 
 exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ = tab;}
 | exp ";" exps {$3->insert($3->begin(), $1); $$ = $3;}
+| exp error exps {$3->insert($3->begin(), $1); $$ = $3;}
 ;
 
 
@@ -405,7 +414,7 @@ classfields vardec {$1->emplace_back($2); $$ = $1;}
     $$ = $1;
   }
 | classfields "method" ID "(" ")" type_dec "=" exp {
-  auto* a = new ast::MethodDec(@$, $3, nullptr, $6, $8);
+  auto* a = new ast::MethodDec(@$, $3, new ast::VarDecs(@$), $6, $8);
   auto* b = new ast::MethodDecs(@$);
   b->push_front(*a);
   $1->emplace_back(b);

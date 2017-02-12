@@ -22,16 +22,14 @@ main()
   std::cout << *f << std::endl;
   delete f;
   ast::Exp* g = parse::parse("let \
-	var a:= 0 \
+	var a:= 0                 \
 in \ 
-	for i:=0 to 100 do (a:=a+1;())\
+	for i:=0 to 100 do (a:=a+1;())          \
 end");
   std::cout << *g << std::endl;
   delete g;
-//    ast::Exp* g = parse::parse("let \
-// 	var a:= 0 \
-// in \
-// end");
-//   std::cout << *g << std::endl;
-//   delete g;
+  ast::Exp* h = parse::parse("a & b");
+  std::cout << *h << std::endl;
+  delete h;
+
 }

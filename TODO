@@ -24,12 +24,12 @@ AST:
 [x]     - method-call-exp.cc
 [x]     - method-call-exp.hh
 [x]     - method-call-exp.hxx
-[]        - object-exp.cc
-[]        - object-exp.hh
-[]        - object-exp.hxx
+[x]        - object-exp.cc
+[x]        - object-exp.hh
+[x]        - object-exp.hxx
 [x]     - op-exp.cc
-        - pretty-printer.cc
-        - pretty-printer.hh
+ x       - pretty-printer.cc
+ x       - pretty-printer.hh
 [x]     - record-exp.cc
 [x]     - record-exp.hh
 [x]     - record-exp.hxx
@@ -44,12 +44,12 @@ AST:
 [x]     - string-exp.hxx
 
 VISITOR:
-        - default-visitor.hxx
-        - object-visitor.hxx
+ x       - default-visitor.hxx
+ x       - object-visitor.hxx
 
 
 
 PARSER:
-       - parse/parsetiger.yy
-       - parse/scantiger.ll
-       - parse/tasks.cc
+ x      - parse/parsetiger.yy
+ x      - parse/scantiger.ll
+ x      - parse/tasks.cc

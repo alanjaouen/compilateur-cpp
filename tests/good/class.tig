@@ -11,6 +11,6 @@ class Point2d
         self.print_row ();
         print (", ");
         self.print_col ();
-        print (")");
+        print (")")
     )
 }
