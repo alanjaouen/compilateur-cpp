@@ -186,6 +186,7 @@ EOF 0        "end of file"
 EXP "_exp"
 LVALUE "_lvalue"
 NAMETY "_namety"
+
 %left "|"
 %left "&"
 %left "+" "-"
@@ -253,9 +254,14 @@ INT   { $$ = new ast::IntExp(@$, $1); }
 | exp "<" exp  {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::lt, $3);}
 | exp ">=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::ge, $3);}
 | exp "<=" exp {$$ = new ast::OpExp(@$, $1, ast::OpExp::Oper::le, $3);}
-| exp "&" exp  { $$ = tp.parse(::parse::Tweast() << "if " << *$1 << " then " << *$3 << " <> 0" << " else " << 0);}
-| exp "|" exp  { $$ = tp.parse(::parse::Tweast() << "if " << *$1 << " then " << 1 << " else " << *$3 << " <> 0");}
+| exp "&" exp { $$ = new ast::IfExp(@$, $1, new ast::OpExp(@$, $3, ast::OpExp::Oper::ne, new ast::IntExp(@$, 0)), new ast::IntExp(@$, 0));}
+
+  //{ $$ = tp.parse(::parse::Tweast() << " if " << *$1 << " then " << *$3 << " <> 0 " << " else 0");}
+| exp "|" exp { $$ = new ast::IfExp(@$, $1, new ast::IntExp(@$, 1), new ast::OpExp(@$, $3, ast::OpExp::Oper::ne, new ast::IntExp(@$, 0)));}
+
+  //{ $$ = tp.parse(::parse::Tweast() << " if " << *$1 << " then 1 " << " else " << *$3 << " <> 0 ");}
 | "(" exps ")" {$$ = new ast::SeqExp(@$, $2);}
+| "("  ")" {$$ = new ast::SeqExp(@$, new ast::exps_type());}
 | lvalue ":=" exp {$$ = new ast::AssignExp(@$, $1, $3);}
 
 | "if" exp "then" exp "else" exp {$$ = new ast::IfExp(@$, $2, $4, $6); }
@@ -265,6 +271,7 @@ INT   { $$ = new ast::IntExp(@$, $1); }
       (@$, new ast::VarDec(@2, $2, nullptr, $4), $6, $8);}
 | "break" { $$ = new ast::BreakExp(@$);}
 | "let" decs "in" exps  "end" {$$ = new ast::LetExp(@$, $2, new ast::SeqExp(@$,$4)); }
+| "let" decs "in"   "end" {$$ = new ast::LetExp(@$, $2, new ast::SeqExp(@$,new ast::exps_type())); }
 
 | "_cast" "(" exp "," ty ")" { $$ = new ast::CastExp(@$, $3, $5);}
 | "_exp" "(" INT ")" {$$ = metavar<ast::Exp>(tp, $3);}
@@ -306,8 +313,8 @@ lvalue_dot "[" exp "]" { $$ = new ast::SubscriptVar(@$, $1, $3); }
 
 exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ = tab;}
 | exp ";" exps {$3->insert($3->begin(), $1); $$ = $3;}
-| %empty   { $$ = new ast::exps_type(); }
 ;
+
 
   // FIXME: Some code was deleted here (More rules).
 

@@ -182,11 +182,11 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 "var"           { return TOKEN(VAR);       }
 "while"         { return TOKEN(WHILE);     }
 "\""            { str = ""; BEGIN(SC_STRING);}
-"_cast"         { return TOKEN(CAST); }
-"_decs"         { return TOKEN(DECS);}
-"_exp"          { return TOKEN(EXP);}
-"_lvalue"       { return TOKEN(LVALUE);}
-"_namety"       { return TOKEN(NAMETY);}
+"_cast"         { CHECK_EXTENSION(); return TOKEN(CAST); }
+"_decs"         { CHECK_EXTENSION(); return TOKEN(DECS);}
+"_exp"          { CHECK_EXTENSION(); return TOKEN(EXP);}
+"_lvalue"       { CHECK_EXTENSION(); return TOKEN(LVALUE);}
+"_namety"       { CHECK_EXTENSION(); return TOKEN(NAMETY);}
 
 {int} {
     int val = 0;
