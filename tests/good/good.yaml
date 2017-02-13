@@ -22,7 +22,7 @@ line.tih: 0
 local-vs-global-type.tig: 0
 logo.tih: 0
 merge.tig: 0
-multi-class-&-function-call-in-method.tig: 0
+--object multi-class-\&-function-call-in-method.tig: 0
 mutually-recursive-functions.tig: 0
 mutually-recursive-procedures.tig: 0
 --object new-object.tig: 0
