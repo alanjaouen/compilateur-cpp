@@ -60,14 +60,17 @@ public:
 
   /// \}
 
-private:
-  // Factor pretty-printing of RecordExp and RecordTy.
-  template <typename RecordClass>
-  void print_record(const RecordClass& e);
+  private:
+    // Factor pretty-printing of RecordExp and RecordTy.
+    template <typename RecordClass>
+    void print_record(const RecordClass& e);
 
-protected:
-  /// The stream to print on.
-  std::ostream& ostr_;
-};
+    // Whether we are in a ast::ClassTy.
+    bool within_classty_p_ = false;
+
+  protected:
+    /// The stream to print on.
+    std::ostream& ostr_;
+  };
 
 } // namespace ast

@@ -24,6 +24,7 @@ namespace object
     TASK_DECLARE("object-parse", "parse a file, allowing objects",
                  object_parse, "object parse");
 
+  // FIXME: Some code was deleted here.
 
 
 

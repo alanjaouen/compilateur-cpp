@@ -22,6 +22,7 @@ namespace object
     object_parse()
     {}
 
+  // FIXME: Some code was deleted here.
 
 
 
