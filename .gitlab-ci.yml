@@ -1,0 +1,2 @@
+job:
+        script: "./bootstrap; ./configure; make -j check"
