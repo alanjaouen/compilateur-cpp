@@ -1,4 +1,8 @@
-New in 1.54, 2017-02-22
+New in 1.56, 2017-02-13
+
+* Fix documentation
+
+New in 1.55, 2017-02-02
 
 * General Maintenance
   - Remove unnecessary/deprecated Fixmes
