@@ -58,22 +58,12 @@ def list_category(yaml_file):
 
 
 def get_status(my, ref):
-    returncode = my + ref
-    if returncode == 0 or returncode == 4 or returncode == 6:
+    if my == ref:
         return (0, "\tmy returned: " + str(my) +\
                    "\n\tref returned: " + str(ref))
-    elif returncode == 2:
-        return (2, "\tmy returned: " + str(my) +\
-                   "\n\tref returned: " + str(ref))
-    elif returncode == 3:
-        return (3, "\tmy returned: " + str(my) +\
-                   "\n\tref returned: " + str(ref))
-    elif returncode == 5:
-        return (5, "\tmy returned: " + str(my) +\
-                   "\n\tref returned: " + str(ref))
     else:
-        return (1, "\tOups! An error occured. my returned: " + str(my) +\
-                   " and ref returned: " + str(ref))
+        return (1, "\tmy returned: " + str(my) +\
+                   "\n\tref returned: " + str(ref))
 
 
 def errormsg(percent, category, mycmd, comment, msg):
