@@ -54,7 +54,7 @@ namespace object
   Binder::operator()(ast::ClassTy& e)
   {
     scope_begin();
-    e.super_get().accept(*this);
+//    e.super_get().accept(*this);
     bool saved_within_class_ty = within_class_ty_;
     within_class_ty_ = true;
     bool saved_within_method_dec = within_method_dec_;
