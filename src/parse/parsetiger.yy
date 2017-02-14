@@ -217,6 +217,10 @@ NAMETY "_namety"
 %type <ast::FieldVar*> lvalue_dot
 %type <ast::DecsList*> classfields
 %type <ast::NameTy*> dec_class_def
+
+%type <ast::FunctionDecs*> function_decs
+
+
 %destructor {delete $$;} <ast::Exp*> <ast::DecsList*> <ast::NameTy*> <ast::exps_type*> <ast::Var*> <ast::Decs*> <ast::Ty*>  <ast::fieldinits_type*> <ast::VarDecs*> <ast::fields_type*>
 
 %start program
@@ -332,7 +336,7 @@ exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ 
 %token DECS "_decs";
 decs:
 %empty   { $$ = new ast::DecsList(@$); }
-| dec decs {$2->push_front($1); $$ = $2;}
+| decs_type decs {$2->push_front($1); $$ = $2;}
 | "_decs" "(" INT ")" decs {auto* a = metavar<ast::DecsList>(tp, $3);
   $5->splice_front(*a);
   $$ = $5;
@@ -342,50 +346,51 @@ decs:
     $3->splice_front(*a);
   $$ = $3;
   }
+| vardec {$$ = $1;}
+| function_decs decs {$2->push_front($1); $$ = $2;}
 ;
 
-dec:
-"type" ID "=" ty {
-  auto* a = new ast::TypeDecs(@$);
+decs_type:
+"type" ID "=" ty decs_type {
   auto* b = new ast::TypeDec(@$, $2, $4);
-  a->push_front(*b);
-  $$ = a;
+  $5->push_front(*b);
+  $$ = $5;
 }
-| "class" ID dec_class_def "{" classfields "}" {
+| "class" ID dec_class_def "{" classfields "}" decs_type{
   auto* a = new ast::ClassTy(@$, $3, $5);
   auto* b = new ast::TypeDec(@$, $2, a);
-  auto* c = new ast::TypeDecs(@$);
   c->push_front(*b);
   $$ = c;
   }
-| vardec {$$ = $1;}
+| %empty { $$ = new ast::TypeDecs(@$);}
+;
+function_decs:
 | "function" ID "(" vardecs ")" type_dec "=" exp {
-  auto* tab = new ast::FunctionDecs(@$);
   auto* b = new ast::FunctionDec(@$, $2, $4, $6, $8);
   tab->push_front(*b);
   $$ = tab;
   }
 | "function" ID "(" ")" type_dec "=" exp {
-  auto* tab = new ast::FunctionDecs(@$);
   auto* b = new ast::FunctionDec(@$, $2, new ast::VarDecs(@$), $5, $7);
   tab->push_front(*b);
   $$ = tab;
   }
 | "primitive" ID "(" vardecs ")" type_dec
 {
-  auto* tab = new ast::FunctionDecs(@$);
   auto* prim = new ast::FunctionDec(@$, $2, $4, $6, nullptr);
   tab->push_front(*prim);
   $$ = tab;
 }
 | "primitive" ID "(" ")" type_dec
 {
-  auto* tab = new ast::FunctionDecs(@$);
-  auto* prim = new ast::FunctionDec(@$, $2, new ast::VarDecs(@$), $5, nullptr);
+    auto* prim = new ast::FunctionDec(@$, $2, new ast::VarDecs(@$), $5, nullptr);
   tab->push_front(*prim);
   $$ = tab;
 }
+| %empty { $$ = new ast::FunctionDecs(@$);}
 ;
+
+
 type_dec:
 ":" type_id { $$ = $2; }
 | %empty    { $$ = nullptr; }
@@ -401,6 +406,7 @@ vardec:
   $$ = a;
 }
 ;
+
 classfields:
 classfields vardec {$1->emplace_back($2); $$ = $1;}
 | classfields "method" ID "(" vardecs ")" type_dec "=" exp
@@ -418,7 +424,6 @@ classfields vardec {$1->emplace_back($2); $$ = $1;}
   $1->emplace_back(b);
   $$ = $1;
   }
-| %empty { $$ = new ast::DecsList(@$); }
 ;
 ty:
 type_id {$$ = $1;}
