@@ -192,7 +192,8 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
     int val = 0;
     auto res = std::stol(yytext);
     if (res > INT_MAX)
-      throw std::overflow_error(res + " is overfow max int");
+      tp.error_ << misc::error::scan
+                << tp.Location_ << "overflowed int: " << yytext << std::endl;
     val = res;
     return TOKEN_VAL(INT, val);
 }
