@@ -20,7 +20,11 @@ namespace misc
   template <typename Key, typename Data>
   class scoped_map
   {
-  // FIXME: Some code was deleted here.
+    void put (const Key& key, const Data& value);
+    Data get (const Key& key) const;
+    std::ostream& dump (std::ostream& ostr) const;
+    void scope_begin ();
+    void scope_end ();
   };
 
   template <typename Key, typename Data>
