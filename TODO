@@ -1,55 +1,40 @@
-AST:
-
-[x]     - array-exp.cc
-[x]     - array-exp.hh
-[x]     - array-exp.hxx
-[x]     - assign-exp.cc
-[x]     - assign-exp.hh
-[x]     - assign-exp.hxx
-[x]     - break-exp.cc
-[x]     - break-exp.hh
-[x]     - break-exp.hxx
-[x]     - call-exp.cc
-[x]     - call-exp.hh
-[x]     - call-exp.hxx
-[x]     - field-var.cc
-[x]     - field-var.hh
-[x]     - field-var.hxx
-[x]     - if-exp.cc
-[x]     - if-exp.hh
-[x]     - if-exp.hxx
-[x]     - let-exp.cc
-[x]     - let-exp.hh
-[x]     - let-exp.hxx
-[x]     - method-call-exp.cc
-[x]     - method-call-exp.hh
-[x]     - method-call-exp.hxx
-[x]        - object-exp.cc
-[x]        - object-exp.hh
-[x]        - object-exp.hxx
-[x]     - op-exp.cc
- x       - pretty-printer.cc
- x       - pretty-printer.hh
-[x]     - record-exp.cc
-[x]     - record-exp.hh
-[x]     - record-exp.hxx
-[x]     - record-ty.cc
-[x]     - record-ty.hh
-[x]     - record-ty.hxx
-[x]     - seq-exp.cc
-[x]     - seq-exp.hh
-[x]     - seq-exp.hxx
-[x]     - string-exp.cc
-[x]     - string-exp.hh
-[x]     - string-exp.hxx
-
-VISITOR:
- x       - default-visitor.hxx
- x       - object-visitor.hxx
 
 
+[]- lib/misc/scoped-map.hxx
+[]- lib/misc/scoped-map.hh
+[]- lib/misc/test-symbol.cc
 
-PARSER:
- x      - parse/parsetiger.yy
- x      - parse/scantiger.ll
- x      - parse/tasks.cc
+[]- src/ast/escapable.hh
+[]- src/ast/escapable.cc
+[]- src/ast/escapable.hxx
+
+[]- src/ast/pretty-printer.cc
+
+
+[]- src/object/tasks.hh
+[]- src/object/libobject.cc
+[]- src/object/libobject.cc
+[]- src/object/binder.cc
+
+[]- src/bind/binder.cc
+[]- src/bind/binder.hxx
+[]- src/bind/binder.hh
+
+[]- src/bind/renamer.hxx
+[]- src/bind/renamer.hh
+[]- src/bind/renamer.cc
+
+[]- src/bind/libbind.cc
+[]- src/bind/libbind.hh
+[]- src/object/libobject.hh
+
+[]- src/bind/tasks.cc
+[]- src/bind/tasks.hh
+[]- src/object/tasks.cc
+
+[]- src/parse/parsetiger.yy
+[]- src/parse/scantiger.ll
+
+
+[]- src/escapes/escapes-visitor.hh
+[]- src/escapes/escapes-visitor.cc
