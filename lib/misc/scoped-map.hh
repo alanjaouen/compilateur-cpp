@@ -20,11 +20,21 @@ namespace misc
   template <typename Key, typename Data>
   class scoped_map
   {
+    using scope_slot = std::map<Key&, Data&>;
+    using scope_type = std::vector<scope_slot&>;
+
+    scoped_map(const Key& key, const Data& value);
+
     void put (const Key& key, const Data& value);
     Data get (const Key& key) const;
     std::ostream& dump (std::ostream& ostr) const;
     void scope_begin ();
     void scope_end ();
+
+    const scope_type& scopes_get() const;
+  private:
+
+    scope_type& scopes_;
   };
 
   template <typename Key, typename Data>
