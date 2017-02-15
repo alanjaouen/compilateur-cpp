@@ -1,7 +1,6 @@
 stages:
  - config
  - build
- - tests
 
 config:
   stage: config
@@ -12,9 +11,7 @@ config:
 build:
   stage: build
   script: "make -j8"
-  artifacts:
-    untracked: true
     
 tests:
-  stage: tests
+  stage: build
   script: "make check -j8"
