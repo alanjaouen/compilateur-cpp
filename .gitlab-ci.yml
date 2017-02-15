@@ -1,11 +1,16 @@
-bootstrap:
-        script: "./bootstrap;"
+stages:
+ - config
+ - build
+ - tests
 
-configure:
-        script "./configure;"
+config:
+  stages: config
+  script: "./bootstrap; ./configure;"
 
 build:
-        script "make -j8"
+  stages: build
+  script: "make -j8"
 
-check:
-        script "make check -j8"
+tests:
+  stages: tests
+  script: "make check -j8"
