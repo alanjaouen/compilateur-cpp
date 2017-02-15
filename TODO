@@ -32,8 +32,8 @@
 []- src/bind/tasks.hh
 []- src/object/tasks.cc
 
-[]- src/parse/parsetiger.yy
-[]- src/parse/scantiger.ll
+[x]- src/parse/parsetiger.yy
+[x]- src/parse/scantiger.ll
 
 
 []- src/escapes/escapes-visitor.hh
