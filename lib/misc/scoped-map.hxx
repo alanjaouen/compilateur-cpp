@@ -16,6 +16,11 @@ namespace misc
 {
 
   template <typename Key, typename Data>
+  scoped_map<Key, Data>::scoped_map() :
+    scopes_(new scope_type())
+  {}
+
+  template <typename Key, typename Data>
   scoped_map<Key, Data>::scoped_map(const Key& key, const Data& value)
   {
     scope_type* list = new scope_type();
