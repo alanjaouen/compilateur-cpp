@@ -1,2 +1,11 @@
-job:
-        script: "./bootstrap; ./configure; make -j check"
+bootstrap:
+        script: "./bootstrap;"
+
+configure:
+        script "./configure;"
+
+build:
+        script "make -j8"
+
+check:
+        script "make check -j8"
