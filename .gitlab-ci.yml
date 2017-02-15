@@ -6,11 +6,15 @@ stages:
 config:
   stage: config
   script: "./bootstrap; ./configure;"
-
+  artifacts:
+      untracked: true
+      
 build:
   stage: build
   script: "make -j8"
-
+  artifacts:
+    untracked: true
+    
 tests:
   stage: tests
   script: "make check -j8"
