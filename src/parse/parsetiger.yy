@@ -187,27 +187,31 @@ EXP "_exp"
 LVALUE "_lvalue"
 NAMETY "_namety"
 
+CHUNK "chunk"
+
+
+%nonassoc CHUNK
+%nonassoc THEN OF //DO
+
+%precedence ":=" "to" "in" "do" "else"
+%nonassoc IF
+%nonassoc CLASS METHOD EXTENDS FUNCTION PRIMITIVE TYPE VAR
+
 %left "|"
 %left "&"
 %left "+" "-"
 %left "*" "/"
-
-
 %nonassoc ">=" "<=" "=" "<>" "<" ">"
-%nonassoc THEN DO OF
-%nonassoc  ELSE
-%nonassoc ASSIGN
-  // FIXME: Some code was deleted here (More %types).
 
-
+%type <ast::Ast*> program
 %type <ast::Exp*> exp
 %type <ast::DecsList*> decs
 %type <ast::NameTy*> type_id
 %type <ast::exps_type*> exps
 %type <ast::Var*> lvalue
-%type <ast::Decs*> dec
+ //%type <ast::Decs*> dec
 %type <ast::Ty*> ty
-%type <ast::NameTy*> type_dec
+%type <ast::NameTy*> return_type
 %type <ast::VarDecs*> vardec
 %type <ast::fieldinits_type*> array
 %type <ast::exps_type*> function
@@ -215,9 +219,20 @@ NAMETY "_namety"
 %type <ast::fields_type*> tyfields
 %type <ast::SubscriptVar*> lvalue_bracket
 %type <ast::FieldVar*> lvalue_dot
+
+%type <ast::FunctionDecs*> decs_functions
+%type <ast::TypeDecs*> decs_types
+%type <ast::FunctionDec*> dec_function
+%type <ast::TypeDec*> dec_type
+
+
 %type <ast::DecsList*> classfields
-%type <ast::NameTy*> dec_class_def
-%destructor {delete $$;} <ast::Exp*> <ast::DecsList*> <ast::NameTy*> <ast::exps_type*> <ast::Var*> <ast::Decs*> <ast::Ty*>  <ast::fieldinits_type*> <ast::VarDecs*> <ast::fields_type*>
+%type <ast::NameTy*> super_class
+%type <ast::MethodDecs*> methoddecs
+%type <ast::MethodDec*> methoddec
+
+
+%destructor {delete $$;} <ast::Exp*> <ast::DecsList*> <ast::NameTy*> <ast::exps_type*> <ast::Var*>  <ast::Ty*>  <ast::fieldinits_type*> <ast::VarDecs*> <ast::fields_type*> <ast::TypeDecs*> <ast::FunctionDecs*> <ast::TypeDec*> <ast::FunctionDec*> <ast::MethodDec*> <ast::MethodDecs*>
 
 %start program
 
@@ -332,7 +347,7 @@ exps: exp {auto* tab  = new ast::exps_type(); tab->insert(tab->begin(), $1); $$ 
 %token DECS "_decs";
 decs:
 %empty   { $$ = new ast::DecsList(@$); }
-| dec decs {$2->push_front($1); $$ = $2;}
+//| decs_type decs {$2->push_front($1); $$ = $2;}
 | "_decs" "(" INT ")" decs {auto* a = metavar<ast::DecsList>(tp, $3);
   $5->splice_front(*a);
   $$ = $5;
@@ -342,90 +357,76 @@ decs:
     $3->splice_front(*a);
   $$ = $3;
   }
+| vardec decs {$2->push_front($1); $$ = $2;}
+| decs_functions decs {$2->push_front($1); $$ = $2;}
+| decs_types decs {$2->push_front($1); $$ = $2;}
 ;
 
-dec:
-"type" ID "=" ty {
-  auto* a = new ast::TypeDecs(@$);
-  auto* b = new ast::TypeDec(@$, $2, $4);
-  a->push_front(*b);
-  $$ = a;
-}
-| "class" ID dec_class_def "{" classfields "}" {
-  auto* a = new ast::ClassTy(@$, $3, $5);
-  auto* b = new ast::TypeDec(@$, $2, a);
-  auto* c = new ast::TypeDecs(@$);
-  c->push_front(*b);
-  $$ = c;
-  }
-| vardec {$$ = $1;}
-| "function" ID "(" vardecs ")" type_dec "=" exp {
-  auto* tab = new ast::FunctionDecs(@$);
-  auto* b = new ast::FunctionDec(@$, $2, $4, $6, $8);
-  tab->push_front(*b);
-  $$ = tab;
-  }
-| "function" ID "(" ")" type_dec "=" exp {
-  auto* tab = new ast::FunctionDecs(@$);
-  auto* b = new ast::FunctionDec(@$, $2, new ast::VarDecs(@$), $5, $7);
-  tab->push_front(*b);
-  $$ = tab;
-  }
-| "primitive" ID "(" vardecs ")" type_dec
-{
-  auto* tab = new ast::FunctionDecs(@$);
-  auto* prim = new ast::FunctionDec(@$, $2, $4, $6, nullptr);
-  tab->push_front(*prim);
-  $$ = tab;
-}
-| "primitive" ID "(" ")" type_dec
-{
-  auto* tab = new ast::FunctionDecs(@$);
-  auto* prim = new ast::FunctionDec(@$, $2, new ast::VarDecs(@$), $5, nullptr);
-  tab->push_front(*prim);
-  $$ = tab;
-}
+decs_types:
+ dec_type %prec CHUNK  { $$ = new ast::TypeDecs(@$); $$->push_front(*$1);}
+| dec_type decs_types { $2->push_front(*$1); $$ = $2;}
 ;
-type_dec:
-":" type_id { $$ = $2; }
-| %empty    { $$ = nullptr; }
+
+dec_type:
+  "type" ID "=" ty  { $$ = new ast::TypeDec(@$, $2, $4);}
+| "class" ID super_class "{" classfields "}" { auto* a = new ast::ClassTy(@$, $3, $5);
+  $$ = new ast::TypeDec(@$, $2, a); }
 ;
-dec_class_def:
-"extends" type_id { $$ = $2; }
-| %empty { $$ = nullptr; }
+
+
+decs_functions:
+dec_function %prec CHUNK {$$ = new ast::FunctionDecs(@$); $$->push_front(*$1);}
+| dec_function decs_functions { $2->push_front(*$1); $$ = $2;}
 ;
+
+
+dec_function:
+ "function" ID "(" vardecs ")" return_type "=" exp { $$ = new ast::FunctionDec(@$, $2, $4, $6, $8); }
+| "function" ID "(" ")" return_type "=" exp {  $$ = new ast::FunctionDec(@$, $2, new ast::VarDecs(@$), $5, $7); }
+| "primitive" ID "(" vardecs ")" return_type { $$ = new ast::FunctionDec(@$, $2, $4, $6, nullptr); }
+| "primitive" ID "(" ")" return_type {$$ = new ast::FunctionDec(@$, $2, new ast::VarDecs(@$), $5, nullptr); }
+;
+
 vardec:
-"var" ID type_dec ":=" exp { auto* a = new ast::VarDecs(@$);
+"var" ID return_type ":=" exp { auto* a = new ast::VarDecs(@$);
   auto* b = new ast::VarDec(@$, $2, $3, $5);
   a->push_front(*b);
   $$ = a;
 }
 ;
-classfields:
-classfields vardec {$1->emplace_back($2); $$ = $1;}
-| classfields "method" ID "(" vardecs ")" type_dec "=" exp
-  {
-    auto* a = new ast::MethodDec(@$, $3, $5, $7, $9);
-    auto* b = new ast::MethodDecs(@$);
-    b->push_front(*a);
-    $1->emplace_back(b);
-    $$ = $1;
-  }
-| classfields "method" ID "(" ")" type_dec "=" exp {
-  auto* a = new ast::MethodDec(@$, $3, new ast::VarDecs(@$), $6, $8);
-  auto* b = new ast::MethodDecs(@$);
-  b->push_front(*a);
-  $1->emplace_back(b);
-  $$ = $1;
-  }
-| %empty { $$ = new ast::DecsList(@$); }
+
+return_type:
+":" type_id { $$ = $2; }
+| %empty    { $$ = nullptr; }
 ;
+super_class:
+"extends" type_id { $$ = $2; }
+| %empty { $$ = nullptr; }
+;
+
+classfields:
+vardec classfields {$2->push_front($1); $$ = $2;}
+| methoddecs classfields {$2->push_front($1); $$ = $2;}
+| %empty { $$ = new ast::DecsList(@$); }
+
+;
+
+methoddecs:
+methoddec %prec CHUNK {$$ = new ast::MethodDecs(@$); $$->push_front(*$1);}
+| methoddec methoddecs {$2->push_front(*$1); $$ = $2; }
+;
+methoddec:
+ "method" ID "(" vardecs ")" return_type "=" exp { $$ = new ast::MethodDec(@$, $2, $4, $6, $8); }
+| "method" ID "(" ")" return_type "=" exp {$$ = new ast::MethodDec(@$, $2, new ast::VarDecs(@$), $5, $7); }
+;
+
+
 ty:
 type_id {$$ = $1;}
 | "{" tyfields "}" {$$ = new ast::RecordTy(@$, $2);}
 | "{"  "}" {$$ = new ast::RecordTy(@$, new ast::fields_type());}
 | "array" "of" type_id {$$ = $3;}
-| "class" dec_class_def "{" classfields "}" { $$ = new ast::ClassTy(@$, $2, $4); }
+| "class" super_class "{" classfields "}" { $$ = new ast::ClassTy(@$, $2, $4); }
 ;
 
 //use field
