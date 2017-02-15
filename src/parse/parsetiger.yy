@@ -187,11 +187,15 @@ EXP "_exp"
 LVALUE "_lvalue"
 NAMETY "_namety"
 
+CHUNK "chunk"
+
+
+%nonassoc CHUNK
 %nonassoc THEN OF //DO
 
 %precedence ":=" "to" "in" "do" "else"
 %nonassoc IF
-%nonassoc CLASS METHOD EXTENDS FUNCTION PRIMITIVE
+%nonassoc CLASS METHOD EXTENDS FUNCTION PRIMITIVE TYPE VAR
 
 %left "|"
 %left "&"
@@ -359,8 +363,8 @@ decs:
 ;
 
 decs_types:
-dec_type { $$ = new ast::TypeDecs(@$); $$->push_front($1);}
-| dec_type decs_types {$2->push_front($1); $$ = $2;}
+ dec_type %prec CHUNK  { $$ = new ast::TypeDecs(@$); $$->push_front(*$1);}
+| dec_type decs_types { $2->push_front(*$1); $$ = $2;}
 ;
 
 dec_type:
@@ -371,8 +375,8 @@ dec_type:
 
 
 decs_functions:
-dec_function {$$ = new ast::FunctionDecs(@$); $$->push_front($1);}
-| dec_function decs_functions { $2->push_front($1); $$ = $2;}
+dec_function %prec CHUNK {$$ = new ast::FunctionDecs(@$); $$->push_front(*$1);}
+| dec_function decs_functions { $2->push_front(*$1); $$ = $2;}
 ;
 
 
@@ -401,15 +405,15 @@ super_class:
 ;
 
 classfields:
-vardec classfields {$1->emplace_back($2); $$ = $1;}
+vardec classfields {$2->push_front($1); $$ = $2;}
 | methoddecs classfields {$2->push_front($1); $$ = $2;}
 | %empty { $$ = new ast::DecsList(@$); }
 
 ;
 
 methoddecs:
-methoddec {$$ = new ast::MethodDecs(@$); $$->push_front($1);}
-| methoddec methoddecs {$2->push_front($1); $$ = $2; }
+methoddec %prec CHUNK {$$ = new ast::MethodDecs(@$); $$->push_front(*$1);}
+| methoddec methoddecs {$2->push_front(*$1); $$ = $2; }
 ;
 methoddec:
  "method" ID "(" vardecs ")" return_type "=" exp { $$ = new ast::MethodDec(@$, $2, $4, $6, $8); }
