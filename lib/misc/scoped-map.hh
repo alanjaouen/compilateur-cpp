@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <map>
+#include <ostream>
 
 namespace misc
 {
@@ -27,6 +28,7 @@ namespace misc
     scoped_map(const Key& key, const Data& value);
     // needed by lrde tests
     scoped_map();
+    ~scoped_map();
 
     void put (const Key& key, const Data& value);
     Data get (const Key& key) const;
