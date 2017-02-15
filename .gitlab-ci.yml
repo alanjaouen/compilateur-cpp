@@ -4,13 +4,13 @@ stages:
  - tests
 
 config:
-  stages: config
+  stage: config
   script: "./bootstrap; ./configure;"
 
 build:
-  stages: build
+  stage: build
   script: "make -j8"
 
 tests:
-  stages: tests
+  stage: tests
   script: "make check -j8"
