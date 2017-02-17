@@ -1,16 +1,8 @@
-# will be invalid latter
-break-outside-loop.tig: 0
-# will be invalid latter
-invalid-function-redefinition-1.tig: 0
-# will be invalid latter
-invalid-type-redefinition.tig: 0
-# will be invalid latter
-test17.tig: 0
-# will be invalid latter
-test18.tig: 0
-# will be invalid latter
-test19.tig: 0
-# will be invalid latter
-undeclared-variable.tig: 0
-# will be invalid latter
-unknown-record.tig: 0
+break-outside-loop.tig: 4
+invalid-function-redefinition-1.tig: 4
+invalid-type-redefinition.tig: 4
+recursive-function-interupt.tig: 4
+recursive-type-interupt.tig: 4
+undeclared-variable-in-function.tig: 4
+undeclared-variable.tig: 4
+unknown-record.tig: 4
