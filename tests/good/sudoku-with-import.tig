@@ -9,7 +9,7 @@ let
   var n := 9
 
   type int_array = array of int
-  var grid := let import "test64.tih" in init_grid() end
+  var grid := let import "sudoku.tih" in init_grid() end
 
   function print_board() =
   (print("-------------------");
