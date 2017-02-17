@@ -21,6 +21,7 @@ namespace misc
   template <typename Key, typename Data>
   class scoped_map
   {
+  public:
     //Fixed
   public:
     using scope_slot = std::map<Key, Data>;
