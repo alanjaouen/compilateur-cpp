@@ -59,8 +59,20 @@ namespace bind
 
     /* The visiting methods. */
     void operator()(ast::LetExp& e) override;
-  // FIXME: Some code was deleted here.
 
+    void operator()(ast::VarDecs& e) override;
+    void operator()(ast::FunctionDecs& e) override;
+    void operator()(ast::TypeDecs& e) override;
+    void operator()(ast::DecsList& e) override;
+
+    void operator()(ast::ForExp& e) override;
+    void operator()(ast::WhileExp& e) override;
+    void operator()(ast::BreakExp& e) override;
+    
+    void operator()(ast::SeqExp& e) override;
+//    void operator()(ast::& e) override;
+    //void operator()(ast::WhileExp& e) override;
+    
     // ---------------- //
     // Visiting /Dec/.  //
     // ---------------- //
@@ -109,6 +121,7 @@ namespace bind
     void visit_dec_body(D& e);
 
   // FIXME: Some code was deleted here.
+
     /// \}
 
     /// \name Error handling
@@ -150,8 +163,11 @@ namespace bind
 
     /// Binding errors handler.
     misc::error error_;
-
-  // FIXME: Some code was deleted here (More members).
+    
+    // FIXED
+    misc::scoped_map<misc::symbol, ast::TypeDec*> type_dec;
+    misc::scoped_map<misc::symbol, ast::FunctionDec*> function_dec;
+    misc::scoped_map<misc::symbol, ast::VarDec*> Var_dec;
   };
 }
 
