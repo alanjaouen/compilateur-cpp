@@ -28,7 +28,6 @@ namespace misc
     using scope_type = std::vector<scope_slot>;
 
     scoped_map();
-    // scoped_map(const Key key, const Data value);
     // needed by lrde tests
     ~scoped_map() = default;
 

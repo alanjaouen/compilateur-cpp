@@ -20,15 +20,6 @@ namespace misc
     scopes_()
   {}
 
-  // template <typename Key, typename Data>
-  // scoped_map<Key, Data>::scoped_map(const Key key, const Data value)
-  // {
-  //   scope_type* list = new scope_type();
-  //   scope_slot& slot = new scope_slot(key, value);
-  //   list.push_back(slot);
-  //   scopes_ = list;
-  // }
-
   template <typename Key, typename Data>
   void scoped_map<Key, Data>::put(const Key& key, const Data& value)
   {
@@ -40,23 +31,25 @@ namespace misc
   {
     for (auto i = scopes_.rbegin(); i != scopes_.rend(); i++)
       {
-	auto res = i->find(key);
-	if (res != i->end())
-	  return res->second;
+        auto res = i->find(key);
+        if (res != i->end())
+          return res->second;
       }
     return throw_range_error<Key, Data>();
-    //return res->second;
   }
 
   template <typename Key, typename Data>
   std::ostream& scoped_map<Key, Data>::dump(std::ostream& ostr) const
   {
-    for (const auto& i : scopes_)
+    for (auto i = scopes_.rbegin(); i != scopes_.rend(); i++)
       {
         ostr << "( ";
-        for (const auto& j : i)
-          ostr << j.first << ", ";
-        ostr << " )";
+        for (auto j = i->begin(); j != i->end(); j++)
+          {
+            ostr << j->first << " ";
+            ostr << j->second << " ";
+          }
+        ostr << ")\n";
       }
     return ostr;
   }

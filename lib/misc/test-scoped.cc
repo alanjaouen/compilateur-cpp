@@ -5,6 +5,7 @@
 #include <ostream>
 #include <misc/contract.hh>
 #include <misc/scoped-map.hh>
+#include <iostream>
 
 int
 main()
@@ -25,6 +26,7 @@ main()
       t.put(toto1, 1111);
       assertion(t.get(toto1) == 1111);
       assertion(t.get(titi1) == 22);
+      t.dump(std::cout);
       t.scope_end();
     }
     assertion(t.get(toto1) == 11);
