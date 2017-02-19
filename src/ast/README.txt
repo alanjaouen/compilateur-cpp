@@ -13,33 +13,33 @@ Incomplete classes are tagged with a `*'.
   /Exp/             ()
     /Var/           ()
       CastVar       (Var var, Ty ty)
-*     FieldVar
+      FieldVar      (Var lvalue, symbol name)
       SimpleVar     (symbol name)
       SubscriptVar  (Var var, Exp index)
 
-*   ArrayExp
-*   AssignExp
-*   BreakExp
-*   CallExp
-*     MethodCallExp (Var lvalue)
+    ArrayExp        (NameTy type, Exp l_exp, Exp r_exp)
+    AssignExp       (Var lvalue, Exp exp)
+    BreakExp        ()
+    CallExp         (symbol name, exps_type seq)
+      MethodCallExp (Var lvalue)
     CastExp         (Exp exp, Ty ty)
     ForExp          (VarDec vardec, Exp hi, Exp body)
-*   IfExp
+    IfExp           (Exp test, Exp Bthen, Exp Belse)
     IntExp          (int value)
-*   LetExp
+    LetExp          (DecsList decs, Exp vect)
     NilExp          ()
-*   ObjectExp       (Exp exp, NameTy type)
+    ObjectExp       (Exp exp, NameTy type)
     OpExp           (Exp left, Oper oper, Exp right)
-*   RecordExp
-*   SeqExp
-*   StringExp
+    RecordExp       (NameTy id, fieldsinits_type vect)
+    SeqExp          (exps_type seq)
+    StringExp       (std::string str)
     WhileExp        (Exp test, Exp body)
 
   /Ty/              ()
     ArrayTy         (NameTy base_type)
     ClassTy         (NameTy super, DecsList decs)
     NameTy          (symbol name)
-*   RecordTy
+    RecordTy        (fields_type vect)
 
   DecsList          (decs_type decs)
 
