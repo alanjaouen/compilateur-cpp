@@ -63,16 +63,17 @@ namespace bind
     void operator()(ast::VarDecs& e) override;
     void operator()(ast::FunctionDecs& e) override;
     void operator()(ast::TypeDecs& e) override;
-    void operator()(ast::DecsList& e) override;
 
     void operator()(ast::ForExp& e) override;
     void operator()(ast::WhileExp& e) override;
     void operator()(ast::BreakExp& e) override;
-    
-    void operator()(ast::SeqExp& e) override;
-//    void operator()(ast::& e) override;
-    //void operator()(ast::WhileExp& e) override;
-    
+
+    void operator()(ast::NameTy& e) override;
+    void operator()(ast::RecordTy& e) override;
+    void operator()(ast::ArrayTy& e) override;
+
+    void operator()(ast::CallExp& e) override;
+    void operator()(ast::SimpleVar& e) override;
     // ---------------- //
     // Visiting /Dec/.  //
     // ---------------- //
@@ -165,9 +166,9 @@ namespace bind
     misc::error error_;
     
     // FIXED
-    misc::scoped_map<misc::symbol, ast::TypeDec*> type_dec;
-    misc::scoped_map<misc::symbol, ast::FunctionDec*> function_dec;
-    misc::scoped_map<misc::symbol, ast::VarDec*> Var_dec;
+    misc::scoped_map<misc::symbol, ast::TypeDec*> type_scope_;
+    misc::scoped_map<misc::symbol, ast::FunctionDec*> function_scope_;
+    misc::scoped_map<misc::symbol, ast::VarDec*> Var_scope_;
   };
 }
 

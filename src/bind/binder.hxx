@@ -31,13 +31,60 @@ namespace bind
   Binder::decs_visit(ast::AnyDecs<D>& e)
   {
     // Shorthand.
-    using decs_type = ast::AnyDecs<D>;
-  // FIXME: Some code was deleted here (Two passes: once on headers, then on bodies).
+    //using decs_type = ast::AnyDecs<D>;
+    for (auto& i : e.decs_get())
+    {
+      visit_dec_header(*i);
+      visit_dec_body(*i);
+    }
+    
   }
 
   /* These specializations are in bind/binder.hxx, so that derived
      visitors can use them (otherwise, they wouldn't see them).  */
 
-  // FIXME: Some code was deleted here.
+  template <>
+  void Binder::visit_dec_header<ast::TypeDec>(ast::TypeDec& e)
+  {
+    type_scope_.put(e.name_get(), &e);
+    e.ty_get().accept(*this);
+    
+  }
+
+  template <>
+  void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
+  {
+    function_scope_.put(e.name_get(), &e);
+    decs_visit(e.formals_get());
+    if (e.result_get())
+      e.result_get()->accept(*this);
+  }
+
+  template <>
+  void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e)
+  {
+    Var_scope_.put(e.name_get(), &e);
+  }
+  
+  template <>
+  void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
+  {
+    e.accept(*this);
+  }
+
+  template <>
+  void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
+  {
+    e.accept(*this);
+  }
+
+  template <>
+  void Binder::visit_dec_body<ast::VarDec>(ast::VarDec& e)
+  {
+    e.accept(*this);
+  }
+  
+
+  
 
 } // namespace bind

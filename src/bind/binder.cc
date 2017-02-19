@@ -32,13 +32,18 @@ namespace bind
   void
   Binder::scope_begin()
   {
-  // FIXME: Some code was deleted here.
+    type_scope_.scope_begin();
+    function_scope_.scope_begin();
+    Var_scope_.scope_begin();
   }
 
   void
   Binder::scope_end()
   {
-  // FIXME: Some code was deleted here.
+    type_scope_.scope_end();
+    function_scope_.scope_end();
+    Var_scope_.scope_end();
+
   }
 
   /*---------.
@@ -50,26 +55,45 @@ namespace bind
   void
   Binder::operator()(ast::LetExp& e)
   {
-  // FIXME: Some code was deleted here.
+    scope_begin();
+    e.accept(*this);
+    scope_end();
   }
+
+  
 
 
   /*-------------------.
   | Visiting VarDecs.  |
   `-------------------*/
 
-  // FIXME: Some code was deleted here.
+  void
+  Binder::operator()(ast::VarDecs& e)
+  {
+    decs_visit<ast::VarDec>(e);
+  }
 
 
   /*------------------------.
   | Visiting FunctionDecs.  |
   `------------------------*/
 
-  // FIXME: Some code was deleted here.
+  void
+  Binder::operator()(ast::FunctionDecs& e)
+  {
+    decs_visit<ast::FunctionDec>(e);
+  }
 
+  
   /*--------------------.
   | Visiting TypeDecs.  |
   `--------------------*/
-  // FIXME: Some code was deleted here.
 
+  void
+  Binder::operator()(ast::TypeDecs& e)
+  {
+    decs_visit<ast::TypeDec>(e);
+  }
+
+  
 } // namespace bind
