@@ -43,7 +43,9 @@ namespace bind
   /* These specializations are in bind/binder.hxx, so that derived
      visitors can use them (otherwise, they wouldn't see them).  */
 
+
   template <>
+  inline 
   void Binder::visit_dec_header<ast::TypeDec>(ast::TypeDec& e)
   {
     type_scope_.put(e.name_get(), &e);
@@ -52,6 +54,7 @@ namespace bind
   }
 
   template <>
+  inline 
   void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
   {
     function_scope_.put(e.name_get(), &e);
@@ -61,24 +64,28 @@ namespace bind
   }
 
   template <>
+  inline 
   void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e)
   {
     Var_scope_.put(e.name_get(), &e);
   }
   
   template <>
+  inline 
   void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
   {
     e.accept(*this);
   }
 
   template <>
+  inline 
   void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
   {
     e.accept(*this);
   }
 
   template <>
+  inline 
   void Binder::visit_dec_body<ast::VarDec>(ast::VarDec& e)
   {
     e.accept(*this);

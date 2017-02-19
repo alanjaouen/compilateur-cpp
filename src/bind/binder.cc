@@ -60,7 +60,26 @@ namespace bind
     scope_end();
   }
 
-  
+
+  void Binder::operator()(ast::ForExp& e)
+  {}
+  void Binder::operator()(ast::WhileExp& e)
+  {}
+  void Binder::operator()(ast::BreakExp& e)
+  {}
+
+  void Binder::operator()(ast::NameTy& e)
+  {}
+  void Binder::operator()(ast::RecordTy& e)
+  {}
+  void Binder::operator()(ast::ArrayTy& e)
+  {}
+
+  void Binder::operator()(ast::CallExp& e)
+  {}
+  void Binder::operator()(ast::SimpleVar& e)
+  {}
+
 
 
   /*-------------------.

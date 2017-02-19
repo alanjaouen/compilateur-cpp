@@ -117,6 +117,8 @@ namespace bind
     template <class D>
     void visit_dec_header(D& e);
 
+
+    
     /// Check a Function or Type declaration body.
     template <class D>
     void visit_dec_body(D& e);

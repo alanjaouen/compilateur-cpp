@@ -3,6 +3,7 @@
  ** \brief Define exported bind functions.
  */
 
+#include <bind/binder.hh>
 #include <bind/libbind.hh>
 
 namespace bind
@@ -10,6 +11,7 @@ namespace bind
   
   void bind_compute(ast::Ast& tree)
   {
-    return;
+    Binder bindings_compute;
+    bindings_compute(tree);
   }
 }
