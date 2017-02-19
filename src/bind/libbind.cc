@@ -3,4 +3,13 @@
  ** \brief Define exported bind functions.
  */
 
-  // FIXME: Some code was deleted here.
+#include <bind/libbind.hh>
+
+namespace bind
+{
+  
+  void bind_compute(ast::Ast& tree)
+  {
+    return;
+  }
+}
