@@ -14,7 +14,19 @@ namespace bind
   | Error handling.  |
   `-----------------*/
 
-  // FIXME: Some code was deleted here (Error reporting).
+  // FIXED by forest_b
+  template <typename T>
+  void Binder::undeclared(const std::string& k, const T& e)
+  {
+    error_ << misc::error::bind << e.location_get() << "undeclared" << k << e.name_get() << std::endl;
+  }
+  template <typename T>
+  void Binder::redefinition(const T& e1, const T& e2)
+  {
+    error_ << misc::error::bind << e2.location_get() << "redefinition:" << e2.name_get() << std::endl
+           << e1.location_get() << "first definiton" << std::endl;
+  }
+
 
   /*-------------------.
   | Definition sites.  |
