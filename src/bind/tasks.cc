@@ -28,7 +28,7 @@ namespace bind
 
     void bind()
     {
-      //precondition(the_program);
+      precondition(ast::tasks::the_program);
       bind::bind(*ast::tasks::the_program);
     }
 

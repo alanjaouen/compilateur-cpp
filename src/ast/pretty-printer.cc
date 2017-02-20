@@ -127,7 +127,11 @@ void PrettyPrinter::operator()(const ObjectExp& e)
 
 void PrettyPrinter::operator()(const CallExp& e)
 {
-  ostr_ << e.name_get() << "(";
+  ostr_ << e.name_get();
+
+  if (bindings_display(ostr_))
+    ostr_ << " /* " << e.def_get() << " */";
+  ostr_ << "(";
   for (auto& exp : e.seq_get())
   {
     if (exp != e.seq_get().back())

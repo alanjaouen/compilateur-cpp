@@ -21,7 +21,7 @@ namespace bind
 
     TASK_DECLARE("b|bindings-compute",
                  "Bind the name uses to their definitions (objects forbidden).",
-                 bind, "");
+                 bind, "parse");
 
     TASK_DECLARE("B|bindings-display",
                  "Enable the bindings display in the next --ast-display\
