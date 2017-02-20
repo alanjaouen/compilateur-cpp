@@ -34,7 +34,7 @@ namespace bind
   {
     type_scope_.scope_begin();
     function_scope_.scope_begin();
-    Var_scope_.scope_begin();
+    var_scope_.scope_begin();
   }
 
   void
@@ -42,7 +42,7 @@ namespace bind
   {
     type_scope_.scope_end();
     function_scope_.scope_end();
-    Var_scope_.scope_end();
+    var_scope_.scope_end();
 
   }
 
@@ -88,7 +88,13 @@ namespace bind
   void Binder::operator()(ast::CallExp& e)
   {}
   void Binder::operator()(ast::SimpleVar& e)
-  {}
+  {
+    auto* res = var_scope_.get(e.name_get());
+    if (!res)
+      undeclared("variable", e);
+    else
+      e.def_set(res);
+  }
 
 
 

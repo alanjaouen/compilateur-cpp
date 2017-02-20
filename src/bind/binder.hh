@@ -170,7 +170,7 @@ namespace bind
     // FIXED
     misc::scoped_map<misc::symbol, ast::TypeDec*> type_scope_;
     misc::scoped_map<misc::symbol, ast::FunctionDec*> function_scope_;
-    misc::scoped_map<misc::symbol, ast::VarDec*> Var_scope_;
+    misc::scoped_map<misc::symbol, ast::VarDec*> var_scope_;
   };
 }
 

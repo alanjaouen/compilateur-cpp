@@ -17,14 +17,14 @@ namespace bind
 template <typename T>
 void Binder::undeclared(const std::string& k, const T& e)
 {
-  error_ << misc::error::bind << e.location_get() << "undeclared" << k
-         << e.name_get() << std::endl;
+  error_ << misc::error::bind << e.location_get() << ": undeclared "
+         << k << ": " << e.name_get() << std::endl;
 }
 template <typename T>
 void Binder::redefinition(const T& e1, const T& e2)
 {
   error_ << misc::error::bind << e2.location_get()
-         << "redefinition:" << e2.name_get() << std::endl
+         << "redefinition: " << e2.name_get() << std::endl
          << e1.location_get() << "first definiton" << std::endl;
 }
 
@@ -72,7 +72,7 @@ inline void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
 template <>
 inline void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e)
 {
-  Var_scope_.put(e.name_get(), &e);
+  var_scope_.put(e.name_get(), &e);
 }
 
 template <>
