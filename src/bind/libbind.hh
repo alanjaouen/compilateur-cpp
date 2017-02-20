@@ -14,5 +14,5 @@
 
 namespace bind
 {
-  void bind_compute(ast::Ast& tree);
+  misc::error bind(ast::Ast& tree);
 }

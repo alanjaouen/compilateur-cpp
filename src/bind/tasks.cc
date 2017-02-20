@@ -10,6 +10,9 @@
 #include <ast/tasks.hh>
 
 #include <bind/libbind.hh>
+
+#include <parse/libparse.hh>
+
 #define DEFINE_TASKS 3
 #include <bind/tasks.hh>
 #undef DEFINE_TASKS
@@ -26,7 +29,7 @@ namespace bind
     void bind()
     {
       //precondition(the_program);
-      bind::bind_compute(*ast::tasks::the_program);
+      bind::bind(*ast::tasks::the_program);
     }
 
     void bind_display()
