@@ -13,5 +13,6 @@ namespace bind
   {
     Binder bindings_compute;
     bindings_compute(tree);
+    return bindings_compute.error_get();
   }
 }

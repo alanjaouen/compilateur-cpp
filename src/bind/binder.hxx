@@ -9,101 +9,87 @@
 
 namespace bind
 {
+/*-----------------.
+| Error handling.  |
+`-----------------*/
 
-  /*-----------------.
-  | Error handling.  |
-  `-----------------*/
+// FIXED by forest_b
+template <typename T>
+void Binder::undeclared(const std::string& k, const T& e)
+{
+  error_ << misc::error::bind << e.location_get() << "undeclared" << k
+         << e.name_get() << std::endl;
+}
+template <typename T>
+void Binder::redefinition(const T& e1, const T& e2)
+{
+  error_ << misc::error::bind << e2.location_get()
+         << "redefinition:" << e2.name_get() << std::endl
+         << e1.location_get() << "first definiton" << std::endl;
+}
 
-  // FIXED by forest_b
-  template <typename T>
-  void Binder::undeclared(const std::string& k, const T& e)
+/*-------------------.
+| Definition sites.  |
+`-------------------*/
+
+// FIXME: Some code was deleted here.
+
+/*------------------.
+| Visiting /Decs/.  |
+`------------------*/
+
+template <class D>
+void Binder::decs_visit(ast::AnyDecs<D>& e)
+{
+  // Shorthand.
+  // using decs_type = ast::AnyDecs<D>;
+  for (auto& i : e.decs_get())
   {
-    error_ << misc::error::bind << e.location_get() << "undeclared" << k << e.name_get() << std::endl;
+    visit_dec_header(*i);
+    visit_dec_body(*i);
   }
-  template <typename T>
-  void Binder::redefinition(const T& e1, const T& e2)
-  {
-    error_ << misc::error::bind << e2.location_get() << "redefinition:" << e2.name_get() << std::endl
-           << e1.location_get() << "first definiton" << std::endl;
-  }
+}
 
+/* These specializations are in bind/binder.hxx, so that derived
+   visitors can use them (otherwise, they wouldn't see them).  */
 
-  /*-------------------.
-  | Definition sites.  |
-  `-------------------*/
+template <>
+inline void Binder::visit_dec_header<ast::TypeDec>(ast::TypeDec& e)
+{
+  type_scope_.put(e.name_get(), &e);
+  e.ty_get().accept(*this);
+}
 
-  // FIXME: Some code was deleted here.
+template <>
+inline void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
+{
+  function_scope_.put(e.name_get(), &e);
+  decs_visit(e.formals_get());
+  if (e.result_get())
+    e.result_get()->accept(*this);
+}
 
-  /*------------------.
-  | Visiting /Decs/.  |
-  `------------------*/
+template <>
+inline void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e)
+{
+  Var_scope_.put(e.name_get(), &e);
+}
 
-  template <class D>
-  void
-  Binder::decs_visit(ast::AnyDecs<D>& e)
-  {
-    // Shorthand.
-    //using decs_type = ast::AnyDecs<D>;
-    for (auto& i : e.decs_get())
-    {
-      visit_dec_header(*i);
-      visit_dec_body(*i);
-    }
-    
-  }
+template <>
+inline void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
+{
+}
 
-  /* These specializations are in bind/binder.hxx, so that derived
-     visitors can use them (otherwise, they wouldn't see them).  */
+template <>
+inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
+{
+  super_type::operator()(e);
+}
 
-
-  template <>
-  inline 
-  void Binder::visit_dec_header<ast::TypeDec>(ast::TypeDec& e)
-  {
-    type_scope_.put(e.name_get(), &e);
-    e.ty_get().accept(*this);
-    
-  }
-
-  template <>
-  inline 
-  void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
-  {
-    function_scope_.put(e.name_get(), &e);
-    decs_visit(e.formals_get());
-    if (e.result_get())
-      e.result_get()->accept(*this);
-  }
-
-  template <>
-  inline 
-  void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e)
-  {
-    Var_scope_.put(e.name_get(), &e);
-  }
-  
-  template <>
-  inline 
-  void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
-  {
-    e.accept(*this);
-  }
-
-  template <>
-  inline 
-  void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
-  {
-    e.accept(*this);
-  }
-
-  template <>
-  inline 
-  void Binder::visit_dec_body<ast::VarDec>(ast::VarDec& e)
-  {
-    e.accept(*this);
-  }
-  
-
-  
+template <>
+inline void Binder::visit_dec_body<ast::VarDec>(ast::VarDec& e)
+{
+  e.accept(*this);
+}
 
 } // namespace bind

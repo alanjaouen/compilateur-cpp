@@ -120,7 +120,8 @@ namespace ast
         {
             e.test_get().accept(*this);
             e.then_get().accept(*this);
-            e.else_get()->accept(*this);
+            if (e.else_get())
+              e.else_get()->accept(*this);
         }
 
     template <template <typename> class Const>
@@ -244,8 +245,10 @@ namespace ast
         GenDefaultVisitor<Const>::operator()(const_t<FunctionDec>& e)
         {
             e.formals_get().accept(*this);
-            e.result_get()->accept(*this);
-            e.body_get()->accept(*this);
+            if (e.result_get())
+              e.result_get()->accept(*this);
+            if (e.body_get())
+              e.body_get()->accept(*this);
         }
 
     template <template <typename> class Const>
