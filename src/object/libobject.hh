@@ -20,11 +20,8 @@ namespace object
   | Bind.  |
   `-------*/
 
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
 
-
-
-
-
+  misc::error bind(ast::Ast& e);
 
 } // namespace object
