@@ -56,10 +56,9 @@ namespace bind
   Binder::operator()(ast::LetExp& e)
   {
     scope_begin();
-    e.accept(*this);
+    e.decs_get().accept(*this);
     scope_end();
   }
-
 
   void Binder::operator()(ast::ForExp& e)
   {
@@ -83,10 +82,18 @@ namespace bind
   void Binder::operator()(ast::RecordTy& e)
   {}
   void Binder::operator()(ast::ArrayTy& e)
-  {}
+  {
+    
+  }
 
   void Binder::operator()(ast::CallExp& e)
-  {}
+  {
+    auto* res = function_scope_.get(e.name_get());
+    if (!res)
+      undeclared("variable", e);
+    else
+      e.def_set(res);
+  }
   void Binder::operator()(ast::SimpleVar& e)
   {
     auto* res = var_scope_.get(e.name_get());

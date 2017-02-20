@@ -59,7 +59,7 @@ namespace bind
 
     /* The visiting methods. */
     void operator()(ast::LetExp& e) override;
-
+//    void operator()(ast::DecsList& e) override;
     void operator()(ast::VarDecs& e) override;
     void operator()(ast::FunctionDecs& e) override;
     void operator()(ast::TypeDecs& e) override;
