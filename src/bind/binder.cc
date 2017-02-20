@@ -62,11 +62,21 @@ namespace bind
 
 
   void Binder::operator()(ast::ForExp& e)
-  {}
+  {
+    scope_begin();
+    e.accept(*this);
+    scope_end();
+  }
   void Binder::operator()(ast::WhileExp& e)
-  {}
+  {
+    scope_begin();
+    e.accept(*this);
+    scope_end();
+  }
   void Binder::operator()(ast::BreakExp& e)
-  {}
+  {
+    
+  }
 
   void Binder::operator()(ast::NameTy& e)
   {}
@@ -89,7 +99,9 @@ namespace bind
   void
   Binder::operator()(ast::VarDecs& e)
   {
+    scope_begin();
     decs_visit<ast::VarDec>(e);
+    scope_end();
   }
 
 
@@ -100,7 +112,9 @@ namespace bind
   void
   Binder::operator()(ast::FunctionDecs& e)
   {
+    scope_begin();
     decs_visit<ast::FunctionDec>(e);
+    scope_end();
   }
 
   
@@ -111,7 +125,9 @@ namespace bind
   void
   Binder::operator()(ast::TypeDecs& e)
   {
+    scope_begin();
     decs_visit<ast::TypeDec>(e);
+    scope_end();
   }
 
   
