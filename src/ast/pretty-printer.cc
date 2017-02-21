@@ -163,9 +163,8 @@ void PrettyPrinter::operator()(const AssignExp& e)
 }
 
 void PrettyPrinter::operator()(const IfExp& e)
-{ 
+{
   ostr_ << "(if " << e.test_get() << misc::incendl << "then " << e.then_get();
-        
   if (e.else_get() != nullptr)
     ostr_ << misc::iendl << "else " << *e.else_get();
   ostr_  << ')' <<misc::decendl;
@@ -197,15 +196,9 @@ void PrettyPrinter::operator()(const LetExp& e)
         << "end";
 }
 
-
-  // void PrettyPrinter::operator()(const Ty& e)
-  // {
-    
-  // }
-  
   void PrettyPrinter::operator()(const TypeDec& e)
   {
-    ostr_ << "type " << e.name_get() << " = " << e.ty_get() << misc::iendl;
+    ostr_ << "type " << e << " = " << e.ty_get() << misc::iendl;
   }
 
 void PrettyPrinter::operator()(const ClassTy& e)
@@ -243,9 +236,10 @@ void PrettyPrinter::operator()(const FunctionDec& e)
   ostr_ << e << '(';
   for (auto& var : e.formals_get().decs_get())
   {
+    ast::Dec& dec = *var;
     if (var != e.formals_get().decs_get().back())
     {
-      ostr_ << var->name_get();
+      ostr_ << dec;
       if (var->type_name_get() != nullptr)
         ostr_ << " : " << *var->type_name_get();
       if (var->init_get() != nullptr)
@@ -254,7 +248,7 @@ void PrettyPrinter::operator()(const FunctionDec& e)
     }
     else
     {
-      ostr_ << var->name_get();
+      ostr_ << dec;
       if (var->type_name_get() != nullptr)
         ostr_ << " : " << *var->type_name_get();
       if (var->init_get() != nullptr)
