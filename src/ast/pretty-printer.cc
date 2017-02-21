@@ -113,9 +113,9 @@ void PrettyPrinter::operator()(const RecordExp& e)
   for (const auto& exp : e.fini_get())
   {
     if (exp != e.fini_get().back())
-      ostr_ << exp->name_get() << " = " << exp->init_get() << " , ";
+      ostr_ << exp << " = " << exp->init_get() << " , ";
     else
-      ostr_ << exp->name_get() << " = " << exp->init_get();
+      ostr_ << exp << " = " << exp->init_get();
   }
   ostr_ << " }";
 }
@@ -224,7 +224,8 @@ void PrettyPrinter::operator()(const ClassTy& e)
 
 void PrettyPrinter::operator()(const VarDec& e)
 {
-  ostr_ << "var " << e.name_get();
+  const ast::Dec& dec = e;
+  ostr_ << "var " << dec;
   if (e.type_name_get() != nullptr)
     ostr_ << " : " << *e.type_name_get();
   if (e.init_get() != nullptr)
@@ -239,7 +240,7 @@ void PrettyPrinter::operator()(const FunctionDec& e)
     ostr_ << "function ";
   else
     ostr_ << "primitive ";
-  ostr_ << e.name_get() << '(';
+  ostr_ << e << '(';
   for (auto& var : e.formals_get().decs_get())
   {
     if (var != e.formals_get().decs_get().back())
@@ -290,15 +291,15 @@ void PrettyPrinter::operator()(const RecordTy& e)
   ostr_ << "{ ";
   for (auto& field : e.recs_get())
     if (field != e.recs_get().back())
-      ostr_ << field->name_get() << " : " << field->type_name_get() << " , ";
+      ostr_ << field << " : " << field->type_name_get() << " , ";
     else
-      ostr_ << field->name_get() << " : " << field->type_name_get();
+      ostr_ << field << " : " << field->type_name_get();
   ostr_ << " }";
 }
 
 void PrettyPrinter::operator()(const ArrayTy& e)
 {
-  ostr_ << "array of " << e.base_type_get().name_get();
+  ostr_ << "array of " << e.base_type_get();
 }
 
 void PrettyPrinter::operator()(const SeqExp& e)
