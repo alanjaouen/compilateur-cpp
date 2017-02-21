@@ -72,15 +72,19 @@ namespace bind
   void Binder::operator()(ast::ForExp& e)
   {
     scope_begin();
-    e.accept(*this);
+    e.vardec_get().accept(*this);
+    e.hi_get().accept(*this);
+    e.body_get().accept(*this);
     scope_end();
   }
+  
   void Binder::operator()(ast::WhileExp& e)
   {
     scope_begin();
     e.accept(*this);
     scope_end();
   }
+  
   void Binder::operator()(ast::BreakExp& e)
   {
     
