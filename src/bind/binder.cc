@@ -116,7 +116,9 @@ namespace bind
   void
   Binder::operator()(ast::VarDecs& e)
   {
+    
     decs_visit<ast::VarDec>(e);
+    
   }
 
 

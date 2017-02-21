@@ -42,12 +42,19 @@ template <class D>
 void Binder::decs_visit(ast::AnyDecs<D>& e)
 {
   // Shorthand.
-  // using decs_type = ast::AnyDecs<D>;
-  for (auto& i : e.decs_get())
-  {
-    visit_dec_header(*i);
-    visit_dec_body(*i);
+  using decs_type = ast::AnyDecs<D>;
+  auto cdecs = e.decs_get();
+    for (auto i = cdecs.begin(); i != cdecs.end(); i++)
+    {
+    for(auto j = cdecs.begin(); j != i; j++)
+    {
+      if ((*j)->name_get() == (*i)->name_get())
+        redefinition(**i, **j);
+    }
+    visit_dec_header<D>(**i);
   }
+  for (auto& i : e.decs_get())
+    visit_dec_body(*i);
 }
 
 /* These specializations are in bind/binder.hxx, so that derived
@@ -56,14 +63,8 @@ void Binder::decs_visit(ast::AnyDecs<D>& e)
 template <>
 inline void Binder::visit_dec_header<ast::TypeDec>(ast::TypeDec& e)
 {
-  auto last_scoped = type_scope_.scopes_get().back();
-  auto res = last_scoped.find(e.name_get());
-
-  if ( res != last_scoped.end() && res->second != &e)
-    redefinition(e, *res->second);
-  else
-    type_scope_.put(e.name_get(), &e);
-
+  
+  type_scope_.put(e.name_get(), &e);
   e.ty_get().accept(*this);
 }
 
@@ -103,7 +104,9 @@ inline void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
 template <>
 inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
 {
-  super_type::operator()(e); 
+  scope_begin();
+  super_type::operator()(e.body_get()); 
+  scope_end();
 }
 
 template <>
