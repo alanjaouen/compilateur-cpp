@@ -3,4 +3,17 @@
  ** \brief Define exported bind functions.
  */
 
-  // FIXME: Some code was deleted here.
+#include <bind/binder.hh>
+#include <bind/libbind.hh>
+
+namespace bind
+{
+  
+  misc::error bind(ast::Ast& tree)
+  {
+    Binder bindings_compute;
+    bindings_compute(tree);
+    return bindings_compute.error_get();
+      //bindings_compute.error_get().ice_here();
+  }
+}

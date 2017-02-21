@@ -101,7 +101,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
                     mycmd = ""
                     if sanity:
                         mycmd += "valgrind "
-                    mycmd += my_path
+                    mycmd += my_path + " -XbBA"
                     if test.startswith("--", 0, 2):
                         line = test.split()
                         mycmd += " " + line[0]

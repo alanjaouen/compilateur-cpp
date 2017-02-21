@@ -18,6 +18,7 @@
 
 namespace misc
 {
+  //Fixed by caradi_c
   template <typename Key, typename Data>
   class scoped_map
   {
@@ -42,7 +43,7 @@ namespace misc
     ///Close the last scope, forgetting everything since the latest scope_begin(). 
     void scope_end ();
 
-    const scope_type scopes_get() const;
+    const scope_type& scopes_get() const;
   private:
 
     scope_type scopes_;

@@ -67,7 +67,7 @@ namespace misc
   }
 
   template <typename Key, typename Data>
-  inline const typename scoped_map<Key, Data>::scope_type
+  inline const typename scoped_map<Key, Data>::scope_type&
   scoped_map<Key, Data>::scopes_get() const
   {
     return scopes_;

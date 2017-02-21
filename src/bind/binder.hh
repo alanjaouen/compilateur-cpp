@@ -59,8 +59,21 @@ namespace bind
 
     /* The visiting methods. */
     void operator()(ast::LetExp& e) override;
-  // FIXME: Some code was deleted here.
+    // void operator()(ast::SeqExp& e) override;
+    void operator()(ast::VarDecs& e) override;
+    void operator()(ast::FunctionDecs& e) override;
+    void operator()(ast::TypeDecs& e) override;
 
+    void operator()(ast::ForExp& e) override;
+    void operator()(ast::WhileExp& e) override;
+    void operator()(ast::BreakExp& e) override;
+
+    void operator()(ast::NameTy& e) override;
+    // void operator()(ast::RecordTy& e) override;
+    // void operator()(ast::ArrayTy& e) override;
+    //void operator()(ast::Field& e) override;
+    void operator()(ast::CallExp& e) override;
+    void operator()(ast::SimpleVar& e) override;
     // ---------------- //
     // Visiting /Dec/.  //
     // ---------------- //
@@ -104,11 +117,14 @@ namespace bind
     template <class D>
     void visit_dec_header(D& e);
 
+
+    
     /// Check a Function or Type declaration body.
     template <class D>
     void visit_dec_body(D& e);
 
   // FIXME: Some code was deleted here.
+
     /// \}
 
     /// \name Error handling
@@ -150,8 +166,11 @@ namespace bind
 
     /// Binding errors handler.
     misc::error error_;
-
-  // FIXME: Some code was deleted here (More members).
+    
+    // FIXED
+    misc::scoped_map<misc::symbol, ast::TypeDec*> type_scope_;
+    misc::scoped_map<misc::symbol, ast::FunctionDec*> function_scope_;
+    misc::scoped_map<misc::symbol, ast::VarDec*> var_scope_;
   };
 }
 

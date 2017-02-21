@@ -37,4 +37,8 @@ main()
   assert(!bound("let function f(a : int, a : string) : int = a in "
                 " 5 "
                 "end"));
+  assert(!bound("let  function g (a : int) : int = a "
+                "function g (a : int) : int = a "
+                "in  0 end"));
+
 }

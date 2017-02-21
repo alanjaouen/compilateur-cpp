@@ -13,9 +13,10 @@ namespace object
   | Bind.  |
   `-------*/
 
-  // FIXME: Some code was deleted here.
-
-
+  
+  misc::error bind(ast::Ast& e)
+  {
+  }
 
 
 

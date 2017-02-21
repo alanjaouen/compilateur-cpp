@@ -37,7 +37,26 @@ namespace ast
   {
     return name_;
   }
-  /** \} */
+
+  /// Return definition site.
+  inline const FunctionDec*
+  CallExp::def_get() const
+  {
+    return def_;
+  }
+  /// Return definition site.
+  inline FunctionDec*
+  CallExp::def_get()
+  {
+    return def_;
+  }
+  /// Set definition site.
+  inline void
+  CallExp::def_set(FunctionDec* def)
+  {
+    def_ = def;
+  }
+/** \} */
 
 } // namespace ast
 
