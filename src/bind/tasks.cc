@@ -29,7 +29,9 @@ namespace bind
     void bind()
     {
       precondition(ast::tasks::the_program);
-      bind::bind(*ast::tasks::the_program);
+      auto e = bind::bind(*ast::tasks::the_program);
+      if (e)
+        e.exit_on_error();
     }
 
     void bind_display()

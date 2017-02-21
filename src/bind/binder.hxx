@@ -48,7 +48,7 @@ void Binder::decs_visit(ast::AnyDecs<D>& e)
     {
     for(auto j = cdecs.begin(); j != i; j++)
     {
-      if ((*j)->name_get() == (*i)->name_get())
+      if ((*j)->name_get().get() == (*i)->name_get().get())
         redefinition(**i, **j);
     }
     visit_dec_header<D>(**i);
@@ -98,7 +98,9 @@ inline void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e)
 template <>
 inline void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
 {
+  scope_begin();
   super_type::operator()(e);
+  scope_end();
 }
 
 template <>

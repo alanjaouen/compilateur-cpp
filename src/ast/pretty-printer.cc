@@ -287,12 +287,20 @@ void PrettyPrinter::operator()(const RecordTy& e)
   ostr_ << "{ ";
   for (auto& field : e.recs_get())
     if (field != e.recs_get().back())
-      ostr_ << field << " : " << field->type_name_get() << " , ";
+      ostr_ << *field << " : " << field->type_name_get() << " , ";
     else
-      ostr_ << field << " : " << field->type_name_get();
+      ostr_ << *field << " : " << field->type_name_get();
   ostr_ << " }";
 }
 
+void PrettyPrinter::operator()(const Field& e)
+{
+  ostr_ << e.name_get();
+  if (bindings_display(ostr_))
+    ostr_ << " /* " << e.def_get() << " */";
+}
+
+  
 void PrettyPrinter::operator()(const ArrayTy& e)
 {
   ostr_ << "array of " << e.base_type_get();

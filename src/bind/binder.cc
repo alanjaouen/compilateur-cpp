@@ -107,7 +107,29 @@ namespace bind
       e.def_set(res);
   }
 
+  // void Binder::operator()(ast::Field& e)
+  // {
+  //   auto* res = type_scope_.get(e.name_get());
+  //   if (!res)
+  //     undeclared("type", e);
+  //   else
+  //     e.def_set(res);
+  // }
 
+  void Binder::operator()(ast::NameTy& e)
+  {
+    auto* res = type_scope_.get(e.name_get());
+    if (e.name_get().get() == "string" || e.name_get().get() == "int")
+    {
+      e.def_set(nullptr);
+      return;
+    }
+    if (!res)
+      undeclared("type", e);
+    else
+      e.def_set(res);
+  }
+  
 
   /*-------------------.
   | Visiting VarDecs.  |

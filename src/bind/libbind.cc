@@ -14,5 +14,6 @@ namespace bind
     Binder bindings_compute;
     bindings_compute(tree);
     return bindings_compute.error_get();
+      //bindings_compute.error_get().ice_here();
   }
 }
