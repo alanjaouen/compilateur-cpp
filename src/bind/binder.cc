@@ -57,9 +57,18 @@ namespace bind
   {
     scope_begin();
     e.decs_get().accept(*this);
+    e.seq_get().accept(*this);
     scope_end();
   }
 
+  // void Binder::operator()(ast::SeqExp& e)
+  // {
+  //   scope_begin();
+  //   for (auto& exp : e.seq_get())
+  //     exp->accept(*this);
+  //   scope_end();
+  // }
+  
   void Binder::operator()(ast::ForExp& e)
   {
     scope_begin();
@@ -77,20 +86,11 @@ namespace bind
     
   }
 
-  void Binder::operator()(ast::NameTy& e)
-  {}
-  void Binder::operator()(ast::RecordTy& e)
-  {}
-  void Binder::operator()(ast::ArrayTy& e)
-  {
-    
-  }
-
   void Binder::operator()(ast::CallExp& e)
   {
     auto* res = function_scope_.get(e.name_get());
     if (!res)
-      undeclared("variable", e);
+      undeclared("function", e);
     else
       e.def_set(res);
   }
@@ -112,9 +112,7 @@ namespace bind
   void
   Binder::operator()(ast::VarDecs& e)
   {
-    scope_begin();
     decs_visit<ast::VarDec>(e);
-    scope_end();
   }
 
 

@@ -59,7 +59,7 @@ inline void Binder::visit_dec_header<ast::TypeDec>(ast::TypeDec& e)
   auto last_scoped = type_scope_.scopes_get().back();
   auto res = last_scoped.find(e.name_get());
 
-  if ( res != last_scoped.end())
+  if ( res != last_scoped.end() && res->second != &e)
     redefinition(e, *res->second);
   else
     type_scope_.put(e.name_get(), &e);
@@ -73,7 +73,7 @@ inline void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
   auto last_scoped = function_scope_.scopes_get().back();
   auto res = last_scoped.find(e.name_get());
 
-  if ( res != last_scoped.end())
+  if ( res != last_scoped.end() && res->second != &e)
     redefinition(e, *res->second);
   else
     function_scope_.put(e.name_get(), &e);
@@ -88,7 +88,7 @@ inline void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e)
 {
   auto last_scoped = var_scope_.scopes_get().back();
   auto res = last_scoped.find(e.name_get());
-  if ( res != last_scoped.end())
+  if ( res != last_scoped.end() && res->second != &e)
     redefinition(e, *res->second);
   else
     var_scope_.put(e.name_get(), &e);
@@ -103,7 +103,7 @@ inline void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
 template <>
 inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
 {
-  super_type::operator()(e);
+  super_type::operator()(e); 
 }
 
 template <>

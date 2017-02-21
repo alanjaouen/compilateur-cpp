@@ -59,7 +59,7 @@ namespace bind
 
     /* The visiting methods. */
     void operator()(ast::LetExp& e) override;
-//    void operator()(ast::DecsList& e) override;
+    // void operator()(ast::SeqExp& e) override;
     void operator()(ast::VarDecs& e) override;
     void operator()(ast::FunctionDecs& e) override;
     void operator()(ast::TypeDecs& e) override;
@@ -68,9 +68,9 @@ namespace bind
     void operator()(ast::WhileExp& e) override;
     void operator()(ast::BreakExp& e) override;
 
-    void operator()(ast::NameTy& e) override;
-    void operator()(ast::RecordTy& e) override;
-    void operator()(ast::ArrayTy& e) override;
+    // void operator()(ast::NameTy& e) override;
+    // void operator()(ast::RecordTy& e) override;
+    // void operator()(ast::ArrayTy& e) override;
 
     void operator()(ast::CallExp& e) override;
     void operator()(ast::SimpleVar& e) override;
