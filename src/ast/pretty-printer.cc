@@ -278,6 +278,8 @@ void PrettyPrinter::operator()(const MethodDec& e)
 void PrettyPrinter::operator()(const NameTy& e)
 {
   ostr_ << e.name_get();
+  if (bindings_display(ostr_))
+    ostr_ << " /* " << e.def_get() << " */";
 }
 
 void PrettyPrinter::operator()(const RecordTy& e)
