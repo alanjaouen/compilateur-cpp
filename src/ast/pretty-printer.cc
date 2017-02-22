@@ -297,7 +297,7 @@ void PrettyPrinter::operator()(const Field& e)
 {
   ostr_ << e.name_get();
   if (bindings_display(ostr_))
-    ostr_ << " /* " << e.def_get() << " */";
+    ostr_ << " /* " << e.name_get() << " */";
 }
 
   

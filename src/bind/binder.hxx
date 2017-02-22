@@ -43,13 +43,16 @@ void Binder::decs_visit(ast::AnyDecs<D>& e)
 {
   // Shorthand.
   using decs_type = ast::AnyDecs<D>;
-  auto cdecs = e.decs_get();
+  auto& cdecs = e.decs_get();
     for (auto i = cdecs.begin(); i != cdecs.end(); i++)
     {
     for(auto j = cdecs.begin(); j != i; j++)
     {
       if ((*j)->name_get().get() == (*i)->name_get().get())
-        redefinition(**i, **j);
+        {
+	  redefinition(**j, **i);
+	  break;
+	}
     }
     visit_dec_header<D>(**i);
   }
