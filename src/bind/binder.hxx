@@ -38,27 +38,27 @@ void Binder::redefinition(const T& e1, const T& e2)
 | Visiting /Decs/.  |
 `------------------*/
 
-template <class D>
-void Binder::decs_visit(ast::AnyDecs<D>& e)
-{
-  // Shorthand.
-  using decs_type = ast::AnyDecs<D>;
-  auto& cdecs = e.decs_get();
+  template <class D>
+  void Binder::decs_visit(ast::AnyDecs<D>& e)
+  {
+    // Shorthand.
+    using decs_type = ast::AnyDecs<D>;
+    auto& cdecs = e.decs_get();
     for (auto i = cdecs.begin(); i != cdecs.end(); i++)
-    {
-    for(auto j = cdecs.begin(); j != i; j++)
-    {
-      if ((*j)->name_get().get() == (*i)->name_get().get())
-        {
-	  redefinition(**j, **i);
-	  break;
-	}
-    }
-    visit_dec_header<D>(**i);
+      {
+        for(auto j = cdecs.begin(); j != i; j++)
+          {
+            if ((*j)->name_get().get() == (*i)->name_get().get())
+              {
+                redefinition(**j, **i);
+                break;
+              }
+          }
+        visit_dec_header<D>(**i);
+      }
+    for (auto& i : e.decs_get())
+      visit_dec_body(*i);
   }
-  for (auto& i : e.decs_get())
-    visit_dec_body(*i);
-}
 
 /* These specializations are in bind/binder.hxx, so that derived
    visitors can use them (otherwise, they wouldn't see them).  */
@@ -66,7 +66,6 @@ void Binder::decs_visit(ast::AnyDecs<D>& e)
 template <>
 inline void Binder::visit_dec_header<ast::TypeDec>(ast::TypeDec& e)
 {
-  
   type_scope_.put(e.name_get(), &e);
   e.ty_get().accept(*this);
 }
@@ -75,16 +74,7 @@ template <>
 inline void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
 {
   auto last_scoped = function_scope_.scopes_get().back();
-  auto res = last_scoped.find(e.name_get());
-
-  if ( res != last_scoped.end() && res->second != &e)
-    redefinition(e, *res->second);
-  else
-    function_scope_.put(e.name_get(), &e);
-
-  decs_visit(e.formals_get());
-  if (e.result_get())
-    e.result_get()->accept(*this);
+  function_scope_.put(e.name_get(), &e);
 }
 
 template <>
@@ -106,17 +96,19 @@ inline void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
   scope_end();
 }
 
-  template <>
-  inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
-  {
-    scope_begin();
-    e.formals_get().accept(*this);
-    if (e.result_get())
-      e.result_get()->accept(*this);
-    if (e.body_get())
-      e.body_get()->accept(*this);
-    scope_end();
-  }
+template <>
+inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
+{
+  scope_begin();
+  decs_visit<ast::VarDec>(e.formals_get());
+  auto result = e.result_get();
+  if (result)
+    result->accept(*this);
+  auto body = e.body_get();
+  if (body)
+    body->accept(*this);
+  scope_end();
+}
 
 template <>
 inline void Binder::visit_dec_body<ast::VarDec>(ast::VarDec& e)

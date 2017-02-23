@@ -43,7 +43,6 @@ namespace bind
     type_scope_.scope_end();
     function_scope_.scope_end();
     var_scope_.scope_end();
-
   }
 
   /*---------.
