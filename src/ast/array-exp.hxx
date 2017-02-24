@@ -40,6 +40,21 @@ namespace ast
   {
     return *r_exp_;
   }
+  inline const VarDec*
+  ArrayExp::def_get() const
+  {
+    return def_;
+  }
+  inline VarDec*
+  ArrayExp::def_get()
+  {
+    return def_;
+  }
+  inline void
+  ArrayExp::def_set(VarDec* def)
+  {
+    def_ = def;
+  }
 
 } // namespace ast
 

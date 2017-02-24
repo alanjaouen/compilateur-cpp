@@ -57,6 +57,11 @@ namespace ast
             const Exp& r_exp_get() const;
             /// Return the right expression.
             Exp& r_exp_get();
+            const VarDec* def_get() const;
+            /// Return definition site.
+            VarDec* def_get();
+            /// Set definition site.
+            void def_set(VarDec*);
             /** \} */
 
         protected:
@@ -66,6 +71,9 @@ namespace ast
             Exp* l_exp_;
             /// The right expression.
             Exp* r_exp_;
+
+            /// Definition site.
+            VarDec* def_ = nullptr;
     };
 
 } // namespace ast
