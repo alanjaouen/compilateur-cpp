@@ -22,7 +22,13 @@ namespace bind
     return error_;
   }
 
-  // FIXME: Some code was deleted here (Error reporting).
+  //fixed caradi_c
+  void Binder::break_outside_loop(ast::BreakExp& e)
+  {
+      error_ << misc::error::bind << e.location_get() << ": break outside loop "
+             << std::endl;
+
+  }
 
   /*----------------.
   | Symbol tables.  |
@@ -89,7 +95,9 @@ namespace bind
   {
     scope_begin();
     loop_scope_.push(&e);
+    e.is_test_set(true);
     e.test_get().accept(*this);
+    e.is_test_set(false);
     e.body_get().accept(*this);
     loop_scope_.pop();
     scope_end();
@@ -97,10 +105,10 @@ namespace bind
 
   void Binder::operator()(ast::BreakExp& e)
   {
+    if (e.is_test_get())
+      break_outside_loop(e);
     auto res = loop_scope_.top();
-    std::cout << res << "\n";
     e.loop_set(res);
-    std::cout << e.loop_get() << std::endl;
   }
 
   void Binder::operator()(ast::CallExp& e)
@@ -175,9 +183,7 @@ namespace bind
   void
   Binder::operator()(ast::TypeDecs& e)
   {
-    scope_begin();
     decs_visit<ast::TypeDec>(e);
-    scope_end();
   }
 
   

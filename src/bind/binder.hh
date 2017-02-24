@@ -172,7 +172,7 @@ namespace bind
 
     /// Binding errors handler.
     misc::error error_;
-    
+    void break_outside_loop(ast::BreakExp& e);
     // FIXED
     misc::scoped_map<misc::symbol, ast::TypeDec*> type_scope_;
     misc::scoped_map<misc::symbol, ast::FunctionDec*> function_scope_;

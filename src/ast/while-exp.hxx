@@ -33,6 +33,5 @@ namespace ast
     return *body_;
   }
 
-
 } // namespace ast
 

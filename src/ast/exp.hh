@@ -20,7 +20,12 @@ namespace ast
     Exp(const Location& location);
     /// Destroy an Exp node.
     virtual ~Exp() = default;
+    bool is_test_get();
+    void is_test_set(bool is_test);
+
     /** \} */
+  protected:
+    bool is_test_ = false;
   };
 
 } // namespace ast

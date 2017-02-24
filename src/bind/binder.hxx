@@ -87,7 +87,7 @@ template <>
 inline void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
 {
   scope_begin();
-  super_type::operator()(e);
+  e.ty_get().accept(*this);
   scope_end();
 }
 
