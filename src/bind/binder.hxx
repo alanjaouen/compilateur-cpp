@@ -73,23 +73,14 @@ inline void Binder::visit_dec_header<ast::TypeDec>(ast::TypeDec& e)
 template <>
 inline void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
 {
-  //auto last_scoped = function_scope_.scopes_get().back();
   function_scope_.put(e.name_get(), &e);
-  function_scope_.dump(std::cout);
-
-  std::cout << std::endl;
 }
 
 
 template <>
 inline void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e)
 {
-  auto last_scoped = var_scope_.scopes_get().back();
-  auto res = last_scoped.find(e.name_get());
-  if ( res != last_scoped.end() && res->second != &e)
-    redefinition(e, *res->second);
-  else
-    var_scope_.put(e.name_get(), &e);
+  var_scope_.put(e.name_get(), &e);
 }
 
 template <>
@@ -105,7 +96,7 @@ inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
 {
   scope_begin();
   decs_visit<ast::VarDec>(e.formals_get());
-  auto result = e.result_get();
+  auto result = e.result_get();//TODO : gerer les types
   if (result)
     result->accept(*this);
   auto body = e.body_get();
@@ -117,7 +108,12 @@ inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
 template <>
 inline void Binder::visit_dec_body<ast::VarDec>(ast::VarDec& e)
 {
-  super_type::operator()(e);
+  scope_begin();
+  if (e.type_name_get())
+    e.type_name_get()->accept(*this);
+  if (e.init_get())
+    e.init_get()->accept(*this);
+  scope_end();
 }
 
 } // namespace bind
