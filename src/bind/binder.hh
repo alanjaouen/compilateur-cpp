@@ -11,6 +11,9 @@
 #include <ast/default-visitor.hh>
 #include <ast/object-visitor.hh>
 
+//add by caradi_c
+#include<stack>
+
 namespace bind
 {
 
@@ -174,6 +177,7 @@ namespace bind
     misc::scoped_map<misc::symbol, ast::TypeDec*> type_scope_;
     misc::scoped_map<misc::symbol, ast::FunctionDec*> function_scope_;
     misc::scoped_map<misc::symbol, ast::VarDec*> var_scope_;
+    std::stack<ast::Exp*> loop_scope_;
   };
 }
 

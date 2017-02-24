@@ -7,6 +7,7 @@
 
 #include <ast/exp.hh>
 
+
 namespace ast
 {
 
@@ -29,7 +30,12 @@ namespace ast
     /// Accept a non-const visitor \a v.
     void accept(Visitor& v) override;
     /// \}
+    const Exp* loop_get() const;
+    Exp* loop_get();
+    void loop_set(Exp* loop);
 
+  private:
+    Exp* loop_;
   };
 
 } // namespace ast

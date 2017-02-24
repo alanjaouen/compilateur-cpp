@@ -77,23 +77,30 @@ namespace bind
   void Binder::operator()(ast::ForExp& e)
   {
     scope_begin();
+    loop_scope_.push(&e);
     e.vardec_get().accept(*this);
     e.hi_get().accept(*this);
     e.body_get().accept(*this);
+    loop_scope_.pop();
     scope_end();
   }
 
   void Binder::operator()(ast::WhileExp& e)
   {
     scope_begin();
+    loop_scope_.push(&e);
     e.test_get().accept(*this);
     e.body_get().accept(*this);
+    loop_scope_.pop();
     scope_end();
   }
 
   void Binder::operator()(ast::BreakExp& e)
   {
-    
+    auto res = loop_scope_.top();
+    std::cout << res << "\n";
+    e.loop_set(res);
+    std::cout << e.loop_get() << std::endl;
   }
 
   void Binder::operator()(ast::CallExp& e)
