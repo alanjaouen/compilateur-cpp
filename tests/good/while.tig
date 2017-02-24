@@ -1,12 +1,5 @@
 let
   var i := 0
-  while i < 10
-  do
-    (
-      print_int (i);
-      print ("\n");
-      i := i + 1
-    )
 in
   while i < 10
   do
