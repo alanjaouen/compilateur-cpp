@@ -73,9 +73,13 @@ inline void Binder::visit_dec_header<ast::TypeDec>(ast::TypeDec& e)
 template <>
 inline void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
 {
-  auto last_scoped = function_scope_.scopes_get().back();
+  //auto last_scoped = function_scope_.scopes_get().back();
   function_scope_.put(e.name_get(), &e);
+  function_scope_.dump(std::cout);
+
+  std::cout << std::endl;
 }
+
 
 template <>
 inline void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e)

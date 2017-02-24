@@ -57,6 +57,9 @@ namespace bind
     /// The error handler.
     const misc::error& error_get() const;
 
+    Binder();
+    ~Binder();
+
     /* The visiting methods. */
     void operator()(ast::LetExp& e) override;
     // void operator()(ast::SeqExp& e) override;

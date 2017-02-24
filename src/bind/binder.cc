@@ -28,7 +28,6 @@ namespace bind
   | Symbol tables.  |
   `----------------*/
 
-
   void
   Binder::scope_begin()
   {
@@ -50,7 +49,14 @@ namespace bind
   `---------*/
 
   // FIXME: Some code was deleted here.
-
+    Binder::Binder()
+    {
+      scope_begin();
+    }
+    Binder::~Binder()
+    {
+      scope_end();
+    }
   void
   Binder::operator()(ast::LetExp& e)
   {
@@ -91,7 +97,7 @@ namespace bind
 
   void Binder::operator()(ast::CallExp& e)
   {
-    auto* res = function_scope_.get(e.name_get());
+    auto res = function_scope_.get(e.name_get());
     if (!res)
       undeclared("function", e);
     else
@@ -150,9 +156,7 @@ namespace bind
   void
   Binder::operator()(ast::FunctionDecs& e)
   {
-    scope_begin();
     decs_visit<ast::FunctionDec>(e);
-    scope_end();
   }
 
   
