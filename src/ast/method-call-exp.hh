@@ -28,7 +28,7 @@ namespace ast
      * \{ */
     /// Construct a MethodCallExp node.
     MethodCallExp(const Location& location, misc::symbol& name,
-                  ast::exps_type* seq, Var* lvalue);
+                  ast::exps_type* seq, Exp* lvalue);
     /// Destroy a MethodCallExp node.
     virtual ~MethodCallExp();
     /** \} */
@@ -46,14 +46,14 @@ namespace ast
      * \name Accessors.
      * \{ */
     /// Return the call expression.
-    const Var& lvalue_get() const;
+    const Exp& lvalue_get() const;
     /// Return the call expression.
-    Var& lvalue_get();
+    Exp& lvalue_get();
     /** \} */
 
 
   protected:
-    Var* lvalue_;
+    Exp* lvalue_;
   };
 
 } // namespace ast

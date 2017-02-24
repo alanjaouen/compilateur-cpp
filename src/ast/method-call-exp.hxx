@@ -10,13 +10,13 @@
 namespace ast
 {
 
-    inline const Var&
+    inline const Exp&
     MethodCallExp::lvalue_get() const
     {
       return *lvalue_;
     }
 
-    inline Var&
+    inline Exp&
     MethodCallExp::lvalue_get()
     {
       return *lvalue_;
