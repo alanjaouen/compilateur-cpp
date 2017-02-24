@@ -1,0 +1,27 @@
+let
+  var i := 0
+  function fibo (i : int) : int =
+    let
+      var f0 := 0
+      var f1 := 1
+      var bound := 5
+      var res := 0
+      var i := 0
+    in
+      while (i <= bound)
+      do
+        (
+          res := f0 + f1;
+          f0 := f1;
+          f1 := res;
+          bound := bound + 1
+        )
+    end
+in
+  while (i < 6)
+  do
+  (
+    fibo(i);
+    i := i + 1
+  )
+end
