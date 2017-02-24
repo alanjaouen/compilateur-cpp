@@ -159,7 +159,10 @@ void PrettyPrinter::operator()(const OpExp& e)
 
 void PrettyPrinter::operator()(const AssignExp& e)
 {
-  ostr_ << e.var_get() << " := " << e.exp_get();
+  ostr_ << e.var_get();
+  if (bindings_display(ostr_))
+      ostr_ << "/* " << &e << " */";
+  ostr_ << " := " << e.exp_get();
 }
 
 void PrettyPrinter::operator()(const IfExp& e)
@@ -172,21 +175,29 @@ void PrettyPrinter::operator()(const IfExp& e)
 
 void PrettyPrinter::operator()(const WhileExp& e)
 {
-  ostr_ << "while " << e.test_get() << " do" << misc::incendl
+  ostr_ << "while ";
+  if (bindings_display(ostr_))
+      ostr_ << "/* " << &e << " */ ";
+  ostr_ << e.test_get() << " do" << misc::incendl
         << misc::incendl << e.body_get() << misc::decendl 
         << misc::decendl;
 }
 
 void PrettyPrinter::operator()(const ForExp& e)
 {
-  ostr_ << "for " << e.vardec_get().name_get()
+  ostr_ << "for ";
+  if (bindings_display(ostr_))
+      ostr_ << "/* " << &e << " */ ";
+  ostr_ << e.vardec_get().name_get()
         << " := " << *e.vardec_get().init_get() << " to " << e.hi_get() << " do"
         << misc::incendl << e.body_get() << misc::decendl;
 }
 
-void PrettyPrinter::operator()(const BreakExp&)
+void PrettyPrinter::operator()(const BreakExp& e)
 {
   ostr_ << "break";
+  if (bindings_display(ostr_))
+      ostr_ << "/* " << &e << " */";
 }
 
 void PrettyPrinter::operator()(const LetExp& e)
