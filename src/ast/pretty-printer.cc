@@ -197,7 +197,7 @@ void PrettyPrinter::operator()(const BreakExp& e)
 {
   ostr_ << "break";
   if (bindings_display(ostr_))
-      ostr_ << "/* " << &e << " */";
+    ostr_ << "/* " << e.loop_get() << " */";
 }
 
 void PrettyPrinter::operator()(const LetExp& e)
