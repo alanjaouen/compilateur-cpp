@@ -89,6 +89,7 @@
 # include <ast/field.hh>
 # include <ast/field-init.hh>
 # include <ast/function-dec.hh>
+# include <ast/method-dec.hh>
 # include <ast/type-dec.hh>
 # include <ast/var-dec.hh>
 # include <ast/any-decs.hh>
