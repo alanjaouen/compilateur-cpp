@@ -1,6 +1,11 @@
-while i < 10 do
-(
-    print_int (i);
-    print ("\n");
-    i := i + 1
-)
+let
+  var i := 0
+in
+  while i < 10
+  do
+    (
+      print_int (i);
+      print ("\n");
+      i := i + 1
+    )
+end

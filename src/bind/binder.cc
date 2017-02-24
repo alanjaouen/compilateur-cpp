@@ -73,7 +73,7 @@ namespace bind
   //     exp->accept(*this);
   //   scope_end();
   // }
-  
+
   void Binder::operator()(ast::ForExp& e)
   {
     scope_begin();
@@ -82,14 +82,15 @@ namespace bind
     e.body_get().accept(*this);
     scope_end();
   }
-  
+
   void Binder::operator()(ast::WhileExp& e)
   {
     scope_begin();
-    e.accept(*this);
+    e.test_get().accept(*this);
+    e.body_get().accept(*this);
     scope_end();
   }
-  
+
   void Binder::operator()(ast::BreakExp& e)
   {
     
@@ -103,6 +104,7 @@ namespace bind
     else
       e.def_set(res);
   }
+
   void Binder::operator()(ast::SimpleVar& e)
   {
     auto* res = var_scope_.get(e.name_get());
@@ -134,7 +136,7 @@ namespace bind
     else
       e.def_set(res);
   }
-  
+
 
   /*-------------------.
   | Visiting VarDecs.  |
