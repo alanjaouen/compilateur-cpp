@@ -1,3 +1,4 @@
 Raphaël Caruso          <caruso_r@epita.fr>
 Clyde Jean Caradine     <caradi_c@epita.fr>
 François Forestier      <forest_b@epita.fr>
+Alan Jaouen             <alan.jaouen@epita.fr>
