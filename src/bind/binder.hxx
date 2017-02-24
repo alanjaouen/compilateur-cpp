@@ -106,13 +106,17 @@ inline void Binder::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
   scope_end();
 }
 
-template <>
-inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
-{
-  scope_begin();
-  super_type::operator()(e.body_get()); 
-  scope_end();
-}
+  template <>
+  inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
+  {
+    scope_begin();
+    e.formals_get().accept(*this);
+    if (e.result_get())
+      e.result_get()->accept(*this);
+    if (e.body_get())
+      e.body_get()->accept(*this);
+    scope_end();
+  }
 
 template <>
 inline void Binder::visit_dec_body<ast::VarDec>(ast::VarDec& e)
