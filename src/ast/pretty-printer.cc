@@ -63,7 +63,7 @@ namespace ast
   void
   PrettyPrinter::operator()(const FieldVar& e)
   {
-    ostr_ << e.lvalue_get();
+    ostr_ << misc::deref << e.lvalue_get() << "." << e.name_get();
   }
 
   /* Foo[10]. */
@@ -109,13 +109,13 @@ void PrettyPrinter::operator()(const ArrayExp& e)
 
 void PrettyPrinter::operator()(const RecordExp& e)
 {
-  ostr_ << e.id_get().name_get() << "{ ";
+  ostr_ << e.id_get().name_get() << " { ";
   for (const auto& exp : e.fini_get())
   {
     if (exp != e.fini_get().back())
-      ostr_ << exp << " = " << exp->init_get() << " , ";
+      ostr_ << exp->name_get() << " = " << exp->init_get() << " , ";
     else
-      ostr_ << exp << " = " << exp->init_get();
+      ostr_ << exp->name_get() << " = " << exp->init_get();
   }
   ostr_ << " }";
 }
@@ -159,10 +159,7 @@ void PrettyPrinter::operator()(const OpExp& e)
 
 void PrettyPrinter::operator()(const AssignExp& e)
 {
-  ostr_ << e.var_get();
-  if (bindings_display(ostr_))
-      ostr_ << "/* " << &e << " */";
-  ostr_ << " := " << e.exp_get();
+  ostr_ << e.var_get() << " := " << e.exp_get();
 }
 
 void PrettyPrinter::operator()(const IfExp& e)
@@ -187,9 +184,12 @@ void PrettyPrinter::operator()(const ForExp& e)
 {
   ostr_ << "for ";
   if (bindings_display(ostr_))
-      ostr_ << "/* " << &e << " */ ";
-  ostr_ << e.vardec_get().name_get()
-        << " := " << *e.vardec_get().init_get() << " to " << e.hi_get() << " do"
+    ostr_ << "/* " << &e << " */ ";
+  ostr_ << e.vardec_get().name_get();
+
+  if (bindings_display(ostr_))
+    ostr_ << " /* " << &e.vardec_get() << " */ ";
+  ostr_ << " := " << *e.vardec_get().init_get() << " to " << e.hi_get() << " do"
         << misc::incendl << e.body_get() << misc::decendl;
 }
 
@@ -244,6 +244,8 @@ void PrettyPrinter::operator()(const FunctionDec& e)
     ostr_ << "function ";
   else
     ostr_ << "primitive ";
+
+
   ostr_ << e << '(';
   for (auto& var : e.formals_get().decs_get())
   {
@@ -306,11 +308,8 @@ void PrettyPrinter::operator()(const RecordTy& e)
 
 void PrettyPrinter::operator()(const Field& e)
 {
-  ostr_ << e.name_get();
-  if (bindings_display(ostr_))
-    ostr_ << " /* " << e.name_get() << " */";
+  ostr_ << e.name_get() << "." << e.type_name_get();
 }
-
   
 void PrettyPrinter::operator()(const ArrayTy& e)
 {
