@@ -103,7 +103,12 @@ void PrettyPrinter::operator()(const StringExp& e)
 
 void PrettyPrinter::operator()(const ArrayExp& e)
 {
-  ostr_ << e.type_get().name_get() << '[' << e.l_exp_get() << "] of "
+  ostr_ << e.type_get().name_get();
+
+  if (bindings_display(ostr_))
+    ostr_ << " /* " << e.def_get() << " */ ";
+
+  ostr_ << '[' << e.l_exp_get() << "] of "
         << e.r_exp_get();
 }
 
@@ -144,7 +149,11 @@ void PrettyPrinter::operator()(const CallExp& e)
 
 void PrettyPrinter::operator()(const MethodCallExp& e)
 {
-  ostr_ << e.lvalue_get() << '.' << e.name_get() << misc::incendl << '('
+  ostr_ << e.lvalue_get();
+  if (bindings_display(ostr_))
+    ostr_ << " /* " << e.def_get() << " */";
+  
+  ostr_ << e.name_get() << misc::incendl << '('
         << misc::incendl;
   for (auto& exp : e.seq_get())
     ostr_ << exp;
