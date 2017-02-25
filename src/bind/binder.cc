@@ -72,14 +72,6 @@ namespace bind
     scope_end();
   }
 
-  // void Binder::operator()(ast::SeqExp& e)
-  // {
-  //   scope_begin();
-  //   for (auto& exp : e.seq_get())
-  //     exp->accept(*this);
-  //   scope_end();
-  // }
-
   void Binder::operator()(ast::ForExp& e)
   {
     scope_begin();
@@ -144,9 +136,10 @@ namespace bind
 
   void Binder::operator()(ast::NameTy& e)
   {
-    auto* res = type_scope_.get(e.name_get());
+    auto res = type_scope_.get(e.name_get());
     if (e.name_get().get() == "string" || e.name_get().get() == "int")
     {
+      std::cout << "1" << std::endl;
       e.def_set(nullptr);
       return;
     }
@@ -156,6 +149,22 @@ namespace bind
       e.def_set(res);
   }
 
+  void Binder::operator()(ast::ArrayTy& e)
+  {
+    e.base_type_get().accept(*this);
+  }
+
+  void Binder::operator()(ast::ArrayExp& e)
+  {
+    e.type_get().accept(*this);
+    e.l_exp_get().accept(*this);
+    e.r_exp_get().accept(*this);
+  }
+
+  void Binder::operator()(ast::Field& e)
+  {
+    e.type_name_get().accept(*this);
+  }
 
   /*-------------------.
   | Visiting VarDecs.  |
@@ -165,7 +174,6 @@ namespace bind
   Binder::operator()(ast::VarDecs& e)
   {
     decs_visit<ast::VarDec>(e);
-    var_scope_.dump(std::cout);
   }
 
 
@@ -179,7 +187,7 @@ namespace bind
     decs_visit<ast::FunctionDec>(e);
   }
 
-  
+
   /*--------------------.
   | Visiting TypeDecs.  |
   `--------------------*/
