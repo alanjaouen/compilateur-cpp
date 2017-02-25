@@ -106,7 +106,7 @@ void PrettyPrinter::operator()(const ArrayExp& e)
   ostr_ << e.type_get().name_get();
 
   if (bindings_display(ostr_))
-    ostr_ << " /* " << e.def_get() << " */ ";
+    ostr_ << " /* " << e.type_get().def_get() << " */ ";
 
   ostr_ << '[' << e.l_exp_get() << "] of "
         << e.r_exp_get();
