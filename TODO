@@ -40,5 +40,4 @@
 []- src/escapes/escapes-visitor.cc
 
 array
-function call
 field(s)
