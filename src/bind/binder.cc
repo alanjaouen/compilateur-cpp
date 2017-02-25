@@ -117,7 +117,11 @@ namespace bind
     if (!res)
       undeclared("function", e);
     else
-      e.def_set(res);
+      {
+        e.def_set(res);
+        for (auto& i : e.seq_get())
+          i->accept(*this);
+      }
   }
 
   void Binder::operator()(ast::SimpleVar& e)

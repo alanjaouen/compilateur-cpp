@@ -96,7 +96,7 @@ inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
 {
   scope_begin();
   decs_visit<ast::VarDec>(e.formals_get());
-  auto result = e.result_get();//TODO : gerer les types
+  auto result = e.result_get();
   if (result)
     result->accept(*this);
   auto body = e.body_get();
