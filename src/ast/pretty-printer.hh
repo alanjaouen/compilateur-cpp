@@ -21,6 +21,7 @@ public:
 
   /// Build to print on \a ostr.
   PrettyPrinter(std::ostream& ostr);
+  static bool is_meth;
 
   /// Visit methods.
   /// \{
@@ -53,7 +54,7 @@ public:
   void operator()(const VarDec& e) override;
   void operator()(const WhileExp& e) override;
   void operator()(const Field& e) override;
-  //void operator()(const FieldInit& e) override;
+  void operator()(const FieldInit& e) override;
   void operator()(const SeqExp& e) override;
 //  void operator()(const DecsList& e) override;  
 //  void operator()(const Ty& e) override;
@@ -67,6 +68,7 @@ public:
 
     // Whether we are in a ast::ClassTy.
     bool within_classty_p_ = false;
+
 
   protected:
     /// The stream to print on.

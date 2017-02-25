@@ -14,6 +14,9 @@
 namespace ast
 {
 
+  bool PrettyPrinter::is_meth = false;
+
+
   // Anonymous namespace: these functions are private to this file.
   namespace
   {
@@ -63,9 +66,21 @@ namespace ast
   void
   PrettyPrinter::operator()(const FieldVar& e)
   {
-    ostr_ << misc::deref << e.lvalue_get() << "." << e.name_get();
+    ostr_ << misc::deref << e.lvalue_get() << ".";
+    if ( !PrettyPrinter::is_meth )
+      ostr_ << e.name_get();
   }
 
+  void PrettyPrinter::operator()(const Field& e)
+  {
+    ostr_ << e.name_get() << "." << e.type_name_get();
+  }
+
+  void PrettyPrinter::operator()(const FieldInit& e)
+  {
+    ostr_ << "field init";
+  }
+  
   /* Foo[10]. */
   void
   PrettyPrinter::operator()(const SubscriptVar& e)
@@ -154,10 +169,9 @@ void PrettyPrinter::operator()(const CallExp& e)
 
 void PrettyPrinter::operator()(const MethodCallExp& e)
 {
+  PrettyPrinter::is_meth = true;
   ostr_ << e.lvalue_get();
-  if (bindings_display(ostr_))
-    ostr_ << " /* " << e.def_get() << " */";
-  
+  PrettyPrinter::is_meth = false;
   ostr_ << e.name_get() << misc::incendl << '('
         << misc::incendl;
   for (auto& exp : e.seq_get())
@@ -320,11 +334,7 @@ void PrettyPrinter::operator()(const RecordTy& e)
   ostr_ << " }";
 }
 
-void PrettyPrinter::operator()(const Field& e)
-{
-  ostr_ << e.name_get() << "." << e.type_name_get();
-}
-  
+
 void PrettyPrinter::operator()(const ArrayTy& e)
 {
   ostr_ << "array of " << e.base_type_get();
