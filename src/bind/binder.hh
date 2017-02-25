@@ -76,10 +76,12 @@ namespace bind
 
     void operator()(ast::NameTy& e) override;
     // void operator()(ast::RecordTy& e) override;
-    // void operator()(ast::ArrayTy& e) override;
-    //void operator()(ast::Field& e) override;
+    void operator()(ast::ArrayTy& e) override;
+    void operator()(ast::ArrayExp& e) override;
+    void operator()(ast::Field& e) override;
     void operator()(ast::CallExp& e) override;
     void operator()(ast::SimpleVar& e) override;
+
     // ---------------- //
     // Visiting /Dec/.  //
     // ---------------- //
