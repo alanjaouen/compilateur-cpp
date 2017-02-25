@@ -80,6 +80,18 @@ namespace bind
     void operator()(ast::CallExp& e) override;
     void operator()(ast::SimpleVar& e) override;
 
+    void operator()(ast::DecsList& e) override;
+
+    /// \name Object-related visits.
+    /// \{
+    void operator()(ast::ClassTy& e) override;
+
+    // void operator()(ast::MethodDecs& e) override;
+    // void operator()(ast::MethodDec& e) override;
+
+    // void operator()(ast::MethodCallExp& e) override;
+    /// \}
+
     // ---------------- //
     // Visiting /Dec/.  //
     // ---------------- //
@@ -124,7 +136,7 @@ namespace bind
     void visit_dec_header(D& e);
 
 
-    
+
     /// Check a Function or Type declaration body.
     template <class D>
     void visit_dec_body(D& e);

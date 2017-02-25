@@ -38,6 +38,12 @@ namespace ast
     return name_;
   }
 
+  inline void
+  CallExp::name_set(const misc::symbol& symbol)
+  {
+    name_ = symbol;
+  }
+
   /// Return definition site.
   inline const FunctionDec*
   CallExp::def_get() const

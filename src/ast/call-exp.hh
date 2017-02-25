@@ -52,6 +52,7 @@ public:
   const misc::symbol& name_get() const;
   /// Return the function name.
   misc::symbol& name_get();
+  void name_set(const misc::symbol& symbol);
   /// Return definition site.
   const FunctionDec* def_get() const;
   /// Return definition site.

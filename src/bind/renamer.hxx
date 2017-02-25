@@ -9,14 +9,26 @@
 
 namespace bind
 {
-  // FIXME: Some code was deleted here.
+  //fixed by caradi_c
 
-  template <class E, class Def>
-  void
-  Renamer::visit(E& e, const Def* def)
+  template <typename Def>
+  misc::symbol Renamer::new_name_compute(const Def& e)
   {
-  // FIXME: Some code was deleted here.
+    return e.name_get().fresh(e.name_get());
   }
+
+  template <typename Def>
+  misc::symbol Renamer::new_name(const Def& e)
+  {
+    return new_name_compute(e);
+  }
+
+  // template <class E, class Def>
+  // void
+  // Renamer::visit(E& e, const Def* def)
+  // {
+    
+  // }
 
 
 } // namespace bind

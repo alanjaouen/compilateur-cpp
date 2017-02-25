@@ -139,7 +139,6 @@ namespace bind
     auto res = type_scope_.get(e.name_get());
     if (e.name_get().get() == "string" || e.name_get().get() == "int")
     {
-      std::cout << "1" << std::endl;
       e.def_set(nullptr);
       return;
     }
@@ -164,6 +163,20 @@ namespace bind
   void Binder::operator()(ast::Field& e)
   {
     e.type_name_get().accept(*this);
+  }
+
+  void Binder::operator()(ast::ClassTy& e)
+  {
+    if (e.super_get())
+      e.super_get()->accept(*this);
+    e.decs_get().accept(*this);
+  }
+
+  void
+  Binder::operator()(ast::DecsList& e)
+  {
+    for (auto& i : e.decs_get())
+      i->accept(*this);
   }
 
   /*-------------------.

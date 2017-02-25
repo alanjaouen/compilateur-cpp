@@ -22,9 +22,7 @@ namespace bind
   namespace tasks
   {
     void bound()
-    {
-      
-    }
+    {}
 
     void bind()
     {
@@ -40,8 +38,11 @@ namespace bind
     }
 
     void object_bind()
+    {}
+
+    void rename()
     {
-      
+      bind::rename(*ast::tasks::the_program);
     }
   }
 }

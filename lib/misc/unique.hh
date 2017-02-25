@@ -47,7 +47,6 @@ namespace misc
     /// The number of referenced objects.
     static object_size_type object_map_size();
     /** \} */
-
     /** \name Operators.
      ** \{ */
     /** \brief Assign a \c unique to this \c unique.

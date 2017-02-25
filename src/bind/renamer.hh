@@ -48,17 +48,21 @@ namespace bind
     ///
     /// \a def is the definition site of \e (must be equal to
     /// \a e if it is a Dec node).
-    template <class E, class Def>
-    void visit(E& e, const Def* def);
+    // template <class E, class Def>
+    // void visit(E& e, const Def* def);
 
     /// \name Visiting definition sites.
     /// \{
-  // FIXME: Some code was deleted here.
+    void operator()(ast::VarDec& e) override;
+    void operator()(ast::FunctionDec& e) override;
+    void operator()(ast::TypeDec& e) override;
     /// \}
 
     /// \name Visiting usage sites.
     /// \{
-  // FIXME: Some code was deleted here.
+    void operator()(ast::SimpleVar& e) override;
+    void operator()(ast::CallExp& e) override;
+    void operator()(ast::NameTy& e) override;
     /// \}
 
   private:

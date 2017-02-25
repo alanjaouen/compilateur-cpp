@@ -32,5 +32,6 @@ namespace bind
       "object-bindings-compute",
       "Bind the name uses to their definitions, allowing objects. consistency.",
       object_bind, "");
+    TASK_DECLARE("rename", "", rename, "bindings-compute");
   }
 }
