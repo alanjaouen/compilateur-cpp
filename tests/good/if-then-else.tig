@@ -1,4 +1,8 @@
-if grade < 10 then
+let
+  var grade := 0
+in
+  if grade < 10 then
     print ("Akim will kill you\n")
-else
+  else
     print ("Akim is happy\n")
+end
