@@ -114,7 +114,12 @@ void PrettyPrinter::operator()(const ArrayExp& e)
 
 void PrettyPrinter::operator()(const RecordExp& e)
 {
-  ostr_ << e.id_get().name_get() << " { ";
+  ostr_ << e.id_get().name_get();
+
+  if (bindings_display(ostr_))
+    ostr_ << " /* " << e.id_get().def_get() << " */ ";
+
+  ostr_ << " { ";
   for (const auto& exp : e.fini_get())
   {
     if (exp != e.fini_get().back())
