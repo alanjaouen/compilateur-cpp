@@ -1,36 +1,36 @@
 
 
-[]- lib/misc/scoped-map.hxx
-[]- lib/misc/scoped-map.hh
-[]- lib/misc/test-symbol.cc
+[x]- lib/misc/scoped-map.hxx
+[x]- lib/misc/scoped-map.hh
+[x]- lib/misc/test-symbol.cc
 
 []- src/ast/escapable.hh
 []- src/ast/escapable.cc
 []- src/ast/escapable.hxx
 
-[]- src/ast/pretty-printer.cc
+[~]- src/ast/pretty-printer.cc
 
 
-[]- src/object/tasks.hh
+[~]- src/object/tasks.hh
 []- src/object/libobject.cc
 []- src/object/libobject.cc
 []- src/object/binder.cc
 
-[]- src/bind/binder.cc
-[]- src/bind/binder.hxx
-[]- src/bind/binder.hh
+[~]- src/bind/binder.cc
+[~]- src/bind/binder.hxx
+[~]- src/bind/binder.hh
 
 []- src/bind/renamer.hxx
 []- src/bind/renamer.hh
 []- src/bind/renamer.cc
 
-[]- src/bind/libbind.cc
-[]- src/bind/libbind.hh
+[x]- src/bind/libbind.cc
+[x]- src/bind/libbind.hh
 []- src/object/libobject.hh
 
-[]- src/bind/tasks.cc
-[]- src/bind/tasks.hh
-[]- src/object/tasks.cc
+[~]- src/bind/tasks.cc
+[~]- src/bind/tasks.hh
+[~]- src/object/tasks.cc
 
 [x]- src/parse/parsetiger.yy
 [x]- src/parse/scantiger.ll
@@ -38,3 +38,7 @@
 
 []- src/escapes/escapes-visitor.hh
 []- src/escapes/escapes-visitor.cc
+
+array
+function call
+field(s)
