@@ -9,7 +9,7 @@
 namespace ast
 {
 
-  MethodCallExp::MethodCallExp(const Location& location, misc::symbol& name,
+  MethodCallExp::MethodCallExp(const Location& location, const misc::symbol& name,
                                ast::exps_type* seq, Exp* lvalue)
     : CallExp(location, name, seq)
     , lvalue_(lvalue)
