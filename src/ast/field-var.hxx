@@ -22,12 +22,12 @@ namespace ast
     return *lvalue_;
   }
 
-  inline const misc::symbol&
+  inline const misc::symbol
   FieldVar::name_get() const
   {
     return name_;
   }
-  inline misc::symbol&
+  inline misc::symbol
   FieldVar::name_get()
   {
     return name_;
