@@ -11,15 +11,15 @@ namespace ast
 {
 
 
-  inline const NameTy*
+  inline const NameTy&
   ClassTy::super_get() const
   {
-    return super_;
+    return *super_;
   }
-  inline NameTy*
+  inline NameTy&
   ClassTy::super_get()
   {
-    return super_;
+    return *super_;
   }
 
   inline const DecsList&

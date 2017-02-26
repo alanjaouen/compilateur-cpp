@@ -35,9 +35,9 @@ namespace ast
     /** \name Accessors.
      ** \{ */
     /// Return super class.
-    const NameTy* super_get() const;
+    const NameTy& super_get() const;
     /// Return super class.
-    NameTy* super_get();
+    NameTy& super_get();
     /// Return list of declarations.
     const DecsList& decs_get() const;
     /// Return list of declarations.

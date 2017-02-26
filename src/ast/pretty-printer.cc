@@ -243,8 +243,8 @@ void PrettyPrinter::operator()(const LetExp& e)
 void PrettyPrinter::operator()(const ClassTy& e)
 {
   ostr_ << "class ";
-  if (e.super_get() != nullptr)
-    ostr_<<  " extends " << e.super_get()->name_get();
+  // if (e.super_get() != nullptr)
+  ostr_<<  " extends " << e.super_get().name_get();
   ostr_ << misc::incendl << "{" << misc::iendl;
   for (auto* var : e.decs_get().decs_get())
   {

@@ -29,7 +29,7 @@ GenObjectVisitor<Const>::~GenObjectVisitor()
 template <template <typename> class Const>
 void GenObjectVisitor<Const>::operator()(const_t<ClassTy>& e)
 {
-  e.super_get()->accept(*this);
+  e.super_get().accept(*this);
   e.decs_get().accept(*this);
 }
 
