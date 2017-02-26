@@ -29,7 +29,7 @@ int
 main()
 {
   ast::bindings_display(std::cout) = true;
-  assertion(bound(" let"
+  /*assertion(bound(" let"
                   "   class C"
                   "   {"
                   "     var a := 0"
@@ -73,5 +73,5 @@ main()
                   " in"
                   "   d.a := 2;"
                   "   d.print()"
-                  " end"));
+                  " end"));*/
 }

@@ -116,7 +116,7 @@ namespace object
   Binder::decs_visit(ast::AnyDecs<D>& e)
   {//fix by caradi_c
     // Shorthand.
-    using decs_type = ast::AnyDecs<D>;
+    // using decs_type = ast::AnyDecs<D>;
     // FIXME: Some code was deleted here (Two passes: once on headers, then on bodies).
     auto& cdecs = e.decs_get();
     for (auto i = cdecs.begin(); i != cdecs.end(); i++)

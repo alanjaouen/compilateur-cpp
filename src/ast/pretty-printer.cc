@@ -75,11 +75,6 @@ namespace ast
   {
     ostr_ << e.name_get() << "." << e.type_name_get();
   }
-
-  void PrettyPrinter::operator()(const FieldInit& e)
-  {
-    ostr_ << "field init";
-  }
   
   /* Foo[10]. */
   void

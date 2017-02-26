@@ -42,7 +42,7 @@ namespace bind
   void Binder::decs_visit(ast::AnyDecs<D>& e)
   {
     // Shorthand.
-    using decs_type = ast::AnyDecs<D>;
+    //using decs_type = ast::AnyDecs<D>;
     auto& cdecs = e.decs_get();
     for (auto i = cdecs.begin(); i != cdecs.end(); i++)
       {
