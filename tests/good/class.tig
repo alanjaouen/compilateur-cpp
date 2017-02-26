@@ -1,16 +1,19 @@
-class Point2d
-{
-    var row : int := 0
-    var col : int := 0
+let
+  class Point2d
+  {
+  var row : int := 0
+  var col : int := 0
 
     method print_row () = print_int ( self.row )
     method print_col () = print_int ( self.col )
     method print () =
     (
-        print ("(");
-        self.print_row ();
-        print (", ");
-        self.print_col ();
-        print (")")
+      print ("(");
+             self.print_row ();
+             print (", ");
+             self.print_col ();
+             print (")")
     )
-}
+  }
+in
+end
