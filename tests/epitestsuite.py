@@ -100,7 +100,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
                 for test in subconfig:
                     mycmd = ""
                     if sanity:
-                        mycmd += "valgrind "
+                        mycmd += "valgrind --leak-check=full --error-exitcode=201 "
                     mycmd += my_path + " -bBA"
                     if test.startswith("--", 0, 2):
                         line = test.split()
@@ -119,7 +119,8 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
                         failed += errormsg(percent, category, mycmd,
                                            subconfig[test], "\tTIMEOUT\n")
                         continue
-                    status = get_status(my.returncode, subconfig[test])
+
+                    status = get_status(my.returncode, 0 if sanity else subconfig[test])
                     if status[0] != 0:
                         failed += errormsg(percent, category, mycmd,
                                            subconfig[test], status[1])
