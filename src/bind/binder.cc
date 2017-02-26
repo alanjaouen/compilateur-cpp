@@ -144,7 +144,10 @@ namespace bind
       return;
     }
     if (!res)
-      undeclared("type", e);
+      {
+        type_scope_.dump(std::cout);
+        undeclared("type", e);
+      }
     else
       e.def_set(res);
   }
