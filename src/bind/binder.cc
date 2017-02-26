@@ -149,22 +149,22 @@ namespace bind
       e.def_set(res);
   }
 
-  void Binder::operator()(ast::ArrayTy& e)
-  {
-    e.base_type_get().accept(*this);
-  }
+  // void Binder::operator()(ast::ArrayTy& e)
+  // {
+  //   e.base_type_get().accept(*this);
+  // }
 
-  void Binder::operator()(ast::ArrayExp& e)
-  {
-    e.type_get().accept(*this);
-    e.l_exp_get().accept(*this);
-    e.r_exp_get().accept(*this);
-  }
+  // void Binder::operator()(ast::ArrayExp& e)
+  // {
+  //   e.type_get().accept(*this);
+  //   e.l_exp_get().accept(*this);
+  //   e.r_exp_get().accept(*this);
+  // }
 
-  void Binder::operator()(ast::Field& e)
-  {
-    e.type_name_get().accept(*this);
-  }
+  // void Binder::operator()(ast::Field& e)
+  // {
+  //   e.type_name_get().accept(*this);
+  // }
 
   void Binder::operator()(ast::ClassTy& e)
   {

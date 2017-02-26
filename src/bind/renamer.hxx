@@ -23,11 +23,19 @@ namespace bind
     return new_name_compute(e);
   }
 
+  inline misc::symbol
+  Renamer::new_name(const ast::FunctionDec& e)
+  {
+    if (!e.body_get() || e.name_get().get() == "_main")
+      return e.name_get();
+    return new_name_compute(e);
+  }
+
   // template <class E, class Def>
   // void
   // Renamer::visit(E& e, const Def* def)
   // {
-    
+  //   std::cout << def->getType();
   // }
 
 

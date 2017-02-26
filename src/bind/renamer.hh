@@ -41,6 +41,7 @@ namespace bind
     /// new name of that function on the fly.
     template <typename Def>
     misc::symbol new_name(const Def& e);
+    misc::symbol new_name(const ast::FunctionDec& e);
     /// \}
 
     // Visit methods.
