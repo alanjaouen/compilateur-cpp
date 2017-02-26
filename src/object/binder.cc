@@ -20,15 +20,36 @@ namespace object
      desugared.  */
   void
   Binder::operator()(ast::SimpleVar& e)
-  {
-  // FIXME: Some code was deleted here.
+  {//fix by caradi_c
+    if (within_method_dec_)
+      {
+        auto res = var_scope_.get(e.name_get());
+        if (!res)
+          {
+            if (e.name_get().get() != "self")
+              undeclared("variable", e);
+          }
+        else
+          e.def_set(res);
+      }
+    super_type::operator()(e);
   }
 
   // Handle the case of `Object'.
   void
   Binder::operator()(ast::NameTy& e)
-  {
-  // FIXME: Some code was deleted here.
+  {//fix by caradi_c
+    auto res = type_scope_.get(e.name_get());
+    if (e.name_get().get() == "string" || e.name_get().get() == "int"
+        || e.name_get().get() == "object")
+      {
+        e.def_set(nullptr);
+        return;
+      }
+    if (!res)
+      undeclared("type", e);
+    else
+      e.def_set(res);
   }
 
 
@@ -54,7 +75,7 @@ namespace object
   Binder::operator()(ast::ClassTy& e)
   {
     scope_begin();
-//    e.super_get().accept(*this);
+    e.super_get().accept(*this);
     bool saved_within_class_ty = within_class_ty_;
     within_class_ty_ = true;
     bool saved_within_method_dec = within_method_dec_;
@@ -93,10 +114,25 @@ namespace object
   template <class D>
   void
   Binder::decs_visit(ast::AnyDecs<D>& e)
-  {
+  {//fix by caradi_c
     // Shorthand.
     using decs_type = ast::AnyDecs<D>;
-  // FIXME: Some code was deleted here (Two passes: once on headers, then on bodies).
+    // FIXME: Some code was deleted here (Two passes: once on headers, then on bodies).
+    auto& cdecs = e.decs_get();
+    for (auto i = cdecs.begin(); i != cdecs.end(); i++)
+      {
+        for(auto j = cdecs.begin(); j != i; j++)
+          {
+            if ((*j)->name_get().get() == (*i)->name_get().get())
+              {
+                redefinition(**j, **i);
+                break;
+              }
+          }
+        visit_dec_header<D>(**i);
+      }
+    for (auto& i : e.decs_get())
+      visit_dec_body(*i);
   }
 
   // This trampoline is needed, since `virtual' and `template' cannot
