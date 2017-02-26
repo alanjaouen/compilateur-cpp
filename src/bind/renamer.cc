@@ -40,13 +40,13 @@ namespace bind
     e.name_set(e.def_get()->name_get());
     super_type::operator()(e);
   }
-  
+
   void Renamer::operator()(ast::CallExp& e)
   {
     e.name_set(e.def_get()->name_get());
     super_type::operator()(e);
   }
-  
+
   void Renamer::operator()(ast::NameTy& e)
   {
     if (e.def_get())
