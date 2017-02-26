@@ -37,13 +37,13 @@ namespace bind
       ast::bindings_display(std::cout) = true;
     }
 
-    void object_bind()
-    {
-      precondition(ast::tasks::the_program);
-      auto e = bind::bind(*ast::tasks::the_program);
-      if (e)
-        e.exit_on_error();
-    }
+    // void object_bind()
+    // {
+    //   precondition(ast::tasks::the_program);
+    //   auto e = bind::bind(*ast::tasks::the_program);
+    //   if (e)
+    //     e.exit_on_error();
+    // }
 
     void rename()
     {

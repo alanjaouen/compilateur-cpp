@@ -27,11 +27,6 @@ namespace bind
                  "Enable the bindings display in the next --ast-display\
  invocation. This option does not imply --bindings-compute.",
                  bind_display, "");
-
-    TASK_DECLARE(
-      "object-bindings-compute",
-      "Bind the name uses to their definitions, allowing objects. consistency.",
-      object_bind, "");
     TASK_DECLARE("rename", "", rename, "bindings-compute");
   }
 }
