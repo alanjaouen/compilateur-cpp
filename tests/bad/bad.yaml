@@ -3,4 +3,4 @@ string_coma_escape.tig: 2
 string_not_finish.tig: 2
 var_name.tig: 2
 record.tig: 3
-void.tig: 0
+void.tig: 4
