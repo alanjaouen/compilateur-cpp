@@ -19,7 +19,7 @@ namespace ast
   inline void
   Exp::is_test_set(bool is_test)
   {
-    is_test_ = is_test_;
+    is_test_ = is_test;
   }
 
 } // namespace ast

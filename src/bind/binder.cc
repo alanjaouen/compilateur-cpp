@@ -10,6 +10,7 @@
 
 namespace bind
 {
+  bool Binder::is_test = false;
 
   /*-----------------.
   | Error handling.  |
@@ -55,14 +56,16 @@ namespace bind
   `---------*/
 
   // FIXME: Some code was deleted here.
-    Binder::Binder()
-    {
-      scope_begin();
-    }
-    Binder::~Binder()
-    {
-      scope_end();
-    }
+  Binder::Binder()
+  {
+    scope_begin();
+  }
+  
+  Binder::~Binder()
+  {
+    scope_end();
+  }
+  
   void
   Binder::operator()(ast::LetExp& e)
   {
@@ -88,9 +91,9 @@ namespace bind
   {
     scope_begin();
     loop_scope_.push(&e);
-    e.is_test_set(true);
+    Binder::is_test=true;
     e.test_get().accept(*this);
-    e.is_test_set(false);
+    Binder::is_test=false;
     e.body_get().accept(*this);
     loop_scope_.pop();
     scope_end();
@@ -98,7 +101,9 @@ namespace bind
 
   void Binder::operator()(ast::BreakExp& e)
   {
-    if (e.is_test_get())
+    if (Binder::is_test)
+      break_outside_loop(e);
+    if (loop_scope_.empty())
       break_outside_loop(e);
     auto res = loop_scope_.top();
     e.loop_set(res);

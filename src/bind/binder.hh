@@ -57,6 +57,7 @@ namespace bind
     /// Import all the overloaded \c operator() methods.
     using super_type::operator();
 
+    static bool is_test;
     /// The error handler.
     const misc::error& error_get() const;
 
