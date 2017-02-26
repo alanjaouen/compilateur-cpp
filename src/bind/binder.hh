@@ -83,7 +83,7 @@ namespace bind
 
     /// \name Object-related visits.
     /// \{
-    void operator()(ast::ClassTy& e) override;
+    // void operator()(ast::ClassTy& e) override;
 
     // void operator()(ast::MethodDecs& e) override;
     // void operator()(ast::MethodDec& e) override;

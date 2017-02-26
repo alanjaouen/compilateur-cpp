@@ -119,6 +119,7 @@ namespace bind
 
   void Binder::operator()(ast::SimpleVar& e)
   {
+    std::cout << "simple\n" << std::endl;
     auto* res = var_scope_.get(e.name_get());
     if (!res)
       undeclared("variable", e);
@@ -144,10 +145,7 @@ namespace bind
       return;
     }
     if (!res)
-      {
-        type_scope_.dump(std::cout);
-        undeclared("type", e);
-      }
+      undeclared("type", e);
     else
       e.def_set(res);
   }
@@ -169,12 +167,12 @@ namespace bind
   //   e.type_name_get().accept(*this);
   // }
 
-  void Binder::operator()(ast::ClassTy& e)
-  {
-    if (e.super_get())
-      e.super_get()->accept(*this);
-    e.decs_get().accept(*this);
-  }
+  // void Binder::operator()(ast::ClassTy& e)
+  // {
+  //   if (e.super_get())
+  //     e.super_get()->accept(*this);
+  //   e.decs_get().accept(*this);
+  // }
 
   void
   Binder::operator()(ast::DecsList& e)
