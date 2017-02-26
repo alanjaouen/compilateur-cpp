@@ -24,7 +24,8 @@ namespace object
     TASK_DECLARE("object-parse", "parse a file, allowing objects",
                  object_parse, "object parse");
 
-  // FIXME: Some code was deleted here.
+    //fix by caradi_c
+    TASK_DECLARE("object-bindings-compute", "", bind_obj, "object_parse");
 
 
 

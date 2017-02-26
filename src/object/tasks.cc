@@ -22,7 +22,14 @@ namespace object
     object_parse()
     {}
 
-  // FIXME: Some code was deleted here.
+    //fix by caradi_c
+    void
+    bind_obj()
+    {
+      auto res = object::bind_obj(*ast::tasks::the_program);
+      if (!res)
+        task_error.exit();
+    }
 
 
 
