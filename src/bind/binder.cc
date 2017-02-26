@@ -76,6 +76,7 @@ namespace bind
   {
     scope_begin();
     loop_scope_.push(&e);
+    var_scope_.put(e.vardec_get().name_get(), &(e.vardec_get()));
     e.vardec_get().accept(*this);
     e.hi_get().accept(*this);
     e.body_get().accept(*this);

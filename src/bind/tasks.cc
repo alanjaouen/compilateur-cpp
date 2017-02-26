@@ -38,7 +38,12 @@ namespace bind
     }
 
     void object_bind()
-    {}
+    {
+      precondition(ast::tasks::the_program);
+      auto e = bind::bind(*ast::tasks::the_program);
+      if (e)
+        e.exit_on_error();
+    }
 
     void rename()
     {
