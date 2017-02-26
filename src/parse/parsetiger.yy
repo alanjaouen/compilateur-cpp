@@ -426,7 +426,7 @@ ty:
 type_id {$$ = $1;}
 | "{" tyfields "}" {$$ = new ast::RecordTy(@$, $2);}
 | "{"  "}" {$$ = new ast::RecordTy(@$, new ast::fields_type());}
-| "array" "of" type_id {$$ = $3;}
+| "array" "of" type_id { $$ = new ast::ArrayTy(@$, $3);}
 | "class" super_class "{" classfields "}" { $$ = new ast::ClassTy(@$, $2, $4); }
 ;
 
