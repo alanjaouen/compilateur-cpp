@@ -23,5 +23,5 @@ namespace object
   // FIXED by forest_b
 
   misc::error bind(ast::Ast& e);
-
+  misc::error bind_obj(ast::Ast& );
 } // namespace object

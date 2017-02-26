@@ -5,7 +5,8 @@
 
 
 #include <object/libobject.hh>
-  // FIXME: Some code was deleted here.
+#include <ast/libast.hh>
+#include <object/binder.hh>
 
 namespace object
 {
@@ -13,9 +14,15 @@ namespace object
   | Bind.  |
   `-------*/
 
-  
+
   misc::error bind(ast::Ast& e)
   {
+  }
+  misc::error bind_obj(ast::Ast& e)
+  {
+    Binder bind_compute;
+    bind_compute(e);
+    return bind_compute.error_get();
   }
 
 
