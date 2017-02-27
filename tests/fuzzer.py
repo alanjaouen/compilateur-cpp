@@ -29,24 +29,25 @@ class InterTestSuite(cmd.Cmd):
         d.set_background_title("Tiger Compiler TestSuite")
         code, tag = d.menu("Which type of fuzzing do you wanna do?",
                            choices=[
-                            ("(1)", "Random"),
-                            ("(2)", "Select from a list")])
+                               ("(1)", "Random"),
+                               ("(2)", "Select from a list")])
         if code == d.OK:
             if tag == "(2)":
                 code, tags = d.checklist("For which categories?",
                                          choices=[
-                                          ("Literals", "", False),
-                                          ("Array and record", "", False),
-                                          ("Variables, field, elements", "",
-                                           False),
-                                          ("Object", "", False),
-                                          ("Function", "", False),
-                                          ("Method", "", False),
-                                          ("Operations", "", False),
-                                          ("Assignment", "", False),
-                                          ("Type", "", False),
-                                          ("Class", "", False),
-                                          ("Control structures", "", False)])
+                                             ("Literals", "", False),
+                                             ("Array and record", "", False),
+                                             ("Variables, field, elements", "",
+                                                 False),
+                                             ("Object", "", False),
+                                             ("Function", "", False),
+                                             ("Method", "", False),
+                                             ("Operations", "", False),
+                                             ("Assignment", "", False),
+                                             ("Type", "", False),
+                                             ("Class", "", False),
+                                             ("Control structures", "", False)
+                                                 ])
                 if code != d.OK:
                     os.system('clear')
                     return
