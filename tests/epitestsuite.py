@@ -1,9 +1,9 @@
-#!/usr/bin/python3
+"""TestSuite for TC."""
+# !/usr/bin/python3
 
 from termcolor import colored
 import argparse
 import click
-import difflib
 import os
 import subprocess
 import sys
@@ -11,6 +11,7 @@ import yaml
 
 
 def options(args):
+    """Option parsing."""
     parser = argparse.ArgumentParser(description="Tiger Compiler TestSuite")
     parser.add_argument("-l", "--list", action="store_true", default=False,
                         help="display the list of test categories")
@@ -43,13 +44,15 @@ def options(args):
 
 
 def list_category(yaml_file):
+    """Category listing."""
     with open(yaml_file, 'r') as f:
         config = yaml.load(f)
     categories = []
     for section in config:
         if section == "categories":
             with click.progressbar(label="Generating list of category",
-                    length=len(config[section]), show_eta=True, width=0) as pbar:
+                                   length=len(config[section]),
+                                         show_eta=True, width=0) as pbar:
                 for category in config[section]:
                     categories.append(category)
                     pbar.update(1)
@@ -58,15 +61,17 @@ def list_category(yaml_file):
 
 
 def get_status(my, ref):
+    """Getting status."""
     if my == ref:
-        return (0, "\tmy returned: " + str(my) +\
+        return (0, "\tmy returned: " + str(my) +
                    "\n\tref returned: " + str(ref))
     else:
-        return (1, "\tmy returned: " + str(my) +\
+        return (1, "\tmy returned: " + str(my) +
                    "\n\tref returned: " + str(ref))
 
 
 def errormsg(percent, category, mycmd, comment, msg):
+    """Generating error message."""
     global output
     global fail
     output += colored(percent + mycmd + ": FAIL:\n" + msg, 'red')
@@ -75,6 +80,7 @@ def errormsg(percent, category, mycmd, comment, msg):
 
 
 def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
+    """Parsing configfile."""
     with open(yaml_file, 'r') as f:
         config = yaml.load(f)
     global fail
@@ -100,17 +106,18 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
                 for test in subconfig:
                     mycmd = ""
                     if sanity:
-                        mycmd += "valgrind --leak-check=full --error-exitcode=201 "
+                        mycmd += "valgrind --leak-check=full " +\
+                                 "--error-exitcode=201 "
                     mycmd += my_path + " -bBA"
                     if test.startswith("--", 0, 2):
                         line = test.split()
                         mycmd += " " + line[0]
                         mycmd += " " + category + "/" + line[1]
                     else:
-                        mycmd += " " + category + "/"+ test
+                        mycmd += " " + category + "/" + test
                     mycmd = ' '.join(mycmd.strip().split())
                     percent = "[" + str(int(((list(subconfig).index(test) + 1)
-                                        / len(subconfig) * 100))) + "%] "
+                                             / len(subconfig) * 100))) + "%] "
                     try:
                         my = subprocess.run(mycmd, shell=True, timeout=time,
                                             stdout=subprocess.PIPE,
@@ -120,12 +127,13 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
                                            subconfig[test], "\tTIMEOUT\n")
                         continue
 
-                    status = get_status(my.returncode, 0 if sanity else subconfig[test])
+                    status = get_status(
+                        my.returncode, 0 if sanity else subconfig[test])
                     if status[0] != 0:
                         failed += errormsg(percent, category, mycmd,
                                            subconfig[test], status[1])
                     else:
-                        output += colored(percent + mycmd + ": PASS:\n" +\
+                        output += colored(percent + mycmd + ": PASS:\n" +
                                           status[1], 'green')
                         ptest.update(1)
                     output += "\n"
@@ -148,11 +156,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
 if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
     f = open('tigrou.ascii', 'r')
-    file_content = f.read();
-    print('\033[93m' + file_content+ '\033[0m')
+    file_content = f.read()
+    print('\033[93m' + file_content + '\033[0m')
     f.close()
-    if sys.stdout.isatty():
-        options(sys.argv[1:])
-    else:
-        parse_config('config.yaml', list_category('config.yaml'), False,
-                     sys.stdout, 10)
+    options(sys.argv[1:])
