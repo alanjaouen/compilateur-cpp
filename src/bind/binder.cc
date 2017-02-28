@@ -105,8 +105,11 @@ namespace bind
       break_outside_loop(e);
     if (loop_scope_.empty())
       break_outside_loop(e);
-    auto res = loop_scope_.top();
-    e.loop_set(res);
+    else 
+    {
+      auto res = loop_scope_.top();
+      e.loop_set(res);
+    }
   }
 
   void Binder::operator()(ast::CallExp& e)
