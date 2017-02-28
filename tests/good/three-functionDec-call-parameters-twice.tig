@@ -1,0 +1,9 @@
+let
+	function f (a : int) : int = 2
+	function g (a : int, b : int ) : int = 42
+	var a : int := 5
+	function f (a : int, b : int, c : int ) : int = 43
+
+in
+	f(1, 2 , g( f ( 1 , 2 , 3 ) , 3 ) )
+end

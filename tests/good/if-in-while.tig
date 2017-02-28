@@ -1,0 +1,6 @@
+while (1 <> 2)
+do
+(
+	if 1
+	then 42
+)

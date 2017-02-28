@@ -1,5 +1,4 @@
-"""TestSuite for TC."""
-# !/usr/bin/python3
+#! /bin/python3
 
 from termcolor import colored
 import argparse

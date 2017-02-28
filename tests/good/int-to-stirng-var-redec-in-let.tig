@@ -1,0 +1,5 @@
+let
+	var a := 42
+	var a := "flag triche"
+in
+end

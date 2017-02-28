@@ -4,7 +4,6 @@ array.tig: 0
 arrays.tig: 0
 break-in-while.tig: 0
 --object class.tig: 0
-commands.tih: 0
 comments-nested.tig: 0
 compare-record-and-nil.tig: 0
 fact.tig: 0
@@ -16,17 +15,13 @@ if-then-else.tig: 0
 if.tig: 0
 int-short.tig: 0
 int.tig: 0
-lexer.tih: 0
 libLogo.tih: 0
-line.tih: 0
 local-vs-global-type.tig: 0
-logo.tih: 0
 merge.tig: 0
 --object multi-class-\&-function-call-in-method.tig: 0
 mutually-recursive-functions.tig: 0
 mutually-recursive-procedures.tig: 0
 --object new-object.tig: 0
-parser.tih: 0
 queens.tig: 0
 record.tig: 0
 records.tig: 0
@@ -45,3 +40,26 @@ sudoku-with-import.tig: 0
 three-name-spaces.tig: 0
 void.tig: 0
 while.tig: 0
+function-in-let.tig: 0
+if-and-in-condition-parenthesis.tig: 0
+if-and-in-condition.tig: 0
+if-in-while.tig: 0
+if-or-in-condition-parenthesis.tig: 0
+if-or-in-condition.tig: 0
+if-without-else.tig: 0
+int-to-stirng-var-redec-in-let.tig: 0
+int-var-redec-in-let.tig: 0
+multiple-int-var-redec-in-let.tig: 0
+nil.tig: 0
+op-add-in-let.tig: 0
+op-div-in-let.tig: 0
+op-sub-in-let.tig: 0
+op-times-in-let.tig: 0
+simple-while-ne-condition.tig: 0
+simple-while.tig: 0
+three-functionDec-call-parameters-twice.tig: 0
+three-functionDec-call-parameters.tig: 0
+three-functionDec-call.tig: 0
+three-functionDec.tig: 0
+two-function-in-let.tig: 0
+vardec-in-let.tig: 0

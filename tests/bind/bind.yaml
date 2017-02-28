@@ -6,3 +6,10 @@ recursive-type-interupt.tig: 4
 undeclared-variable-in-function.tig: 4
 undeclared-variable.tig: 4
 unknown-record.tig: 4
+break-alone.tig: 4
+line.tih: 4
+logo.tih: 4
+lexer.tih: 4
+parser.tih: 4
+commands.tih: 4
+break-alone.tig: 4
