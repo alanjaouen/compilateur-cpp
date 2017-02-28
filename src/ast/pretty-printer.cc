@@ -73,7 +73,7 @@ namespace ast
 
   void PrettyPrinter::operator()(const Field& e)
   {
-    ostr_ << e.name_get() << "." << e.type_name_get();
+    ostr_ << e.name_get();
   }
   
   /* Foo[10]. */
