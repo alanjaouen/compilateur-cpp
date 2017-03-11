@@ -53,7 +53,15 @@ namespace escapes
     using super_type = ast::DefaultVisitor;
     /// Import all the overloaded visit methods.
     using super_type::operator();
+    //------------------------------pas sur----------------------------------------
+    // inline void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e);
+    // inline void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e);
+    //-----------------------------------------------------------------------------
 
+    //commence par increment le compteur; visite le contenu; decremente
+    // inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e);
+    //map de <symbol, std::pair<vardec*, depth(un int de count)>>;
+    //compteur statique et fonction d'increment et de decrement;
   // FIXME: Some code was deleted here.
   };
 } // namespace escapes

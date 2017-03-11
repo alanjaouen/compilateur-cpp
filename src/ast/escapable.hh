@@ -15,7 +15,7 @@ namespace ast
   {
   // FIXME: Some code was deleted here.
   public:
-  	Escapable();
+        Escapable();
     /// Destroy a Escapable node.
     virtual ~Escapable();
 
