@@ -129,6 +129,8 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
             << misc::escape(yytext) << "'\n";
   BEGIN(INITIAL);
    }
+{NEWLINE}       { tp.location_.lines(1); tp.location_.step();}
+   
 . { }
 }
 
