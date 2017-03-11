@@ -73,7 +73,6 @@
             else
                 yyo << $$;
          } <ast::Exp*><ast::Var*><ast::VarDecs*>
-           <ast::Decs*><ast::exps_type*>
            <ast::DecsList*><ast::Ty*><ast::NameTy*>
 
 %token <std::string>    STRING "string"
