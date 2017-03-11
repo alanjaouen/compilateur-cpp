@@ -252,7 +252,10 @@ void PrettyPrinter::operator()(const ClassTy& e)
 void PrettyPrinter::operator()(const VarDec& e)
 {
   const ast::Dec& dec = e;
-  ostr_ << "var " << dec;
+  ostr_ << "var ";
+  if (escapes_display(ostr_) && e.is_escaped_get())
+        ostr_ << "/* escaping */ ";
+  ostr_ << dec;
   if (e.type_name_get() != nullptr)
     ostr_ << " : " << *e.type_name_get();
   if (e.init_get() != nullptr)
