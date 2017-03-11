@@ -127,7 +127,6 @@ namespace bind
 
   void Binder::operator()(ast::SimpleVar& e)
   {
-    std::cout << "simple\n" << std::endl;
     auto* res = var_scope_.get(e.name_get());
     if (!res)
       undeclared("variable", e);
