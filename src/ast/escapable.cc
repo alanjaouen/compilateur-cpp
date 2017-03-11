@@ -10,14 +10,14 @@ namespace ast
 {
 
   // FIXME: Some code was deleted here.
-  	Escapable::Escapable()
-  	{
-      this->is_escaped_ = true;
-  	};
+  Escapable::Escapable()
+  {
+    this->is_escaped_ = false;
+  };
 
-    Escapable::~Escapable()
-    {
-    };
+  Escapable::~Escapable()
+  {
+  };
 
 
 } // namespace ast

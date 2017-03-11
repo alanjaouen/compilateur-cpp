@@ -25,7 +25,7 @@ namespace ast
     bool is_escaped_get();
     /// set a boolean for is_escaped.
     void is_escaped_set(bool bo);
-
+  private:
     ///the variable is escaped
     bool is_escaped_;
   };
