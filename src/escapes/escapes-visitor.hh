@@ -55,7 +55,7 @@ namespace escapes
     /// Import all the overloaded visit methods.
     using super_type::operator();
 
-    using dmap = std::map<misc::symbol, std::pair<ast::vardec&, int>>;
+    using dmap = std::map<misc::symbol, std::pair<ast::VarDec&, int>>;
 
     //Ctor & Dtor
     EscapesVisitor();
@@ -80,12 +80,12 @@ namespace escapes
     //reshearch in th map
     int get(misc::symbol sym);
     //add an elemet to the map
-    void put(misc::symbol& sym, ast::vardec& var);
+    void put(misc::symbol& sym, ast::VarDec& var);
     //print the map on std::cout
     void dump();
 
   private:
-    static std::map<misc::symbol, std::pair<ast::vardec&, int>> depth_map_;
+    static std::map<misc::symbol, std::pair<ast::VarDec&, int>> depth_map_;
     static int depth_;
   };
 
