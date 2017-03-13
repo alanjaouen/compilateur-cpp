@@ -53,11 +53,23 @@ namespace escapes
     using super_type = ast::DefaultVisitor;
     /// Import all the overloaded visit methods.
     using super_type::operator();
+
+    //Ctor & Dtor
+    EscapesVisitor();
+    ~EscapesVisitor();
+
+    //increment the depth counter;
+    void incr();
+    //decrement the depth counter;
+    void decr();
+
     //------------------------------pas sur----------------------------------------
     // inline void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e);
     // inline void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e);
     //-----------------------------------------------------------------------------
-
+  private:
+    std::map<symbol, std::pair<vardec*, int>> = depth_map_;
+    static int depth_;
     //commence par increment le compteur; visite le contenu; decremente
     // inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e);
     //map de <symbol, std::pair<vardec*, depth(un int de count)>>;
