@@ -1,0 +1,7 @@
+let
+  var one := 1
+  var two := 2
+  function incr(x: int) : int = x + one
+in
+  incr(two)
+end
