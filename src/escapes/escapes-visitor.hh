@@ -49,7 +49,7 @@ namespace escapes
     , public ast::NonObjectVisitor
   {
   public:
-    //Fixed.
+    //Fixed by caradi_c.
     /// Super class type.
     using super_type = ast::DefaultVisitor;
     /// Import all the overloaded visit methods.

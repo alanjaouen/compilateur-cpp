@@ -16,10 +16,9 @@ namespace escapes
 
   EscapesVisitor()
   {}
-  
+
   ~EscapesVisitor()
   {}
-  
 
   //increment the depth counter;
   void incr()
@@ -42,19 +41,20 @@ namespace escapes
   //getter for deph_map_
   dmap& depth_map_get()
   {
-
+    return EscapesVisitor.depth_map_;
   }
 
   //reshearch in th map
   int get(misc::symbol sym)
   {
-
+    return EscapesVisitor.depth_map_[sym].second;
   }
 
   //add an elemet to the map
-  void put(misc::symbol sym, ast::vardec& var)
+  void put(misc::symbol& sym, ast::VarDec& var)
   {
-
+    EscapesVisitor.depth_map_[sym] = new std::pair<ast::VarDec&, int>
+      (var, EscapesVisitor.depth_get());
   }
 
   //print the map on std::cout
