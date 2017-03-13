@@ -55,15 +55,11 @@ namespace escapes
     /// Import all the overloaded visit methods.
     using super_type::operator();
 
-    using dmap = std::map<misc::symbol, std::pair<ast::VarDec&, int>>;
-
-    //Ctor & Dtor
-    EscapesVisitor();
-    ~EscapesVisitor();
+    using dmap = std::map<misc::symbol, std::pair<ast::VarDec*, int>>;
 
     //commence par increment le compteur; visite le contenu; decremente
     // inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e);
-    void operator()(ast::VarDecs& e) override;
+    void operator()(ast::VarDec& e) override;
     void operator()(ast::FunctionDecs& e) override;
 
     //map de <symbol, std::pair<vardec*, depth(un int de count)>>;
@@ -80,14 +76,14 @@ namespace escapes
     //reshearch in th map
     int get(misc::symbol sym);
     //add an elemet to the map
-    void put(misc::symbol& sym, ast::VarDec& var);
+    void put(misc::symbol& sym, ast::VarDec* var);
     //print the map on std::cout
     void dump();
 
   private:
-    static std::map<misc::symbol, std::pair<ast::VarDec&, int>> depth_map_;
-    static int depth_;
+    dmap depth_map_;
+    int depth_;
   };
 
-  #include <escapes/escapes-visitor.hxx>
 } // namespace escapes
+#include <escapes/escapes-visitor.hxx>
