@@ -85,7 +85,7 @@ namespace escapes
     void dump();
 
   private:
-    std::map<misc::symbol, std::pair<ast::vardec&, int>> depth_map_;
+    static std::map<misc::symbol, std::pair<ast::vardec&, int>> depth_map_;
     static int depth_;
   };
 } // namespace escapes
