@@ -8,6 +8,8 @@
 #include <ast/all.hh>
 #include <escapes/escapes-visitor.hh>
 
+#include <iostream>
+
 namespace escapes
 {
   // FIXMED: Alan
@@ -38,7 +40,7 @@ namespace escapes
   }
 
   //getter for deph_map_
-  dmap depth_map_get()
+  dmap& depth_map_get()
   {
 
   }
@@ -50,7 +52,7 @@ namespace escapes
   }
 
   //add an elemet to the map
-  void put(misc::symbol& sym, ast::vardec& var)
+  void put(misc::symbol sym, ast::vardec& var)
   {
 
   }
@@ -58,7 +60,12 @@ namespace escapes
   //print the map on std::cout
   void dump()
   {
-
+    std::cout << "===== PRINT ESCAPE MAP =====" << std::endl
+    for (auto i : depth_map_get())
+    {
+      std::cout << i.first << " " << i.second.first << " " << i.second.second << std::endl;
+    }
+    std::cout << "============ END ===========" << std::endl
   }
 
 

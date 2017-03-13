@@ -76,7 +76,7 @@ namespace escapes
     //getter for deph_
     int depth_get();
     //getter for deph_map_
-    dmap depth_map_get();
+    dmap& depth_map_get();
     //reshearch in th map
     int get(misc::symbol sym);
     //add an elemet to the map
@@ -88,4 +88,6 @@ namespace escapes
     static std::map<misc::symbol, std::pair<ast::vardec&, int>> depth_map_;
     static int depth_;
   };
+
+  #include <escapes/escapes-visitor.hxx>
 } // namespace escapes
