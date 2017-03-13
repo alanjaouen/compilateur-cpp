@@ -36,6 +36,14 @@ namespace escapes
     EscapesVisitor::decr();
   }
 
+  void
+  EscapesVisitor::operator()(ast::SimpleVar& e)
+  {
+    int d = EscapesVisitor::get(e.name_get());
+    if (EscapesVisitor::depth_get() != d)
+      EscapesVisitor::depth_map_get()[e.name_get()].first->is_escaped_set(true);
+  }
+
   //add an elemet to the map
   void
   EscapesVisitor::put(ast::VarDec* var)

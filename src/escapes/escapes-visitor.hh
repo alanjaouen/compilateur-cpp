@@ -61,7 +61,7 @@ namespace escapes
     // inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e);
     void operator()(ast::VarDec& e) override;
     void operator()(ast::FunctionDec& e) override;
-
+    void operator()(ast::SimpleVar& e) override;
     //map de <symbol, std::pair<vardec*, depth(un int de count)>>;
     //compteur statique et fonction d'increment et de decrement;
     //increment the depth counter;
