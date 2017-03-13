@@ -3,6 +3,8 @@
  ** \brief Object module related tasks' implementation.
  */
 
+#include <memory>
+#include <astclone/libastclone.hh>
 
 #include <common.hh>
 
@@ -31,7 +33,36 @@ namespace object
         task_error.exit();
     }
 
+    void
+    object_types_compute()
+    {
+      task_error << ::object::types_check(*ast::tasks::the_program)
+                 << &misc::error::exit_on_error;
+    }
 
+    static std::unique_ptr<class_names_type> class_names;
+
+    void
+    object_rename()
+    {
+      class_names.reset(::object::rename(*ast::tasks::the_program));
+    }
+
+    void
+    object_desugar()
+    {
+      astclone::apply(::object::desugar, ast::tasks::the_program,
+                      *class_names.get());
+    }
+
+    void
+    raw_object_desugar()
+    {
+      astclone::apply(::object::raw_desugar, ast::tasks::the_program,
+                      *class_names.get());
+    }
+
+  // FIXME: Some code was deleted here.
 
 
   } // namespace tasks

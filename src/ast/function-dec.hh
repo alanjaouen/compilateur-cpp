@@ -8,18 +8,17 @@
 #include <ast/dec.hh>
 #include <ast/exp.hh>
 #include <ast/name-ty.hh>
+#include <ast/type-constructor.hh>
 #include <ast/var-dec.hh>
 #include <ast/any-decs.hh>
 
 namespace ast
 {
-
-
     /**
      * \class ast::FunctionDec
      * \brief FIXME
      *
-     * FIXME
+     * FIXED
      */
 
     /// FunctionDec.

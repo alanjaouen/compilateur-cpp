@@ -11,6 +11,8 @@
 #include <misc/pair.hh>
 #include <misc/separator.hh>
 
+#include <type/class.hh>
+
 namespace ast
 {
 

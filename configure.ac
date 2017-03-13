@@ -13,7 +13,7 @@ AC_PREREQ([2.64])
 ## Package set up.  ##
 ## ---------------- ##
 
-AC_INIT([Caruso Group Tiger Compiler], 3, [caruso_r@epita.fr], [caruso_r-tc])
+AC_INIT([Caruso Group Tiger Compiler], 4, [caruso_r@epita.fr], [caruso_r-tc])
 
 # Auxiliary files.
 AC_CONFIG_AUX_DIR([build-aux])
