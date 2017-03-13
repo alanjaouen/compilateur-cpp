@@ -76,7 +76,7 @@ namespace escapes
     //reshearch in th map
     int get(misc::symbol sym);
     //add an elemet to the map
-    void put(misc::symbol& sym, ast::VarDec* var);
+    void put(ast::VarDec* var);
     //print the map on std::cout
     void dump();
 

@@ -28,12 +28,12 @@ namespace escapes
 
   //add an elemet to the map
   void
-  EscapesVisitor::put(misc::symbol& sym, ast::VarDec* var)
+  EscapesVisitor::put(ast::VarDec* var)
   {
-    auto i = depth_map_.find(sym);
+    auto i = depth_map_.find(var->name_get());
     if (i != depth_map_.end())
       depth_map_.erase(i);
-    depth_map_[sym] = std::pair<ast::VarDec*, int>
+    depth_map_[var->name_get()] = std::pair<ast::VarDec*, int>
       (var, depth_get());
   }
 
