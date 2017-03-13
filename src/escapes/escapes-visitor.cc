@@ -17,13 +17,23 @@ namespace escapes
   void
   EscapesVisitor::operator()(ast::VarDec& e)
   {
-    
+    EscapesVisitor::put(&e);
+    if (e.type_name_get())
+      e.type_name_get()->accept(*this);
+    if (e.init_get())
+      e.init_get()->accept(*this);
   }
 
   void
-  EscapesVisitor::operator()(ast::FunctionDecs& e)
+  EscapesVisitor::operator()(ast::FunctionDec& e)
   {
-
+    EscapesVisitor::incr();
+    e.formals_get().accept(*this);
+    if (e.result_get())
+      e.result_get()->accept(*this);
+    if (e.body_get())
+      e.body_get()->accept(*this);
+    EscapesVisitor::decr();
   }
 
   //add an elemet to the map
