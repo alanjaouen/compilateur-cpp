@@ -49,6 +49,7 @@ namespace escapes
     , public ast::NonObjectVisitor
   {
   public:
+    //Fixed.
     /// Super class type.
     using super_type = ast::DefaultVisitor;
     /// Import all the overloaded visit methods.
@@ -60,6 +61,13 @@ namespace escapes
     EscapesVisitor();
     ~EscapesVisitor();
 
+    //commence par increment le compteur; visite le contenu; decremente
+    // inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e);
+    void operator()(ast::VarDecs& e) override;
+    void operator()(ast::FunctionDecs& e) override;
+
+    //map de <symbol, std::pair<vardec*, depth(un int de count)>>;
+    //compteur statique et fonction d'increment et de decrement;
     //increment the depth counter;
     void incr();
     //decrement the depth counter;
@@ -76,17 +84,8 @@ namespace escapes
     //print the map on std::cout
     void dump();
 
-    //------------------------------pas sur----------------------------------------
-    // inline void Binder::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e);
-    // inline void Binder::visit_dec_header<ast::VarDec>(ast::VarDec& e);
-    //-----------------------------------------------------------------------------
   private:
     std::map<misc::symbol, std::pair<ast::vardec&, int>> depth_map_;
     static int depth_;
-    //commence par increment le compteur; visite le contenu; decremente
-    // inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e);
-    //map de <symbol, std::pair<vardec*, depth(un int de count)>>;
-    //compteur statique et fonction d'increment et de decrement;
-  // FIXME: Some code was deleted here.
   };
 } // namespace escapes
