@@ -1,0 +1,6 @@
+/* missing parenthesis */
+let
+ var a := ( 65
+in
+	1
+end

@@ -1,0 +1,2 @@
+/* incorect type creation */
+ type a array of int

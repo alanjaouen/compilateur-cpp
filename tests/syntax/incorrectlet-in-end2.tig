@@ -1,0 +1,7 @@
+/* incorect let in end */
+
+
+    var a := 2
+in
+    print(a)
+end

@@ -1,0 +1,5 @@
+let
+in
+    var a = 5 + 3;
+    var b = 7 + 2;
+end
