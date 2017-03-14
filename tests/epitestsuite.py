@@ -107,7 +107,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
                     if sanity:
                         mycmd += "valgrind --leak-check=full " +\
                                  "--error-exitcode=201 "
-                    mycmd += my_path + " -bBA"
+                    mycmd += my_path + " -eEA"
                     if test.startswith("--", 0, 2):
                         line = test.split()
                         mycmd += " " + line[0]
