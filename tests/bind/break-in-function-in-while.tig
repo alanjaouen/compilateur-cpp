@@ -1,0 +1,14 @@
+let
+  var i := 0
+in
+  while i < 10
+  do
+    (
+      let
+      	  function print_board() =
+      	    (42; break)
+      in
+      42;()
+      end
+    )
+end
