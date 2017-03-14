@@ -18,6 +18,7 @@ namespace escapes
   EscapesVisitor::operator()(ast::VarDec& e)
   {
     put(&e);
+    e.is_escaped_set(false);
     if (e.type_name_get())
       e.type_name_get()->accept(*this);
     if (e.init_get())
@@ -41,7 +42,7 @@ namespace escapes
   {
     auto d = get(e.name_get());
     if (d != nullptr)
-      d->is_escaped_set(false);
+      d->is_escaped_set(true);
   }
 
 
