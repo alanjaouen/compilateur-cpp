@@ -23,3 +23,6 @@ test43.tig: 0
 too-many-args.tig: 0
 types-endless-recursion.tig: 0
 unconstrained-nil.tig: 0
+int-plus-string.tig: 5
+bad-if.tig: 5
+mutuals.tig: 5
