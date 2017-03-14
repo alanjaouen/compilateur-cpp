@@ -78,10 +78,10 @@ namespace bind
   void Binder::operator()(ast::ForExp& e)
   {
     scope_begin();
-    loop_scope_.push(&e);
     var_scope_.put(e.vardec_get().name_get(), &(e.vardec_get()));
     e.vardec_get().accept(*this);
     e.hi_get().accept(*this);
+    loop_scope_.push(&e);
     e.body_get().accept(*this);
     loop_scope_.pop();
     scope_end();
@@ -90,10 +90,10 @@ namespace bind
   void Binder::operator()(ast::WhileExp& e)
   {
     scope_begin();
-    loop_scope_.push(&e);
     Binder::is_test=true;
     e.test_get().accept(*this);
     Binder::is_test=false;
+    loop_scope_.push(&e);
     e.body_get().accept(*this);
     loop_scope_.pop();
     scope_end();
@@ -195,7 +195,9 @@ namespace bind
   void
   Binder::operator()(ast::VarDecs& e)
   {
+    Binder::is_test=true;
     decs_visit<ast::VarDec>(e);
+    Binder::is_test=false;
   }
 
 
@@ -206,7 +208,10 @@ namespace bind
   void
   Binder::operator()(ast::FunctionDecs& e)
   {
+    Binder::is_test=true;
     decs_visit<ast::FunctionDec>(e);
+    Binder::is_test=false;
+
   }
 
 
