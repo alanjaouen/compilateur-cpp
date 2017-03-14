@@ -191,13 +191,17 @@ NEWLINE         [\n]|[\n\r]|[\r\n]
 "_namety"       { CHECK_EXTENSION(); return TOKEN(NAMETY);}
 
 {int} {
-    int val = 0;
-    auto res = std::stol(yytext);
-    if (res > INT_MAX)
+  int res = 0;
+  try{
+    res = std::stol(yytext);
+    }
+    // if (res > INT_MAX)
+    catch (...)
+    {
       tp.error_ << misc::error::scan
                 << tp.location_ << "overflowed int: " << yytext << std::endl;
-    val = res;
-    return TOKEN_VAL(INT, val);
+    }
+    return TOKEN_VAL(INT, res);
 }
 {ID}            {
   misc::symbol identifier = misc::symbol(yytext);
