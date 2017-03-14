@@ -25,7 +25,7 @@
 
 #include <ast/default-visitor.hh>
 #include <ast/non-object-visitor.hh>
-
+#include <misc/scoped-map.hh>
 namespace escapes
 {
 
@@ -55,8 +55,16 @@ namespace escapes
     /// Import all the overloaded visit methods.
     using super_type::operator();
 
-    using dmap = std::map<misc::symbol, std::pair<ast::VarDec*, int>>;
+//    using dmap = std::map<misc::symbol, std::pair<ast::VarDec*, int>>;
 
+    EscapesVisitor()
+      {
+        scope_begin();
+      }
+    ~EscapesVisitor()
+      {
+        scope_end();
+      }
     //commence par increment le compteur; visite le contenu; decremente
     // inline void Binder::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e);
     void operator()(ast::VarDec& e) override;
@@ -64,25 +72,24 @@ namespace escapes
     void operator()(ast::SimpleVar& e) override;
     //map de <symbol, std::pair<vardec*, depth(un int de count)>>;
     //compteur statique et fonction d'increment et de decrement;
-    //increment the depth counter;
-    void incr();
-    //decrement the depth counter;
-    void decr();
-
-    //getter for deph_
-    int depth_get();
-    //getter for deph_map_
-    dmap& depth_map_get();
+        /** \name Handling the environment
+     ** \{ */
+    /// Open a new var, fun, and type scope.
+    virtual void scope_begin();
+    /// Close the latest var, fun, and type scope.
+    virtual void scope_end();
+    /** \} */    
     //reshearch in th map
-    int get(misc::symbol sym);
+    ast::VarDec* get(misc::symbol sym);
     //add an elemet to the map
     void put(ast::VarDec* var);
     //print the map on std::cout
     void dump();
 
   private:
-    dmap depth_map_;
-    int depth_;
+    misc::scoped_map<misc::symbol, ast::VarDec*> var_scope_;
+    // dmap depth_map_;
+    // int depth_;
   };
 
 } // namespace escapes

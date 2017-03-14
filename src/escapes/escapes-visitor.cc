@@ -17,7 +17,7 @@ namespace escapes
   void
   EscapesVisitor::operator()(ast::VarDec& e)
   {
-    EscapesVisitor::put(&e);
+    put(&e);
     if (e.type_name_get())
       e.type_name_get()->accept(*this);
     if (e.init_get())
@@ -27,32 +27,38 @@ namespace escapes
   void
   EscapesVisitor::operator()(ast::FunctionDec& e)
   {
-    EscapesVisitor::incr();
+    scope_begin();
     e.formals_get().accept(*this);
     if (e.result_get())
       e.result_get()->accept(*this);
     if (e.body_get())
       e.body_get()->accept(*this);
-    EscapesVisitor::decr();
+    scope_end();
   }
 
   void
   EscapesVisitor::operator()(ast::SimpleVar& e)
   {
-    int d = EscapesVisitor::get(e.name_get());
-    if (EscapesVisitor::depth_get() != d)
-      EscapesVisitor::depth_map_get()[e.name_get()].first->is_escaped_set(true);
+    auto d = get(e.name_get());
+    if (d != nullptr)
+      d->is_escaped_set(false);
+  }
+
+
+  void EscapesVisitor::scope_begin()
+  {
+    var_scope_.scope_begin();
+  }  
+  void EscapesVisitor::scope_end()
+  {
+    var_scope_.scope_end();
   }
 
   //add an elemet to the map
   void
   EscapesVisitor::put(ast::VarDec* var)
   {
-    auto i = depth_map_.find(var->name_get());
-    if (i != depth_map_.end())
-      depth_map_.erase(i);
-    depth_map_[var->name_get()] = std::pair<ast::VarDec*, int>
-      (var, depth_get());
+    var_scope_.put(var->name_get(), var);
   }
 
   //print the map on std::cout
@@ -60,8 +66,9 @@ namespace escapes
   EscapesVisitor::dump()
   {
     std::cout << "===== PRINT ESCAPE MAP =====" << std::endl;
-    for (auto i : depth_map_get())
-      std::cout << i.first << " " << i.second.first->name_get() << " " << i.second.second << std::endl;
+    std::cout << var_scope_;
+// for (auto i : depth_map_get())
+    //   std::cout << i.first << " " << i.second.first->name_get() << " " << i.second.second << std::endl;
     std::cout << "============ END ===========" << std::endl;
   }
 
