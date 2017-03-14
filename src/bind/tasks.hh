@@ -17,7 +17,7 @@ namespace bind
 
     TASK_DECLARE("bound", "Make sure bindings (regular or taking overloading or "
                  "objects constructs into account) are computed.",
-                 bound, "");
+                 bound, "bindings-compute");
 
     TASK_DECLARE("b|bindings-compute",
                  "Bind the name uses to their definitions (objects forbidden).",
