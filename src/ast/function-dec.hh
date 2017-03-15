@@ -22,7 +22,7 @@ namespace ast
      */
 
     /// FunctionDec.
-    class FunctionDec : public Dec
+  class FunctionDec : public Dec, public TypeConstructor
     {
         public:
             /** \name Ctor & dtor.

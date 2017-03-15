@@ -31,12 +31,12 @@ namespace bind
     return new_name_compute(e);
   }
 
-  // template <class E, class Def>
-  // void
-  // Renamer::visit(E& e, const Def* def)
-  // {
-  //   std::cout << def->getType();
-  // }
+  template <class E, class Def>
+  void
+  Renamer::visit(E& e, const Def* def)
+  {
+    // FIXME: Some code was deleted here.
+  }
 
 
 } // namespace bind

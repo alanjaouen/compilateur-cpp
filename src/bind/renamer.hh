@@ -49,8 +49,8 @@ namespace bind
     ///
     /// \a def is the definition site of \e (must be equal to
     /// \a e if it is a Dec node).
-    // template <class E, class Def>
-    // void visit(E& e, const Def* def);
+     template <class E, class Def>
+     void visit(E& e, const Def* def);
 
     /// \name Visiting definition sites.
     /// \{
