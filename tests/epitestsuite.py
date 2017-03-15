@@ -26,10 +26,12 @@ def options(args):
     parser.add_argument("-t", "--timeout", metavar="TIME", default=10,
                         help="set TIME as a timeout for the tests " +
                         "(in seconds)")
-    parser.add_argument("--my", metavar="FILE",
-                        help="path to the binary to be tested")
-    parser.add_argument("-p", "--options", metavar="OPT", default="",
-                        help="add the options for all the tests")
+    requiredNamed = parser.add_argument_group('required arguments')
+
+    requiredNamed.add_argument("--my", metavar="FILE",
+                        help="path to the binary to be tested", required=True)
+    requiredNamed.add_argument("-p", "--options", metavar="OPT",
+                        help="add the options for all the tests", required=True)
     options = parser.parse_args(args)
     time = int(options.timeout)
     if options.list:
