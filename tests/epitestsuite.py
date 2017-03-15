@@ -28,6 +28,8 @@ def options(args):
                         "(in seconds)")
     parser.add_argument("--my", metavar="FILE",
                         help="path to the binary to be tested")
+    parser.add_argument("-p", "--options", metavar="OPT", default="",
+                        help="add the options for all the tests")
     options = parser.parse_args(args)
     time = int(options.timeout)
     if options.list:
@@ -36,10 +38,11 @@ def options(args):
         return
     if options.category != []:
         parse_config('config.yaml', options.category, options.sanity,
-                     options.output, time, options.my)
+                     options.output, time, options.my, options.options)
     else:
         parse_config('config.yaml', list_category('config.yaml'),
-                     options.sanity, options.output, time, options.my)
+                     options.sanity, options.output, time, options.my,
+                     options.options)
 
 
 def list_category(yaml_file):
@@ -78,7 +81,8 @@ def errormsg(percent, category, mycmd, comment, msg):
     return 1
 
 
-def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
+def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path,
+                 options):
     """Parsing configfile."""
     with open(yaml_file, 'r') as f:
         config = yaml.load(f)
@@ -107,7 +111,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path):
                     if sanity:
                         mycmd += "valgrind --leak-check=full " +\
                                  "--error-exitcode=201 "
-                    mycmd += my_path + " -eEA"
+                    mycmd += my_path + " -" + options
                     if test.startswith("--", 0, 2):
                         line = test.split()
                         mycmd += " " + line[0]
