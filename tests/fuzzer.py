@@ -1,5 +1,4 @@
-"""module for fuzzing."""
-# !/usr/bin/python3
+#! /bin/python3
 
 from dialog import Dialog
 import cmd
@@ -12,19 +11,11 @@ class InterTestSuite(cmd.Cmd):
     """Command processor."""
 
     def do_quit(self, line):
-        """
-        quit.
-
-        Quit the command processor.
-        """
+        """quit.\n\tQuit the command processor."""
         return True
 
     def do_fuzzing(self, line):
-        """
-        fuzzing.
-
-        Random testing built on regex string generation.
-        """
+        """fuzzing.\n\tRandom testing built on regex string generation."""
         d = Dialog(dialog="dialog")
         d.set_background_title("Tiger Compiler TestSuite")
         code, tag = d.menu("Which type of fuzzing do you wanna do?",
@@ -47,7 +38,7 @@ class InterTestSuite(cmd.Cmd):
                                              ("Type", "", False),
                                              ("Class", "", False),
                                              ("Control structures", "", False)
-                                                 ])
+                                         ])
                 if code != d.OK:
                     os.system('clear')
                     return
@@ -72,21 +63,25 @@ class InterTestSuite(cmd.Cmd):
 
 
 def literals():
-    """Literals."""
     return "([a-z])\w{2,10}|(nil)|([0-9]{1,4})"
 
 
 def array_record():
-    """Array and record."""
-    return """type ([a-z])\w{2,10} = (\{[a-z]\w{2,10} : """ +\
-           """string(, [a-z]\w{2,10} : int){0,3}\}){1}"""
+    return "(type ([a-z])\w{2,10} = (\{[a-z]\w{2,10} : ((string)|(int))" +\
+           "(, [a-z]\w{2,10} : ((string)|(int))){0,3}\}){1})|" +\
+           "(type ([a-z])\w{2,10} (([a-z])\w{2,10} ){0,1}of ([a-z])\w{2,10})"
+
+
+def variables_field_elements():
+    return "([a-z])\w{2,10}((.([a-z])\w{2,10})|(\[([a-z])\w{2,10}\]))"
 
 
 if __name__ == '__main__':
     locale.setlocale(locale.LC_ALL, '')
     global categories
     categories = {
-        """Literals""": literals,
-        """Array and record""": array_record
+        "Literals": literals,
+        "Array and record": array_record,
+        "Variables, field, elements": variables_field_elements
     }
     InterTestSuite().cmdloop()
