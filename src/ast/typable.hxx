@@ -11,6 +11,15 @@ namespace ast
 {
 
   // FIXME: Some code was deleted here.
+  inline void Typable::type_set(const type::Type* e)
+  {
+    type_ = e;
+  }
+    inline const type::Type* Typable::type_get() const
+    {
+      return type_;
+    }
 
+  
 } // namespace ast
 

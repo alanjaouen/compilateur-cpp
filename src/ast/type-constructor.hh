@@ -18,7 +18,8 @@ namespace ast
 
   class TypeConstructor
   {
-  // FIXME: Some code was deleted here.
+    void created_type_set (const type::Type*);
+    const type::Type* created_type_get () const;
   };
 
 } // namespace ast
