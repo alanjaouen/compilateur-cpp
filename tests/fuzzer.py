@@ -5,6 +5,7 @@ import cmd
 import locale
 import os
 import rstr
+import subprocess
 
 
 class InterTestSuite(cmd.Cmd):
@@ -13,6 +14,27 @@ class InterTestSuite(cmd.Cmd):
     def do_quit(self, line):
         """quit.\n\tQuit the command processor."""
         return True
+
+    def do_testsuite(self, line):
+        """testsuite.\n\tLaunch the testsuite."""
+        isnotfile = True
+        while (isnotfile):
+            tc_path = input("Enter the real path to tc binary: ")
+            isnotfile = not os.path.isfile(tc_path)
+            if isnotfile:
+                print("Path is not correct")
+        ts_options = input("Enter the options for the testsuite: ")
+        tscmd = "./epitestsuite.py --my " + tc_path + " " + ts_options
+        ts = subprocess.run(tscmd, shell=True, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+        if ts.returncode == 0:
+            print(ts.stdout.decode("utf-8"))
+            return
+        else:
+            print("Oups, an error occured:")
+            print(tscmd + " returned: " + str(ts.returncode))
+            print(ts.stderr.decode("utf-8"))
+            return
 
     def do_fuzzing(self, line):
         """fuzzing.\n\tRandom testing built on regex string generation."""
