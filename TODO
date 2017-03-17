@@ -8,15 +8,15 @@ BINDER:
 
 AST:
 []  src/ast/pretty-printer.cc
-[]  src/ast/escapable.cc
-[]  src/ast/escapable.hh
-[]  src/ast/escapable.hxx
-[]  src/ast/typable.cc
-[]  src/ast/typable.hh
-[]  src/ast/typable.hxx
-[]  src/ast/type-constructor.cc
-[]  src/ast/type-constructor.hh
-[]  src/ast/type-constructor.hxx
+[x]  src/ast/escapable.cc
+[x]  src/ast/escapable.hh
+[x]  src/ast/escapable.hxx
+[x]  src/ast/typable.cc
+[x]  src/ast/typable.hh
+[x]  src/ast/typable.hxx
+[x]  src/ast/type-constructor.cc
+[x]  src/ast/type-constructor.hh
+[x]  src/ast/type-constructor.hxx
 
 OBJECT:
 []  src/object/binder.cc
@@ -60,8 +60,8 @@ TYPE:
 []  src/type/array.hh
 []  src/type/array.hxx
 []  src/type/attribute.hxx
-[]  src/type/builtin-types.cc
-[]  src/type/builtin-types.hh
+[~]  src/type/builtin-types.cc
+[~]  src/type/builtin-types.hh
 []  src/type/class.cc
 []  src/type/class.hh
 []  src/type/default-visitor.hxx
