@@ -15,10 +15,11 @@ namespace ast
   {
     type_ = e;
   }
-    inline const type::Type* Typable::type_get() const
-    {
-      return type_;
-    }
+
+  inline const type::Type* Typable::type_get() const
+  {
+    return type_;
+  }
 
   
 } // namespace ast
