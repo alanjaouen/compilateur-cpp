@@ -18,8 +18,18 @@ namespace ast
 
   class TypeConstructor
   {
+  public:
+    TypeConstructor()
+      : new_type_(nullptr)
+      {}
+    TypeConstructor(const type::Type* e)
+      : new_type_(e)
+      {}
+    virtual  ~TypeConstructor() = default;
     void created_type_set (const type::Type*);
     const type::Type* created_type_get () const;
+  private:
+    const type::Type* new_type_;
   };
 
 } // namespace ast
