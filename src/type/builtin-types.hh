@@ -14,27 +14,34 @@ namespace type
 template <class D>
 class Singleton
 {
-  Singleton(const Singleton&) = delete;
-  Singleton(Singleton&&) = delete;
-  Singleton& operator=(const Singleton&) = delete;
-  Singleton& operator=(Singleton&&) = delete;
-  static const Singleton& instance()
+  Singleton(const Singleton<D>&) = delete;
+  Singleton(Singleton<D>&&) = delete;
+  Singleton<D>& operator=(const Singleton<D>&) = delete;
+  Singleton<D>& operator=(Singleton<D>&&) = delete;
+  static const Singleton<D>& instance()
   {
-    static Singleton instance;
+    static Singleton<D> instance;
     return instance;
   }
 };
 
-class String : public Singleton<String>, public Type
+  class String : public Singleton<type::String>, public Type
 {
+  String();
+  ~String();
+  
 };
 
-class Int : public Singleton<Int>, public Type
+  class Int : public Singleton<type::Int>, public Type
 {
+  Int();
+  ~Int();
 };
 
-class Void : public Singleton<Void>, public Type
+  class Void : public Singleton<type::Void>, public Type
 {
+  Void();
+  ~Void();
 };
 
 } // namespace type
