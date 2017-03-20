@@ -24,8 +24,21 @@ namespace type
 
   // FIXME: Some code was deleted here (Inherited functions).
 
-  // FIXME: Some code was deleted here (Sound).
+  void Named::accept(ConstVisitor& v) const
+  {}
+    /// Accept a non-const visitor \a v.
+  void Named::accept(Visitor& v)
+  {}
 
+  // FIXME: Some code was deleted here (Sound).
+  bool Named::sound() const
+  {
+    return false;
+  }
   // FIXME: Some code was deleted here (Special implementation of "compatible_with" for Named).
+  bool Named::compatible_with(const Type& other) const
+  {
+    
+  }
 
 } // namespace type
