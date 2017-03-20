@@ -14,6 +14,7 @@ namespace type
 template <class D>
 class Singleton
 {
+public:
   Singleton(const Singleton<D>&) = delete;
   Singleton(Singleton<D>&&) = delete;
   Singleton<D>& operator=(const Singleton<D>&) = delete;
@@ -23,10 +24,13 @@ class Singleton
     static Singleton<D> instance;
     return instance;
   }
+private:
+  Singleton() = default;
 };
 
   class String : public Singleton<type::String>, public Type
 {
+public:
   String();
   ~String();
   
