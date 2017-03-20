@@ -19,12 +19,8 @@ namespace ast
   class TypeConstructor
   {
   public:
-    TypeConstructor()
-      : new_type_(nullptr)
-      {}
-    TypeConstructor(const type::Type* e)
-      : new_type_(e)
-      {}
+    TypeConstructor();
+    TypeConstructor(const type::Type* e);
     virtual  ~TypeConstructor() = default;
     void created_type_set (const type::Type*);
     const type::Type* created_type_get () const;

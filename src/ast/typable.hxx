@@ -10,7 +10,7 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
   inline void Typable::type_set(const type::Type* e)
   {
     type_ = e;

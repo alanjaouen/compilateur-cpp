@@ -32,8 +32,6 @@ namespace bind
     | Definition sites.  |
     `-------------------*/
 
-  // FIXME: Some code was deleted here.
-
   /*------------------.
     | Visiting /Decs/.  |
     `------------------*/

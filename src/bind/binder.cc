@@ -55,7 +55,7 @@ namespace bind
   | Visits.  |
   `---------*/
 
-  // FIXME: Some code was deleted here.
+  //fixed caradi_c
   Binder::Binder()
   {
     scope_begin();
@@ -134,15 +134,6 @@ namespace bind
       e.def_set(res);
   }
 
-  // void Binder::operator()(ast::Field& e)
-  // {
-  //   auto* res = type_scope_.get(e.name_get());
-  //   if (!res)
-  //     undeclared("type", e);
-  //   else
-  //     e.def_set(res);
-  // }
-
   void Binder::operator()(ast::NameTy& e)
   {
     auto res = type_scope_.get(e.name_get());
@@ -156,30 +147,6 @@ namespace bind
     else
       e.def_set(res);
   }
-
-  // void Binder::operator()(ast::ArrayTy& e)
-  // {
-  //   e.base_type_get().accept(*this);
-  // }
-
-  // void Binder::operator()(ast::ArrayExp& e)
-  // {
-  //   e.type_get().accept(*this);
-  //   e.l_exp_get().accept(*this);
-  //   e.r_exp_get().accept(*this);
-  // }
-
-  // void Binder::operator()(ast::Field& e)
-  // {
-  //   e.type_name_get().accept(*this);
-  // }
-
-  // void Binder::operator()(ast::ClassTy& e)
-  // {
-  //   if (e.super_get())
-  //     e.super_get()->accept(*this);
-  //   e.decs_get().accept(*this);
-  // }
 
   void
   Binder::operator()(ast::DecsList& e)
@@ -200,7 +167,6 @@ namespace bind
     Binder::is_test=false;
   }
 
-
   /*------------------------.
   | Visiting FunctionDecs.  |
   `------------------------*/
@@ -214,7 +180,6 @@ namespace bind
 
   }
 
-
   /*--------------------.
   | Visiting TypeDecs.  |
   `--------------------*/
@@ -224,6 +189,5 @@ namespace bind
   {
     decs_visit<ast::TypeDec>(e);
   }
-
   
 } // namespace bind

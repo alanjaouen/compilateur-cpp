@@ -8,8 +8,13 @@
 
 namespace ast
 {
-
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+  TypeConstructor::TypeConstructor()
+      : new_type_(nullptr)
+      {}
+  TypeConstructor::TypeConstructor(const type::Type* e)
+      : new_type_(e)
+      {}
 
 } // namespace ast
 

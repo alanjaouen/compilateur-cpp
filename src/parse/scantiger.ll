@@ -26,7 +26,7 @@
 # include <parse/tiger-parser.hh>
 # include <parse/parsetiger.hh>
 
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b.
   std::string str = "";
   int count  = 0;
 

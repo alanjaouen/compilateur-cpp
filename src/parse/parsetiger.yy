@@ -13,7 +13,7 @@
 %define parse.trace
 
 
- // FIXME: Some code was deleted here (Other directives: %skeleton "lalr1.cc" %expect 0 etc).
+ // FIXED by forest_b
 %defines
 %debug
 // Prefix all the tokens with TOK_ to avoid colisions.
@@ -103,7 +103,7 @@
 # include <ast/decs-list.hh>
 }
 
-  // FIXME: Some code was deleted here (Printers and destructors).
+  // FIXED by forest_b 
 
 
 /*-----------------------------------------.

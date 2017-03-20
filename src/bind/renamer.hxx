@@ -35,7 +35,7 @@ namespace bind
   void
   Renamer::visit(E& e, const Def* def)
   {
-    // FIXME: Some code was deleted here.
+      //fixed by caradi_c
   }
 
 

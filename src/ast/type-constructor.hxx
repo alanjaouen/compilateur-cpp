@@ -10,8 +10,8 @@
 
 namespace ast
 {
-// FIXME: Some code was deleted here.
-inline void TypeConstructor::created_type_set(const type::Type* e)
+  // FIXED by forest_b
+  inline void TypeConstructor::created_type_set(const type::Type* e)
 {
   new_type_ = e;
 }

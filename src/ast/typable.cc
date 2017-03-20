@@ -9,7 +9,7 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
   Typable::Typable(const type::Type* type)
     : type_(type) 
   {
