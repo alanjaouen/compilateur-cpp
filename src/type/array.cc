@@ -11,6 +11,8 @@
 namespace type
 {
 
-  // FIXME: Some code was deleted here.
+  Type::Type(const Type& type)
+    : type_(type)
+  {}
 
 } // namespace type
