@@ -23,27 +23,25 @@ def options(args):
                         "enabled (valgrind)")
     parser.add_argument("-o", "--output", metavar="FILE", default=sys.stdout,
                         help="write output of tests in FILE")
-    parser.add_argument("-t", "--timeout", metavar="TIME", default=10,
-                        help="set TIME as a timeout for the tests " +
-                        "(in seconds)")
     requiredNamed = parser.add_argument_group('required arguments')
 
     requiredNamed.add_argument("--my", metavar="FILE",
-                        help="path to the binary to be tested", required=True)
+                               help="path to the binary to be tested",
+                               required=True)
     requiredNamed.add_argument("-p", "--options", metavar="OPT",
-                        help="add the options for all the tests", required=True)
+                               help="add the options for all the tests",
+                               required=True)
     options = parser.parse_args(args)
-    time = int(options.timeout)
     if options.list:
         for category in list_category('config.yaml'):
             print("- " + category)
         return
     if options.category != []:
         parse_config('config.yaml', options.category, options.sanity,
-                     options.output, time, options.my, options.options)
+                     options.output, options.my, options.options)
     else:
         parse_config('config.yaml', list_category('config.yaml'),
-                     options.sanity, options.output, time, options.my,
+                     options.sanity, options.output, options.my,
                      options.options)
 
 
@@ -83,7 +81,7 @@ def errormsg(percent, category, mycmd, comment, msg):
     return 1
 
 
-def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path,
+def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
                  options):
     """Parsing configfile."""
     with open(yaml_file, 'r') as f:
@@ -108,6 +106,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path,
                 global output
                 output = ""
                 count = failed
+                commands = []
                 for test in subconfig:
                     mycmd = ""
                     if sanity:
@@ -123,22 +122,20 @@ def parse_config(yaml_file, categories_list, sanity, foutput, time, my_path,
                     mycmd = ' '.join(mycmd.strip().split())
                     percent = "[" + str(int(((list(subconfig).index(test) + 1)
                                              / len(subconfig) * 100))) + "%] "
-                    try:
-                        my = subprocess.run(mycmd, shell=True, timeout=time,
-                                            stdout=subprocess.PIPE,
-                                            stderr=subprocess.PIPE)
-                    except subprocess.TimeoutExpired:
-                        failed += errormsg(percent, category, mycmd,
-                                           subconfig[test], "\tTIMEOUT\n")
-                        continue
-
-                    status = get_status(
-                        my.returncode, 0 if sanity else subconfig[test])
+                    commands.append([mycmd, subconfig[test], percent, mycmd])
+                processes = []
+                for cmd in commands:
+                    processes.append([subprocess.Popen(cmd[0], shell=True,
+                                                       stdout=subprocess.PIPE,
+                                                       stderr=subprocess.PIPE),
+                                      cmd[1], cmd[2], cmd[3]])
+                for p in processes:
+                    status = get_status(p[0].returncode, 0 if sanity else p[1])
                     if status[0] != 0:
-                        failed += errormsg(percent, category, mycmd,
-                                           subconfig[test], status[1])
+                        failed += errormsg(p[2], category, p[3], p[1],
+                                           status[1])
                     else:
-                        output += colored(percent + mycmd + ": PASS:\n" +
+                        output += colored(p[2] + p[3] + ": PASS:\n" +
                                           status[1], 'green')
                         ptest.update(1)
                     output += "\n"
