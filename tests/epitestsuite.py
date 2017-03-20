@@ -72,7 +72,7 @@ def get_status(my, ref):
                    "\n\tref returned: " + str(ref))
 
 
-def errormsg(percent, category, mycmd, comment, msg):
+def errormsg(percent, category, mycmd, msg):
     """Generating error message."""
     global output
     global fail
@@ -130,10 +130,12 @@ def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
                                                        stderr=subprocess.PIPE),
                                       cmd[1], cmd[2], cmd[3]])
                 for p in processes:
-                    status = get_status(p[0].returncode, 0 if sanity else p[1])
+                    if sanity:
+                        status = get_status(p[0].returncode, 0)
+                    else:
+                        status = get_status(p[0].returncode, p[1])
                     if status[0] != 0:
-                        failed += errormsg(p[2], category, p[3], p[1],
-                                           status[1])
+                        failed += errormsg(p[2], category, p[3], status[1])
                     else:
                         output += colored(p[2] + p[3] + ": PASS:\n" +
                                           status[1], 'green')
