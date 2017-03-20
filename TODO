@@ -1,43 +1,81 @@
 
+[]  lib/misc/test-symbol.cc
 
-[x]- lib/misc/scoped-map.hxx
-[x]- lib/misc/scoped-map.hh
-[x]- lib/misc/test-symbol.cc
+BINDER:
+[]  src/bind/binder.cc
+[]  src/bind/binder.hh
+[]  src/bind/binder.hxx
 
-[]- src/ast/escapable.hh
-[]- src/ast/escapable.cc
-[]- src/ast/escapable.hxx
+AST:
+[]  src/ast/pretty-printer.cc
+[x]  src/ast/escapable.cc
+[x]  src/ast/escapable.hh
+[x]  src/ast/escapable.hxx
+[x]  src/ast/typable.cc
+[x]  src/ast/typable.hh
+[x]  src/ast/typable.hxx
+[x]  src/ast/type-constructor.cc
+[x]  src/ast/type-constructor.hh
+[x]  src/ast/type-constructor.hxx
 
-[~]- src/ast/pretty-printer.cc
-
-
-[~]- src/object/tasks.hh
-[]- src/object/libobject.cc
-[]- src/object/libobject.cc
-[]- src/object/binder.cc
-
-[~]- src/bind/binder.cc
-[~]- src/bind/binder.hxx
-[~]- src/bind/binder.hh
-
-[]- src/bind/renamer.hxx
-[]- src/bind/renamer.hh
-[]- src/bind/renamer.cc
-
-[x]- src/bind/libbind.cc
-[x]- src/bind/libbind.hh
-[]- src/object/libobject.hh
-
-[~]- src/bind/tasks.cc
-[~]- src/bind/tasks.hh
-[~]- src/object/tasks.cc
-
-[x]- src/parse/parsetiger.yy
-[x]- src/parse/scantiger.ll
+OBJECT:
+[]  src/object/binder.cc
+[]  src/object/libobject.cc
+[]  src/object/libobject.hh
+[]  src/object/tasks.cc
+[]  src/object/desugar-visitor.cc
+[]  src/object/overfun-binder.cc
+[]  src/object/overfun-binder.hh
+[]  src/object/overfun-type-checker.cc
+[]  src/object/overfun-type-checker.hh
+[]  src/object/renamer.cc
+[]  src/object/type-checker.cc
 
 
-[]- src/escapes/escapes-visitor.hh
-[]- src/escapes/escapes-visitor.cc
+[]  src/astclone/cloner.cc
 
-array
-field(s)
+[]  src/callgraph/call-graph-visitor.cc
+
+[]  src/desugar/bounds-checking-visitor.cc
+[]  src/desugar/bounds-checking-visitor.hh
+[]  src/desugar/desugar-visitor.cc
+[]  src/desugar/libdesugar.cc
+[]  src/desugar/tasks.cc
+[]  src/desugar/tasks.hh
+
+[]  src/inlining/inliner.cc
+[]  src/inlining/inliner.hh
+[]  src/inlining/pruner.cc
+[]  src/inlining/pruner.hh
+[]  src/inlining/tasks.cc
+[]  src/inlining/tasks.hh
+
+[]  src/overload/binder.cc
+[]  src/overload/type-checker.cc
+[]  src/overload/type-checker.hh
+
+
+TYPE:
+[]  src/type/array.cc
+[]  src/type/array.hh
+[]  src/type/array.hxx
+[]  src/type/attribute.hxx
+[~]  src/type/builtin-types.cc
+[~]  src/type/builtin-types.hh
+[]  src/type/class.cc
+[]  src/type/class.hh
+[]  src/type/default-visitor.hxx
+[]  src/type/function.cc
+[]  src/type/function.hh
+[]  src/type/method.cc
+[]  src/type/method.hh
+[]  src/type/named.cc
+[]  src/type/named.hxx
+[]  src/type/nil.cc
+[]  src/type/pretty-printer.cc
+[]  src/type/record.cc
+[]  src/type/record.hh
+[]  src/type/type-checker.cc
+[]  src/type/type-checker.hh
+[]  src/type/type-checker.hxx
+[]  src/type/type.hxx
