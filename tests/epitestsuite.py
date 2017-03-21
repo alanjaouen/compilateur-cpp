@@ -129,19 +129,23 @@ def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
                                                        stdout=subprocess.PIPE,
                                                        stderr=subprocess.PIPE),
                                       cmd[1], cmd[2], cmd[3]])
-                for p in processes:
-                    pstdout, pstderr = p[0].communicate()
-                    if sanity:
-                        status = get_status(p[0].wait(), 0)
-                    else:
-                        status = get_status(p[0].wait(), p[1])
-                    if status[0] != 0:
-                        failed += errormsg(p[2], category, p[3], status[1])
-                    else:
-                        output += colored(p[2] + p[3] + ": PASS:\n" +
-                                          status[1], 'green')
-                        ptest.update(1)
-                    output += "\n"
+                while not processes:
+                    for p in processes:
+                        if p[0].poll is None:
+                            continue
+                        pstdout, pstderr = p[0].communicate()
+                        if sanity:
+                            status = get_status(p[0].returncode, 0)
+                        else:
+                            status = get_status(p[0].returncode, p[1])
+                        if status[0] != 0:
+                            failed += errormsg(p[2], category, p[3], status[1])
+                        else:
+                            output += colored(p[2] + p[3] + ": PASS:\n" +
+                                              status[1], 'green')
+                            ptest.update(1)
+                        output += "\n"
+                        processes.remove(p)
                 fo.write(output)
             if count == failed:
                 incr += 1
