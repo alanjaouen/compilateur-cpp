@@ -120,8 +120,8 @@ def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
                     else:
                         mycmd += " " + category + "/" + test
                     mycmd = ' '.join(mycmd.strip().split())
-                    percent = "[" + str(int(((list(subconfig).index(test) + 1)
-                                             / len(subconfig) * 100))) + "%] "
+                    percent = "[Test " + str(list(subconfig).index(test) +
+                                             1) + "] "
                     commands.append([mycmd, subconfig[test], percent, mycmd])
                 processes = []
                 for cmd in commands:
@@ -129,7 +129,7 @@ def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
                                                        stdout=subprocess.PIPE,
                                                        stderr=subprocess.PIPE),
                                       cmd[1], cmd[2], cmd[3]])
-                while not processes:
+                while processes:
                     for p in processes:
                         if p[0].poll is None:
                             continue
