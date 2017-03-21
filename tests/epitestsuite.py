@@ -130,10 +130,11 @@ def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
                                                        stderr=subprocess.PIPE),
                                       cmd[1], cmd[2], cmd[3]])
                 for p in processes:
+                    pstdout, pstderr = p.communicate()
                     if sanity:
-                        status = get_status(p[0].returncode, 0)
+                        status = get_status(p[0].wait(), 0)
                     else:
-                        status = get_status(p[0].returncode, p[1])
+                        status = get_status(p[0].wait(), p[1])
                     if status[0] != 0:
                         failed += errormsg(p[2], category, p[3], status[1])
                     else:
