@@ -33,14 +33,17 @@ namespace type
   const Type*
   TypeChecker::type(ast::Typable& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    return e.type_get();
   }
 
   const Record*
   TypeChecker::type(const ast::fields_type& e)
   {
     auto res = new Record;
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    for (const auto i : e)
+      res->field_add(i->name_get(), *type(i->type_name_get()));
     return res;
   }
 
@@ -88,7 +91,9 @@ namespace type
                            const std::string& exp1, const Type& type1,
                            const std::string& exp2, const Type& type2)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    if (!(type1.compatible_with(type2)))
+      type_mismatch(loc, exp1, type1, exp2, type2);
   }
 
 
@@ -98,9 +103,12 @@ namespace type
                            const std::string& exp2, ast::Typable& type2)
   {
     // Ensure evaluation order.
-    type(type1);
-    type(type2);
-  // FIXME: Some code was deleted here (Check types).
+    const auto a = type(type1);
+    const auto b = type(type2);
+    // FIXED by forest_b
+    if (!(a->compatible_with(*b)))
+      type_mismatch(loc, exp1, *a, exp2, *b);
+
   }
 
 
@@ -138,13 +146,15 @@ namespace type
   void
   TypeChecker::operator()(ast::IntExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    e.type_set(&Int::instance());
   }
 
   void
   TypeChecker::operator()(ast::StringExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    e.type_set(&String::instance());
   }
 
 
