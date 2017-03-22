@@ -16,11 +16,11 @@ namespace type
   // FIXME: fixed by Alan
   public:
     virtual ~Array() = default;
-    Array(misc::symbol name, const Type& type);
+    Array(const Type& type);
 
     const Type& type_get() const;
-
-	private:
+    
+  private:
     /// Array's type.
     const Type& type_;
   };

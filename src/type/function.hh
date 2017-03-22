@@ -44,8 +44,8 @@ namespace type
     const Type& result_get() const;
     /** \} */
 
-  // FIXME: Some code was deleted here (Special implementation of "compatible_with" for Function).
-
+  // FIXED by forest_b
+    bool compatible_with(const Type& other) const override;
   protected:
     /// Formals' types.
     const Record* formals_;

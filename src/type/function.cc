@@ -36,6 +36,10 @@ namespace type
     v(*this);
   }
 
-  // FIXME: Some code was deleted here.
-
+  // FIXED by forest_b
+  bool Function::compatible_with(const Type& other) const
+  {
+    
+  }
+  
 } // namespace type

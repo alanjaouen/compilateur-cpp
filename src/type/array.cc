@@ -11,7 +11,7 @@
 namespace type
 {
 
-  Type::Type(const Type& type)
+  Array::Array(const Type& type)
     : type_(type)
   {}
 

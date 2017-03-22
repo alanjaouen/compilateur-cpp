@@ -12,8 +12,9 @@ namespace type
   // FIXED: (alan) Some code was deleted here (Ctor & Dtor).
 
   inline const Type&
-  Type::type_get() const
+  Array::type_get() const
   {
     return type_;
   }
+  
 } // namespace type
