@@ -27,7 +27,7 @@ namespace ast
 
     Typable() = default;
     Typable(const type::Type* type);
-    ~Typable();
+    ~Typable() = default;
 
     void type_set (const type::Type*);
     const type::Type* type_get () const;

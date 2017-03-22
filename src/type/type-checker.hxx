@@ -28,21 +28,26 @@ namespace type
   void
   TypeChecker::type_default(NodeType& e, const type::Type* type)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    if (e.type_get() == nullptr)
+      e.type_set(type);
   }
 
   template <typename NodeType>
   void
   TypeChecker::created_type_default(NodeType& e, const type::Type* type)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    if (e.created_type_get() == nullptr)
+      e.created_type_set(type);
   }
 
   template <typename NodeType>
   void
   TypeChecker::type_set(NodeType& e, const type::Type* type)
   {
-  // FIXME: Some code was deleted here (Basically e.type_set(type)).
+  // FIXED by forest_b
+    e.type_set(type);
   }
 
 
@@ -71,7 +76,12 @@ namespace type
   void
   TypeChecker::check_type(NodeType& e, const std::string& s, const Type& expected)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    if (!(e.compatible_with(expected)))
+    {
+      error(e, s);
+      e.type_set(expected);
+    }
   }
 
   /*------------.

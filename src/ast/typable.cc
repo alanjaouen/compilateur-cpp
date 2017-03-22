@@ -14,12 +14,6 @@ namespace ast
     : type_(type) 
   {
   }
-
-  Typable::~Typable()
-  {
-    if (type_ != nullptr)
-      delete type_;
-  }
   
 } // namespace ast
 
