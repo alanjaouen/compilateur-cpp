@@ -24,6 +24,11 @@ namespace ast
     virtual  ~TypeConstructor() = default;
     void created_type_set (const type::Type*);
     const type::Type* created_type_get () const;
+
+    virtual void accept (ConstVisitor& v) const;
+    virtual void accept (Visitor& v);
+
+    
   private:
     const type::Type* new_type_;
   };
