@@ -43,8 +43,8 @@ namespace type
   inline const Type&
   Named::actual() const
   {
-  // FIXME: Some code was deleted here.
-//    return *type_;
+  // FIXED by forest_b
+    return type_->actual();
   }
 
 } // namespace type

@@ -34,14 +34,10 @@ namespace type
     String() = default;
     ~String()
       {}
-    void accept(ConstVisitor& v) const
-      {}
-    void accept(Visitor& v)
-      {}
-    bool compatible_with(const Type& other) const
-      {}
-    const Type& actual() const
-      {}
+    void accept(ConstVisitor& v) const;
+    void accept(Visitor& v);
+    bool compatible_with(const Type& other) const;
+    const Type& actual() const;
 
   };
 
@@ -51,14 +47,10 @@ namespace type
     Int() = default;
     ~Int()
       {}
-    void accept(ConstVisitor& v) const
-      {}
-    void accept(Visitor& v)
-      {}
-    bool compatible_with(const Type& other) const
-      {}
-    const Type& actual() const
-      {}
+    void accept(ConstVisitor& v) const;
+    void accept(Visitor& v);
+    bool compatible_with(const Type& other) const;
+    const Type& actual() const;
   };
 
   class Void : public type::Type, public Singleton<type::Void>
@@ -67,14 +59,11 @@ namespace type
     Void() = default;
     ~Void()
       {}
-    void accept(ConstVisitor& v) const
-      {}
-    void accept(Visitor& v)
-      {}
-    bool compatible_with(const Type& other) const
-      {}
-    const Type& actual() const
-      {}
+    void accept(ConstVisitor& v) const;
+    void accept(Visitor& v);
+    bool compatible_with(const Type& other) const;
+    const Type& actual() const;
+
   };
 
 } // namespace type
