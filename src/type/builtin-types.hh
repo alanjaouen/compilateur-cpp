@@ -36,7 +36,7 @@ namespace type
       {}
     void accept(ConstVisitor& v) const;
     void accept(Visitor& v);
-    bool compatible_with(const Type& other) const;
+    //    bool compatible_with(const Type& other) const;
     const Type& actual() const;
 
   };
@@ -49,7 +49,7 @@ namespace type
       {}
     void accept(ConstVisitor& v) const;
     void accept(Visitor& v);
-    bool compatible_with(const Type& other) const;
+    //    bool compatible_with(const Type& other) const;
     const Type& actual() const;
   };
 
@@ -61,7 +61,7 @@ namespace type
       {}
     void accept(ConstVisitor& v) const;
     void accept(Visitor& v);
-    bool compatible_with(const Type& other) const;
+    //    bool compatible_with(const Type& other) const;
     const Type& actual() const;
 
   };

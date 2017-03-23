@@ -21,10 +21,10 @@ namespace type
   {
     v(*this);
   }
-  bool String::compatible_with(const Type& other) const
-  {
+  // bool String::compatible_with(const Type& other) const
+  // {
     
-  }
+  // }
 
   const Type& String::actual() const
   {
@@ -38,10 +38,10 @@ namespace type
   {
     v(*this);
   }
-  bool Int::compatible_with(const Type& other) const
-  {
+  // bool Int::compatible_with(const Type& other) const
+  // {
     
-  }
+  // }
   const Type& Int::actual() const
   {
     return Int::instance();
@@ -55,10 +55,10 @@ namespace type
   {
     v(*this);
   }
-  bool Void::compatible_with(const Type& other) const
-  {
+  // bool Void::compatible_with(const Type& other) const
+  // {
     
-  }
+  // }
   const Type& Void::actual() const
   {
     return Void::instance();

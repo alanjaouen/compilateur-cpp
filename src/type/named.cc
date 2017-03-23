@@ -37,12 +37,21 @@ namespace type
   // FIXME: Some code was deleted here (Sound).
   bool Named::sound() const
   {
+    std::set<const Type*> sept;
+    auto a = this;
+    while (a)
+      {
+	if (!sept.insert(a).second)
+	  return false;
+	a = dynamic_cast<const Named*>(a->type_);
+      }
     return true;
   }
+
   // FIXME: Some code was deleted here (Special implementation of "compatible_with" for Named).
   bool Named::compatible_with(const Type& other) const
   {
-    
+    return type_->compatible_with(other);
   }
 
 } // namespace type

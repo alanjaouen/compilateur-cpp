@@ -224,11 +224,12 @@ namespace type
   TypeChecker::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
   {
     visit_routine_body<Function>(e);
-
+    e.type_set(&(Void::instance()));
+    e.body_get()->accept(*this);
     // Check for Nil types in the function body.
     if (!error_ && e.body_get())
       {
-  // FIXME: Some code was deleted here.
+	// FIXME: Some code was deleted here.
       }
   }
 
@@ -240,7 +241,17 @@ namespace type
   void
   TypeChecker::operator()(ast::VarDec& e)
   {
-  // FIXME: Some code was deleted here.
+    std::cout << e.name_get() << std::endl;
+    // FIXED: caradi_c
+    if (e.init_get())
+      {
+	std::cout << e.init_get() << std::endl;
+	e.init_get()->accept(*this);
+	if (e.type_name_get())
+	  e.type_name_get()->def_get()->created_type_get()->compatible_with
+	    (*(e.init_get()->type_get()));
+      }
+    e.type_set(&(Void::instance()));
   }
 
 
@@ -271,7 +282,7 @@ namespace type
     // We only process the head of the type declaration, to set its
     // name in E.  A declaration has no type in itself; here we store
     // the type declared by E.
-  // FIXME: Some code was deleted here.
+    // FIXME: Some code was deleted here.
   }
 
   // Bind the type body to its name.
@@ -279,7 +290,7 @@ namespace type
   void
   TypeChecker::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXME: Some code was deleted here.
   }
 
   /*------------------.
@@ -290,7 +301,13 @@ namespace type
   void
   TypeChecker::decs_visit(ast::AnyDecs<D>& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXME: Some code was deleted here.
+    for (auto dec : e.decs_get())
+      {
+	visit_dec_body<D>(*dec);
+	if (dec->type_get()->compatible_with(Void::instance()))
+	  std::cout << "ca fais un dindon" << std::endl;
+      }
   }
 
 

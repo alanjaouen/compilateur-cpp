@@ -43,7 +43,7 @@ namespace type
   inline const Type&
   Named::actual() const
   {
-  // FIXED by forest_b
+    // FIXED by forest_b
     return type_->actual();
   }
 
