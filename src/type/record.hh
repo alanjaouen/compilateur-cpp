@@ -57,7 +57,7 @@ namespace type
     /** \} */
 
   // FIXME: Some code was deleted here (Inherited methods).
-
+    bool compatible_with(const Type& other) const;
   protected:
     /// Fields list.
     fields_type fields_;
