@@ -19,7 +19,7 @@ namespace type
   Attribute::type_get() const
   {
   // FIXMED: (Alan) Some code was deleted here.
-    return Void;
+    return Void::instance();
 
   }
 
