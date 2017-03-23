@@ -72,43 +72,72 @@ namespace type
   void
   PrettyPrinter::operator()(const Int&)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED (Alan): Some code was deleted here.
+    ostr_ << "int";
   }
 
   void
   PrettyPrinter::operator()(const String&)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED (Alan): Some code was deleted here.
+    ostr_ << "string";
   }
 
   void
   PrettyPrinter::operator()(const Named& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED (Alan): Some code was deleted here.
+    ostr_ << e.type_get();
   }
 
   void
   PrettyPrinter::operator()(const Array& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED (Alan): Some code was deleted here.
+    ostr_ << "array of " << e.type_get();
   }
 
   void
   PrettyPrinter::operator()(const Record& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED (Alan): Some code was deleted here.
+    ostr_ << "{ ";
+    for(auto i = e.begin(); i != e.end(); i++)
+    {
+      ostr_ << *i;
+      if ((i+1) != e.end())
+        ostr_ << ",";
+    }
+    ostr_ << " }";
   }
 
   void
   PrettyPrinter::operator()(const Class& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED (Alan): Some code was deleted here.
+    ostr_ << "\nClass {\n";
+
+    ostr_ << "\tattrs:\n";
+    for (auto i : e.attrs_get())
+      ostr_ << "\t\t" <<  i.name_get();
+
+    ostr_ << "\tmethods:\n";
+    for (auto i : e.meths_get())
+      ostr_ << "\t\t" <<  i->name_get();
+
+    ostr_ << "\tsubclasses:\n";
+    for (auto i : e.subclasses_get())
+      ostr_ << "\t\t" <<  i->id_get();
+
+    ostr_ << "}\n";
   }
 
   void
   PrettyPrinter::operator()(const Function& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED (Alan): Some code was deleted here.
+    ostr_ << "(" e.formals_get() << ")";
+    ostr_ << " : " << e.result_get();
   }
 
   void
