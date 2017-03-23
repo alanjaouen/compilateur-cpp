@@ -45,35 +45,50 @@ namespace type
   void
   GenDefaultVisitor<Const>::operator()(const_t<Named>& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED (Alan): Some code was deleted here.
+    e.type_get()->accept(*this);
   }
 
   template <template <typename> class Const>
   void
   GenDefaultVisitor<Const>::operator()(const_t<Array>& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED (Alan): Some code was deleted here.
+    e.type_get().accept(*this);
   }
 
   template <template <typename> class Const>
   void
   GenDefaultVisitor<Const>::operator()(const_t<Record>& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED (Alan): Some code was deleted here.
+    for(auto i = e.begin(); i != e.end(); i++)
+      (*i).type_get().accept(*this);
   }
 
   template <template <typename> class Const>
   void
   GenDefaultVisitor<Const>::operator()(const_t<Class>& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED (Alan): Some code was deleted here.
+    for (auto i : e.attrs_get())
+      i.type_get().accept(*this);
+
+    /*for (auto i : e.meths_get())
+      i->type_get().accept(*this);*/
+
+    for (auto i : e.subclasses_get())
+      i->accept(*this);
   }
 
   template <template <typename> class Const>
   void
   GenDefaultVisitor<Const>::operator()(const_t<Function>& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED (Alan): Some code was deleted here.
+    e.formals_get().accept(*this);
+    e.result_get().accept(*this);
+
   }
 
   template <template <typename> class Const>
