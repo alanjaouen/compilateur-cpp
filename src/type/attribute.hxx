@@ -18,7 +18,9 @@ namespace type
   const Type&
   Attribute::type_get() const
   {
-  // FIXME: Some code was deleted here.
+  // FIXMED: (Alan) Some code was deleted here.
+    return Void;
+
   }
 
   inline
