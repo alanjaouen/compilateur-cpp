@@ -136,7 +136,7 @@ namespace type
   PrettyPrinter::operator()(const Function& e)
   {
   // FIXED (Alan): Some code was deleted here.
-    ostr_ << "(" e.formals_get() << ")";
+    ostr_ << "(" << e.formals_get() << ")";
     ostr_ << " : " << e.result_get();
   }
 
