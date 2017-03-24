@@ -271,14 +271,11 @@ namespace type
           type_mismatch(e, "variable declaration", *(e.type_get()),
             "affected value", *(e.init_get()->type_get()));
       }
-
-
-      else /*type creer*/
-    	  if(e.type_name_get()->def_get()->created_type_get()->compatible_with
-    	    (*(e.init_get()->type_get())))
+      else /*type créé*/
+    	  if(e.type_name_get()->created_type_get()->compatible_with(*e.init_get()->type_get()))
         e.type_set(e.init_get()->type_get());
-      else
-        type_mismatch(e,"exp1",*e.type_name_get()->def_get()->created_type_get(),
+        else
+          type_mismatch(e,"exp1",*e.type_name_get()->def_get()->created_type_get(),
             "exp2", *(e.init_get()->type_get()));
     }
     else /*Si c'est ni un type primitif, ni un type creer, ni un sans type*/
@@ -313,7 +310,9 @@ namespace type
     // We only process the head of the type declaration, to set its
     // name in E.  A declaration has no type in itself; here we store
     // the type declared by E.
-    // FIXME: Some code was deleted here.
+    // FIXED: (alan) Some code was deleted here.
+    Named *ptr = new Named(e.name_get());
+    e.type_set(ptr);
   }
 
   // Bind the type body to its name.
@@ -321,7 +320,12 @@ namespace type
   void
   TypeChecker::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
   {
-    // FIXME: Some code was deleted here.
+    // FIXED: (Alan) Some code was deleted here.
+    e.ty_get().accept(*this);
+    delete e.type_get();
+    Named *ptr = new Named(e.name_get(), e.ty_get().type_get()); // TODO free this
+    e.type_set(ptr);
+
   }
 
   /*------------------.
@@ -334,11 +338,13 @@ namespace type
   {
     // FIXME: Some code was deleted here.
     for (auto dec : e.decs_get())
-      {
-	visit_dec_body<D>(*dec);
-	if (dec->type_get()->compatible_with(Void::instance()))
-	  std::cout << "ca fais un dindon" << std::endl;
-      }
+    {
+      visit_dec_header<D>(*dec);
+    }
+    for (auto dec : e.decs_get())
+    {
+      visit_dec_body<D>(*dec);
+    }
   }
 
 
