@@ -255,29 +255,24 @@ namespace type
     // FIXED: caradi_c - Alan
     if (e.init_get())
     {
-    	std::cout << e.init_get() << std::endl;
     	e.init_get()->accept(*this);
 
-      if (!e.type_name_get())
-      {
-        std::cout << "sans type" << std::endl;
+      if (!e.type_name_get()) /* pas de type specifier on affecte automatiquement le type */
         e.type_set(e.init_get()->type_get());
-        print_type_our(*e.type_get());
-        
-      }
-      else if (!e.type_name_get()->def_get())
+
+      else if (!e.type_name_get()->def_get()) /* type primitif */
       {
-        std::cout << "type primitif:" << std::endl;
-        std::cout << e.type_name_get()->name_get() << std::endl;
-        if (e.type_name_get()->name_get() == "string"
-          && String::instance().compatible_with(*e.init_get()->type_get()))
-          std::cout << "String OK" << std::endl;
-        else if (e.type_name_get()->name_get() == "int"
-                  && Int::instance().compatible_with(*e.init_get()->type_get()))
-          std::cout << "int OK" << std::endl;
-        else
-          std::cout <<e.name_get().get()<<" primitif KO " << Int::instance().compatible_with(*e.init_get()->type_get()) << std::endl;
+        if (e.type_name_get()->name_get() == "string")
+          e.type_set(&String::instance());
+        else if (e.type_name_get()->name_get() == "int")
+          e.type_set(&Int::instance());
+
+        if (!e.type_get()->compatible_with(*e.init_get()->type_get())) /*on teste la compatibilite*/
+          type_mismatch(e, "variable declaration", *(e.type_get()),
+            "affected value", *(e.init_get()->type_get()));
       }
+
+
       else /*type creer*/
     	  if(e.type_name_get()->def_get()->created_type_get()->compatible_with
     	    (*(e.init_get()->type_get())))
@@ -286,7 +281,7 @@ namespace type
         type_mismatch(e,"exp1",*e.type_name_get()->def_get()->created_type_get(),
             "exp2", *(e.init_get()->type_get()));
     }
-    else 
+    else /*Si c'est ni un type primitif, ni un type creer, ni un sans type*/
       e.type_set(&(Void::instance()));
   }
 
