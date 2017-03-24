@@ -269,14 +269,14 @@ namespace type
 
         if (!e.type_get()->compatible_with(*e.init_get()->type_get())) /*on teste la compatibilite*/
           type_mismatch(e, "variable declaration", *(e.type_get()),
-            "affected value", *(e.init_get()->type_get()));
+            "variable initialization", *(e.init_get()->type_get()));
       }
       else /*type créé*/
-    	  if(e.type_name_get()->created_type_get()->compatible_with(*e.init_get()->type_get()))
+    	  if(e.type_name_get()->def_get()->type_get()->compatible_with(*e.init_get()->type_get()))
         e.type_set(e.init_get()->type_get());
         else
-          type_mismatch(e,"exp1",*e.type_name_get()->def_get()->created_type_get(),
-            "exp2", *(e.init_get()->type_get()));
+          type_mismatch(e,"variable declaration",*e.type_name_get()->def_get()->type_get(),
+            "variable initialization", *(e.init_get()->type_get()));
     }
     else /*Si c'est ni un type primitif, ni un type creer, ni un sans type*/
       e.type_set(&(Void::instance()));
@@ -356,6 +356,12 @@ namespace type
   TypeChecker::operator()(ast::NameTy& e)
   {
   // FIXME: Some code was deleted here (Recognize user defined types, and built-in types).
+    if (e.name_get() == "string")
+      e.type_set(&String::instance());
+    else if (e.name_get() == "int")
+      e.type_set(&Int::instance());
+    else 
+      e.type_set(e.def_get()->type_get());
   }
 
   void

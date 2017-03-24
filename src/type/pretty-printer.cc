@@ -87,7 +87,7 @@ namespace type
   PrettyPrinter::operator()(const Named& e)
   {
     // FIXED (Alan): Some code was deleted here.
-    ostr_ << e.type_get();
+    ostr_ << e.name_get() << " => " << e.actual();
   }
 
   void
