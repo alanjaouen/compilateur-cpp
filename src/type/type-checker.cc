@@ -252,7 +252,7 @@ namespace type
   TypeChecker::operator()(ast::VarDec& e)
   {
     std::cout << e.name_get() << std::endl;
-    // FIXED: caradi_c
+    // FIXED: caradi_c - Alan
     if (e.init_get())
     {
     	std::cout << e.init_get() << std::endl;
@@ -266,13 +266,28 @@ namespace type
         
       }
       else if (!e.type_name_get()->def_get())
-        std::cout << "type primitif" << std::endl;
+      {
+        std::cout << "type primitif:" << std::endl;
+        std::cout << e.type_name_get()->name_get() << std::endl;
+        if (e.type_name_get()->name_get() == "string"
+          && String::instance().compatible_with(*e.init_get()->type_get()))
+          std::cout << "String OK" << std::endl;
+        else if (e.type_name_get()->name_get() == "int"
+                  && Int::instance().compatible_with(*e.init_get()->type_get()))
+          std::cout << "int OK" << std::endl;
+        else
+          std::cout <<e.name_get().get()<<" primitif KO " << Int::instance().compatible_with(*e.init_get()->type_get()) << std::endl;
+      }
       else /*type creer*/
-    	  e.type_name_get()->def_get()->created_type_get()->compatible_with
-    	    (*(e.init_get()->type_get()));
-
+    	  if(e.type_name_get()->def_get()->created_type_get()->compatible_with
+    	    (*(e.init_get()->type_get())))
+        e.type_set(e.init_get()->type_get());
+      else
+        type_mismatch(e,"exp1",*e.type_name_get()->def_get()->created_type_get(),
+            "exp2", *(e.init_get()->type_get()));
     }
-    e.type_set(&(Void::instance()));
+    else 
+      e.type_set(&(Void::instance()));
   }
 
 
