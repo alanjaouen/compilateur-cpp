@@ -9,6 +9,8 @@
 #include <type/visitor.hh>
 #include <type/record.hh>
 #include <type/nil.hh>
+#include <algorithm>
+#include <iterator>
 
 namespace type
 {
@@ -26,16 +28,27 @@ namespace type
   }
 
   // FIXME: Some code was deleted here (Field manipulators).
-  // const Type*
-  // field_type(const misc::symbol key)
-  // {
-  //   for (auto i : fields_)
-  //     {
-  //       if (i.name_get() == key)
-  //         return i.type_get();
-  //     }
-  //   throw "record.cc:field_type: search not found\n";
-  // }
+  const Type*
+  Record::field_type(const misc::symbol key) const
+  {
+    std::cout << "field_type !!!!!" << std::endl;
+    for (const auto i : fields_)
+      {
+        if (i.name_get() == key)
+          return &i.type_get();
+      }
+    return nullptr;
+  }
+
+  int
+  Record::field_index(const misc::symbol key) const
+  {
+    auto f = std::find_if(fields_.begin(), fields_.end(), [key] (Field f) {return f.name_get() == key;});
+    auto pos = std::distance(fields_.begin(), f);
+    if (pos > fields_.size())
+      return -1;
+    return pos;
+  }
 
   // int
   // field_index(const misc::symbol key)
