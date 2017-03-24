@@ -313,6 +313,7 @@ namespace type
     // FIXED: (alan) Some code was deleted here.
     Named *ptr = new Named(e.name_get());
     e.type_set(ptr);
+    e.created_type_set(ptr);
   }
 
   // Bind the type body to its name.
@@ -323,8 +324,9 @@ namespace type
     // FIXED: (Alan) Some code was deleted here.
     e.ty_get().accept(*this);
     delete e.type_get();
-    Named *ptr = new Named(e.name_get(), e.ty_get().type_get()); // TODO free this
+    Named *ptr = new Named(e.name_get(), e.ty_get().type_get());
     e.type_set(ptr);
+    e.created_type_set(ptr);
 
   }
 
@@ -336,7 +338,7 @@ namespace type
   void
   TypeChecker::decs_visit(ast::AnyDecs<D>& e)
   {
-    // FIXME: Some code was deleted here.
+    // FIXED:(Alan) Some code was deleted here.
     for (auto dec : e.decs_get())
     {
       visit_dec_header<D>(*dec);

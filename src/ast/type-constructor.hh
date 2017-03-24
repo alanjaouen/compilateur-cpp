@@ -21,7 +21,7 @@ namespace ast
   public:
     TypeConstructor();
     TypeConstructor(const type::Type* e);
-    virtual  ~TypeConstructor() = default;
+    virtual  ~TypeConstructor();
     void created_type_set (const type::Type*);
     const type::Type* created_type_get () const;
 

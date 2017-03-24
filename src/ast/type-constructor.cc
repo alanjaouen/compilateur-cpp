@@ -16,5 +16,12 @@ namespace ast
       : new_type_(e)
       {}
 
+  TypeConstructor::~TypeConstructor()
+  {
+  	if (new_type_)
+  		delete new_type_;
+  }
+
+
 } // namespace ast
 
