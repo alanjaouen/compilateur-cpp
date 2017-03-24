@@ -179,7 +179,11 @@ namespace type
     // If any error occured, there's no need to set any nil types.
     // If there are any record initializations, set the `record_type_`
     // of the `Nil` to the expected type.
-  // FIXME: Some code was deleted here.
+    // FIXED by caradi_c
+    auto res = dynamic_cast<Record*>(e.id_get().def_get());
+    for (auto i : res->fields_get())
+      std::cout << i.name_get() << '\n';
+    std::cout << std::endl;
   }
 
   void

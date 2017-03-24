@@ -39,7 +39,6 @@ namespace type
     const Record* type(const ast::fields_type& e);
     const Record* type(const ast::VarDecs& e);
 
-
     // ------------------ //
     // Helping routines.  //
     // ------------------ //
