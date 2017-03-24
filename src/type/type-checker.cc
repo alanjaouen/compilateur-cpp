@@ -34,6 +34,8 @@ namespace type
   TypeChecker::type(ast::Typable& e)
   {
   // FIXED by forest_b
+    if (!e.type_get())
+      e.accept(*this);
     return e.type_get();
   }
 
@@ -150,6 +152,7 @@ namespace type
     auto nil_ptr = std::make_unique<Nil>();
     type_default(e, nil_ptr.get());
     created_type_default(e, nil_ptr.release());
+    std::cout<< e.type_get()<<std::endl;
   }
 
   void
@@ -182,14 +185,36 @@ namespace type
   void
   TypeChecker::operator()(ast::OpExp& e)
   {
+    std::cout<< "her"<<std::endl;
   // FIXME: Some code was deleted here.
+    type(e.left_get());
+    type(e.right_get());
+
 
     // If any of the operands are of type Nil, set the `record_type_` to the
     // type of the opposite operand.
-    if (!error_)
+    if (auto nil = to_nil(*e.left_get().type_get()))
+      if (auto nil2 = to_nil(*e.right_get().type_get()))
       {
-  // FIXME: Some code was deleted here.
+        std::cout << "nil = nil" << std::endl;
+        type_mismatch(e, "right operand", *(e.right_get().type_get()),
+          "expected", *(e.left_get().type_get()));
       }
+
+    if (auto nil = to_nil(*e.left_get().type_get()))
+      nil->set_record_type(*e.right_get().type_get());
+    if (auto nil = to_nil(*e.right_get().type_get()))
+      nil->set_record_type(*e.left_get().type_get());
+
+    if (!error_)
+    {
+  // FIXME: Some code was deleted here.
+      std::cout<< "!error_"<<std::endl;
+      if (! e.left_get().type_get()->compatible_with(*e.right_get().type_get()))
+        type_mismatch(e, "right operand", *(e.right_get().type_get()),
+        "expected", *(e.left_get().type_get()));
+      e.type_set(e.left_get().type_get());
+    }
   }
 
   // FIXME: Some code was deleted here.
@@ -224,6 +249,9 @@ namespace type
   TypeChecker::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
   {
   // FIXME: Some code was deleted here.
+    Named *ptr = new Named(e.name_get());
+    e.type_set(ptr);
+    e.created_type_set(ptr);
   }
 
 
