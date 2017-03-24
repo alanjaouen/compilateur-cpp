@@ -36,7 +36,7 @@ namespace ast
     virtual void accept (Visitor& v) = 0;
     
   private:
-    const type::Type* type_;
+    const type::Type* type_ = nullptr;
   };
 
 } // namespace ast

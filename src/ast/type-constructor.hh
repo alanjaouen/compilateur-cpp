@@ -30,7 +30,7 @@ namespace ast
 
     
   private:
-    const type::Type* new_type_;
+    const type::Type* new_type_ = nullptr;
   };
 
 } // namespace ast
