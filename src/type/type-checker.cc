@@ -305,10 +305,10 @@ namespace type
       }
       else /*type créé*/
     	  if(e.type_name_get()->def_get()->type_get()->compatible_with(*e.init_get()->type_get()))
-        e.type_set(e.init_get()->type_get());
-        else
-          type_mismatch(e,"variable declaration",*e.type_name_get()->def_get()->type_get(),
-            "variable initialization", *(e.init_get()->type_get()));
+            e.type_set(e.init_get()->type_get());
+          else
+            type_mismatch(e,"variable declaration",*e.type_name_get()->def_get()->type_get(),
+                          "variable initialization", *(e.init_get()->type_get()));
     }
     else /*Si c'est ni un type primitif, ni un type creer, ni un sans type*/
       e.type_set(&(Void::instance()));
@@ -407,7 +407,9 @@ namespace type
   void
   TypeChecker::operator()(ast::ArrayTy& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    e.base_type_get().accept(*this);
+    type_default(e, e.base_type_get().type_get());
   }
 
 } // namespace type
