@@ -19,13 +19,6 @@ inline const type::Type* TypeConstructor::created_type_get() const
 {
   return new_type_;
 }
-
-  inline void TypeConstructor::accept(ConstVisitor& v) const
-  {
-  }
-  inline void TypeConstructor::accept(Visitor& v)
-  { 
-  }
-
+  
 } // namespace ast
 

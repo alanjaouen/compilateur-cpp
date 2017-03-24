@@ -18,8 +18,8 @@ namespace type
   const Type&
   Attribute::type_get() const
   {
-  // FIXMED: (Alan) Some code was deleted here.
-    return Void::instance();
+  // FIXMED: forest_b
+    return *def_->type_get();
 
   }
 
