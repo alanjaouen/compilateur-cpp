@@ -68,6 +68,15 @@ namespace type
   | Error handling.  |
   `-----------------*/
 
+
+
+  void
+  TypeChecker::print_type_our(const Type& type1)
+  {
+    error_ << misc::error::type << " type: " << type1 << std::endl;
+  }
+
+
   void
   TypeChecker::error(const ast::Ast& loc, const std::string& msg)
   {
@@ -225,7 +234,8 @@ namespace type
   {
     visit_routine_body<Function>(e);
     e.type_set(&(Void::instance()));
-    e.body_get()->accept(*this);
+    if (e.body_get())
+      e.body_get()->accept(*this);
     // Check for Nil types in the function body.
     if (!error_ && e.body_get())
       {
@@ -244,13 +254,24 @@ namespace type
     std::cout << e.name_get() << std::endl;
     // FIXED: caradi_c
     if (e.init_get())
+    {
+    	std::cout << e.init_get() << std::endl;
+    	e.init_get()->accept(*this);
+
+      if (!e.type_name_get())
       {
-	std::cout << e.init_get() << std::endl;
-	e.init_get()->accept(*this);
-	if (e.type_name_get())
-	  e.type_name_get()->def_get()->created_type_get()->compatible_with
-	    (*(e.init_get()->type_get()));
+        std::cout << "sans type" << std::endl;
+        e.type_set(e.init_get()->type_get());
+        print_type_our(*e.type_get());
+        
       }
+      else if (!e.type_name_get()->def_get())
+        std::cout << "type primitif" << std::endl;
+      else /*type creer*/
+    	  e.type_name_get()->def_get()->created_type_get()->compatible_with
+    	    (*(e.init_get()->type_get()));
+
+    }
     e.type_set(&(Void::instance()));
   }
 

@@ -79,6 +79,8 @@ namespace type
                        const std::string& exp2, const Type& type2);
     /// \}
 
+    void print_type_our(const Type& type1);
+
 
     /// \name Checking types.
     /// \{
