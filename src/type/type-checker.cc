@@ -249,8 +249,7 @@ namespace type
   void
   TypeChecker::operator()(ast::OpExp& e)
   {
-    std::cout<< "/*her*/"<<std::endl;
-  // FIXME: Some code was deleted here.
+  // FIXED: (Alan) Some code was deleted here.
     type(e.left_get());
     type(e.right_get());
 
@@ -259,16 +258,27 @@ namespace type
     // type of the opposite operand.
     if (auto nil = to_nil(*e.left_get().type_get()))
       if (auto nil2 = to_nil(*e.right_get().type_get()))
-      {
-        std::cout << "/*nil = nil*/" << std::endl;
-        type_mismatch(e, "right operand", *(e.right_get().type_get()),
-          "expected", *(e.left_get().type_get()));
-      }
+        type_mismatch(e, "right operand is", *(e.right_get().type_get()),
+          "and left operand is", *(e.left_get().type_get()));
 
-    if (auto nil = to_nil(*e.left_get().type_get()))
-      nil->set_record_type(*e.right_get().type_get());
-    if (auto nil = to_nil(*e.right_get().type_get()))
-      nil->set_record_type(*e.left_get().type_get());
+
+    if (auto nil = to_nil(*e.left_get().type_get())) /* if nil OP EXP */
+    {
+      if (dynamic_cast<const Record*>(e.right_get().type_get()))
+        nil->set_record_type(*e.right_get().type_get());
+      else
+        type_mismatch(e, "right operand", *e.left_get().type_get(),
+        "expected reccord, given", *(e.right_get().type_get()));
+    }
+
+    if (auto nil = to_nil(*e.right_get().type_get())) /* if EXP OP nil */
+    {
+      if (dynamic_cast<const Record*>(e.left_get().type_get()))
+        nil->set_record_type(*e.left_get().type_get());
+      else
+        type_mismatch(e, "right operand", *e.right_get().type_get(),
+        "expected reccord, given", *(e.left_get().type_get()));
+    }
 
     if (!error_)
     {
