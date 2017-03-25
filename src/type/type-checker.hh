@@ -168,6 +168,8 @@ namespace type
     // Complex values.
     void operator()(ast::RecordExp& e) override;
     void operator()(ast::OpExp& e) override;
+    void operator()(ast::AssignExp& e) override;
+
   // FIXME: Some code was deleted here (Other Exp nodes).
 
     // ---------------- //

@@ -197,6 +197,8 @@ namespace type
   void
   TypeChecker::operator()(ast::RecordExp& e)
   {
+    print_type_our(*e.id_get().def_get()->type_get());
+
     // If no error occured, check for nil types in the record initialization.
     // If any error occured, there's no need to set any nil types.
     // If there are any record initializations, set the `record_type_`
@@ -224,7 +226,7 @@ namespace type
     if (auto nil = to_nil(*e.left_get().type_get()))
       if (auto nil2 = to_nil(*e.right_get().type_get()))
       {
-        std::cout << "nil = nil" << std::endl;
+        std::cout << "/*nil = nil*/" << std::endl;
         type_mismatch(e, "right operand", *(e.right_get().type_get()),
           "expected", *(e.left_get().type_get()));
       }
@@ -237,7 +239,7 @@ namespace type
     if (!error_)
     {
   // FIXME: Some code was deleted here.
-      std::cout<< "!error_"<<std::endl;
+      std::cout<< "/*!error_*/"<<std::endl;
       if (! e.left_get().type_get()->compatible_with(*e.right_get().type_get()))
         type_mismatch(e, "right operand", *(e.right_get().type_get()),
         "expected", *(e.left_get().type_get()));
@@ -245,6 +247,19 @@ namespace type
     }
   }
 
+  void
+  TypeChecker::operator()(ast::AssignExp& e)
+  {
+    type(e.var_get());
+    type(e.exp_get());
+
+    //TODO block read only assignation
+
+    if (! e.var_get().type_get()->compatible_with(*e.exp_get().type_get()))
+        type_mismatch(e, "assigned", *(e.var_get().type_get()),
+        "expected", *(e.exp_get().type_get()));
+
+  }
   // FIXME: Some code was deleted here.
 
 
