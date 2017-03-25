@@ -28,3 +28,4 @@ bad-if.tig: 5
 mutuals.tig: 5
 function-void-return-int.tig: 5
 function-int-return-void.tig: 5
+function-wrong-arg.tig: 5
