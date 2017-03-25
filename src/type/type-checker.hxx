@@ -77,10 +77,10 @@ namespace type
   TypeChecker::check_type(NodeType& e, const std::string& s, const Type& expected)
   {
   // FIXED by forest_b
-    if (!(e.compatible_with(expected)))
+    if (!(e.type_get()->compatible_with(expected)))
     {
       error(e, s);
-      e.type_set(expected);
+      e.type_set(&expected);
     }
   }
 

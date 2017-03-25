@@ -306,10 +306,20 @@ namespace type
   }
   // FIXME: Some code was deleted here.
 
-
   void TypeChecker::operator()(ast::IfExp& e)
   {
-    //FIXME
+    std::cout << "/* ifexp */" << std::endl;
+    type(e.test_get());
+    check_type(e.test_get(), "type mismatch", Int::instance());
+//    type(e.then_get())
+    if (e.else_get())
+      check_types(e, "then clause type ", e.then_get(), "else clause type",
+                  *e.else_get());
+    else
+    {
+      type(e.then_get());
+      check_types(e, "then clause type ", *(e.then_get().type_get()), "else clause type", Void::instance());
+    }
   }
   void TypeChecker::operator()(ast::ArrayExp& e)
   {
@@ -318,14 +328,22 @@ namespace type
   void TypeChecker::operator()(ast::CallExp& e)
   {
     //FIXME
+    for (auto& exp : e.seq_get())
+      exp->accept(*this);
   }
   void TypeChecker::operator()(ast::LetExp& e)
   {
-    //FIXME
+    e.decs_get().accept(*this);
+    e.seq_get().accept(*this);
   }
   void TypeChecker::operator()(ast::SeqExp& e)
   {
-    //FIXME
+    for (auto& exp : e.seq_get())
+      exp->accept(*this);
+    if (e.seq_get().size() > 0)
+      e.type_set(e.seq_get().back()->type_get());
+    else
+      e.type_set(&Void::instance());
   }
   
   // LOOP
