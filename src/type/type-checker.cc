@@ -297,14 +297,17 @@ namespace type
   {
     type(e.var_get());
     type(e.exp_get());
-
-    //TODO block read only assignation
-
-    if (! e.var_get().type_get()->compatible_with(*e.exp_get().type_get()))
+    auto svar = dynamic_cast<ast::SimpleVar*>(&e.var_get());
+    if (svar != nullptr
+        && var_read_only_.find(svar->def_get()) != var_read_only_.end())
+      error(e, "for loop var is read only");
+    else
+    {
+      if (! e.var_get().type_get()->compatible_with(*e.exp_get().type_get()))
         type_mismatch(e, "assigned", *(e.var_get().type_get()),
-        "expected", *(e.exp_get().type_get()));
-    e.type_set(&Void::instance());
-
+                      "expected", *(e.exp_get().type_get()));
+      e.type_set(&Void::instance());
+    }
   }
   // FIXME: Some code was deleted here.
 
@@ -386,7 +389,12 @@ namespace type
   
   void TypeChecker::operator()(ast::ForExp& e)
   {
-    
+    type(e.vardec_get());
+    type(e.hi_get());
+    check_type(e.vardec_get(), "for variable type mismatch ", Int::instance());
+    check_type(e.hi_get(), "loop bound type mismatch ", Int::instance());
+    var_read_only_.insert(&e.vardec_get());
+    type(e.body_get());
   }
   void TypeChecker::operator()(ast::BreakExp& e)
   {
@@ -437,9 +445,6 @@ namespace type
       p = new Function(type(e.formals_get()), *type(*e.result_get()));
     else
       p = new Function(type(e.formals_get()), Void::instance());
-
-
-    Named *ptr = new Named(e.name_get());
     e.type_set(p);
     e.created_type_set(p);
   }
