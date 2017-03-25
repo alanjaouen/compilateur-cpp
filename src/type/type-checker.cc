@@ -302,6 +302,7 @@ namespace type
     if (! e.var_get().type_get()->compatible_with(*e.exp_get().type_get()))
         type_mismatch(e, "assigned", *(e.var_get().type_get()),
         "expected", *(e.exp_get().type_get()));
+    e.type_set(&Void::instance());
 
   }
   // FIXME: Some code was deleted here.
@@ -320,7 +321,7 @@ namespace type
       type(e.then_get());
       check_types(e, "then clause type ", *(e.then_get().type_get()), "else clause type", Void::instance());
     }
-    e.type_set(e.test_get().type_get());
+    e.type_set(e.then_get().type_get());
   }
   void TypeChecker::operator()(ast::ArrayExp& e)
   {
@@ -354,6 +355,7 @@ namespace type
   {
     e.decs_get().accept(*this);
     e.seq_get().accept(*this);
+    e.type_set(e.seq_get().type_get());
   }
   void TypeChecker::operator()(ast::SeqExp& e)
   {
@@ -429,8 +431,6 @@ namespace type
   TypeChecker::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
   {
     visit_routine_body<Function>(e);
-    if (e.body_get())
-      e.body_get()->accept(*this);
     // Check for Nil types in the function body.
     if (!error_ && e.body_get())
       {
