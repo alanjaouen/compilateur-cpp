@@ -320,6 +320,7 @@ namespace type
       type(e.then_get());
       check_types(e, "then clause type ", *(e.then_get().type_get()), "else clause type", Void::instance());
     }
+    e.type_set(e.test_get().type_get());
   }
   void TypeChecker::operator()(ast::ArrayExp& e)
   {
@@ -340,7 +341,6 @@ namespace type
       exp->accept(*this);
       if(! it->type_get().compatible_with(*exp->type_get()) || it == end)
       {
-        std::cout << "bbhgvhggh" << std::endl;
         type_mismatch(e, "assigned", *exp->type_get(),
         "expected", it->type_get()); 
       }
@@ -358,11 +358,7 @@ namespace type
   void TypeChecker::operator()(ast::SeqExp& e)
   {
     for (auto& exp : e.seq_get())
-    {
       exp->accept(*this);
-      if (! error_)
-        exit(44);
-    }
     if (e.seq_get().size() > 0)
       e.type_set(e.seq_get().back()->type_get());
     else
