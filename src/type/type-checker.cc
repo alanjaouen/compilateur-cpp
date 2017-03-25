@@ -135,10 +135,24 @@ namespace type
   TypeChecker::operator()(ast::SimpleVar& e)
   {
   // FIXME: Some code was deleted here.
-    type_default(e, e.def_get()->type_get());
+    if (e.def_get()->type_get())
+      type_default(e, e.def_get()->type_get());
+    else if (e.def_get())
+    {
+      type(*e.def_get());
+      type_default(e, e.def_get()->type_get());
+    }
+    else 
+    {
+      if (e.name_get() == "string")
+        type_default(e, &String::instance());
+      else if (e.name_get() == "int")
+        type_default(e, &Int::instance());
+    }
   }
   void TypeChecker::operator()(ast::FieldVar& e)
   {
+    std::cout<<"/* fieldvar */" <<std::endl;
     type(e.lvalue_get());
     auto ty = dynamic_cast<const Record*>(e.lvalue_get().type_get());
     if (ty == nullptr)
@@ -147,9 +161,17 @@ namespace type
     {
       auto ctype = ty->field_type(e.name_get());
       if (ctype == nullptr)
+      {
+        std::cout<<"/* unknown field */" <<std::endl;
+
         error(e, ("unknown field " + e.name_get().get()));
+      }
       else
+      {
+        std::cout<<"/* know field */" <<std::endl;
+
         type_default(e, ctype);
+      }
     }
   }
   void TypeChecker::operator()(ast::SubscriptVar& e)
@@ -157,7 +179,7 @@ namespace type
     //type(e.var_get());
     //type(e.exp_get());
   }
-    
+
   
   // FIXME: Some code was deleted here.
 
@@ -197,7 +219,9 @@ namespace type
   void
   TypeChecker::operator()(ast::RecordExp& e)
   {
-    print_type_our(*e.id_get().def_get()->type_get());
+
+
+    //print_type_our(*e.id_get().def_get()->type_get());
 
     // If no error occured, check for nil types in the record initialization.
     // If any error occured, there's no need to set any nil types.
@@ -210,6 +234,7 @@ namespace type
     for (auto i : res->fields_get())
       std::cout << i.name_get() << '\n';
     std::cout << std::endl;
+    e.type_set(res);
   }
 
   void
@@ -441,6 +466,23 @@ namespace type
   TypeChecker::operator()(ast::RecordTy& e)
   {
   // FIXME: Some code was deleted here.
+    Record *ptr = new Record;
+
+    for (auto i : e.recs_get())
+    {
+      type(i->type_name_get());
+      ptr->field_add(i->name_get(),*i->type_name_get().type_get());
+    }
+    e.type_set(ptr);
+    std::cout << "/*{ ";
+    for(auto i = ptr->begin(); i != ptr->end(); i++)
+    {
+      std::cout << *i;
+      if ((i+1) != ptr->end())
+        std::cout << ", ";
+    }
+    std::cout << " }*/" << std::endl;    
+    std::cout<<"/* couille */"<< std::endl;
   }
 
   void
