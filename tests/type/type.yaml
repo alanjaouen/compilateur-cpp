@@ -26,3 +26,5 @@ unconstrained-nil.tig: 0
 int-plus-string.tig: 5
 bad-if.tig: 5
 mutuals.tig: 5
+function-void-return-int.tig: 5
+function-int-return-void.tig: 5

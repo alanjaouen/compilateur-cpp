@@ -1,0 +1,7 @@
+let
+	function f (a : string, b : int) : int = 2
+	var a :int := 0
+in
+	a := f(2, 5)
+
+end
