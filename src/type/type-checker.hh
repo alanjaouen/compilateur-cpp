@@ -150,7 +150,7 @@ namespace type
     void operator()(ast::SimpleVar& e) override;
     void operator()(ast::FieldVar& e) override;
     void operator()(ast::SubscriptVar& e) override;
-    void operator()(ast::CastExp& e) override;
+    void operator()(ast::CastVar& e) override;
 
 
 // FIXME: Some code was deleted here (Other Var nodes).

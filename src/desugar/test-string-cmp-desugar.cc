@@ -46,17 +46,17 @@ test_string_desugaring(const std::string& oper)
 int
 main()
 {
-  // Desugaring `"foo" = "bar"' as `streq ("foo", "bar")'.
-  std::cout << "First test...\n";
-  test_string_desugaring("=");
-  std::cout << std::endl;
+  // // Desugaring `"foo" = "bar"' as `streq ("foo", "bar")'.
+  // std::cout << "First test...\n";
+  // test_string_desugaring("=");
+  // std::cout << std::endl;
 
-  // Desugaring `"foo" <> "bar"' as `streq ("foo", "bar") = 0'.
-  std::cout << "Second test...\n";
-  test_string_desugaring("<>");
-  std::cout << std::endl;
+  // // Desugaring `"foo" <> "bar"' as `streq ("foo", "bar") = 0'.
+  // std::cout << "Second test...\n";
+  // test_string_desugaring("<>");
+  // std::cout << std::endl;
 
-  // Desugaring `"foo" >= "bar"' as `strcmp ("foo", "bar") >= 0'.
-  std::cout << "Third test...\n";
-  test_string_desugaring(">=");
+  // // Desugaring `"foo" >= "bar"' as `strcmp ("foo", "bar") >= 0'.
+  // std::cout << "Third test...\n";
+  // test_string_desugaring(">=");
 }

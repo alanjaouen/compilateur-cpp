@@ -37,7 +37,7 @@ int
 main()
 {
   // Minimal built-in function requirements.
-  std::string builtins =
+/*  std::string builtins =
     " primitive print_err(string: string)"
     " primitive exit(status: int)"
 
@@ -71,5 +71,5 @@ main()
     test_bounds_checking(*tree);
     delete tree;
     tree = nullptr;
-  }
+    }*/
 }

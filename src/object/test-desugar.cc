@@ -66,54 +66,54 @@ const char* program_name = "test-desugar";
 int
 main()
 {
-  std::cout << "/* Test 1.  */\n";
-  desugar(" let"
-          "   type A = class"
-          "   {"
-          "     var s := \"Hello\""
-          "     method m() = ()"
-          "   }"
-          "   "
-          "   var a : A := new A"
-          " in"
-          "   a.s;"
-          "   a.m()"
-          " end");
-  std::cout << std::endl << std::endl
-            << "/* Test 2.  */\n";
-  desugar(" let"
-          "   primitive print(s : string)"
-          "   "
-          "   class A"
-          "   {"
-          "     var s := \"Hello\""
-          "     method m() = (print(self.s); print(\"\\n\"))"
-          "   }"
-          "   class B extends A"
-          "   {"
-          "     var s2 := \" World!\""
-          "     method m() = (print(self.s); print(self.s2);"
-          "                    print(\"\\n\"))"
-          "   }"
-          "   "
-          "   var b : B := new B"
-          "   var a : A := b"
-          "   var a2 : A := new B"
-          " in"
-          "   b.m();"
-          "   a.m();"
-          "   a2.m();"
-          "   a := a2;"
-          "   a := b"
-          " end");
-  std::cout << std::endl << std::endl
-            << "/* Test 3.  */\n";
-  desugar(" let"
-          "   class A {}"
-          "   class B extends A {}"
-          "   function id(a : A) : A = a"
-          "   var b := new B"
-          "   var a := id(b)"
-          " in"
-          " end");
+  // std::cout << "/* Test 1.  */\n";
+  // desugar(" let"
+  //         "   type A = class"
+  //         "   {"
+  //         "     var s := \"Hello\""
+  //         "     method m() = ()"
+  //         "   }"
+  //         "   "
+  //         "   var a : A := new A"
+  //         " in"
+  //         "   a.s;"
+  //         "   a.m()"
+  //         " end");
+  // std::cout << std::endl << std::endl
+  //           << "/* Test 2.  */\n";
+  // desugar(" let"
+  //         "   primitive print(s : string)"
+  //         "   "
+  //         "   class A"
+  //         "   {"
+  //         "     var s := \"Hello\""
+  //         "     method m() = (print(self.s); print(\"\\n\"))"
+  //         "   }"
+  //         "   class B extends A"
+  //         "   {"
+  //         "     var s2 := \" World!\""
+  //         "     method m() = (print(self.s); print(self.s2);"
+  //         "                    print(\"\\n\"))"
+  //         "   }"
+  //         "   "
+  //         "   var b : B := new B"
+  //         "   var a : A := b"
+  //         "   var a2 : A := new B"
+  //         " in"
+  //         "   b.m();"
+  //         "   a.m();"
+  //         "   a2.m();"
+  //         "   a := a2;"
+  //         "   a := b"
+  //         " end");
+  // std::cout << std::endl << std::endl
+  //           << "/* Test 3.  */\n";
+  // desugar(" let"
+  //         "   class A {}"
+  //         "   class B extends A {}"
+  //         "   function id(a : A) : A = a"
+  //         "   var b := new B"
+  //         "   var a := id(b)"
+  //         " in"
+  //         " end");
 }

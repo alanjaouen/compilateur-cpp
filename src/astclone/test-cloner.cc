@@ -33,9 +33,9 @@ clone_ast(const std::string& s)
 int
 main()
 {
-  std::cout << "First test...\n";
+/*  std::cout << "First test...\n";
   clone_ast("( (a := 5); (a + 1) )");
 
   std::cout << "Second test...\n";
-  clone_ast("let function f() : int = g(a) in f() end");
+  clone_ast("let function f() : int = g(a) in f() end");*/
 }
