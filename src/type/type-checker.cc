@@ -231,9 +231,9 @@ namespace type
     e.id_get().accept(*this);
     auto named = dynamic_cast<const Named*>(e.id_get().def_get()->type_get());
     auto res = dynamic_cast<const Record*>(named->type_get());
-    for (auto i : res->fields_get())
+    /*for (auto i : res->fields_get())
       std::cout << i.name_get() << '\n';
-    std::cout << std::endl;
+    std::cout << std::endl;*/
     e.type_set(res);
   }
 
@@ -347,7 +347,7 @@ namespace type
   void
   TypeChecker::operator()(ast::VarDec& e)
   {
-    std::cout << e.name_get() << std::endl;
+    std::cout << "/*" <<e.name_get() << "*/"<< std::endl;
     // FIXED: caradi_c - Alan
     if (e.init_get())
     {

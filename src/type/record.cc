@@ -31,7 +31,7 @@ namespace type
   const Type*
   Record::field_type(const misc::symbol key) const
   {
-    std::cout << "field_type !!!!!" << std::endl;
+    std::cout << "/* field_type !!!!! */" << std::endl;
     for (const auto i : fields_)
       {
         if (i.name_get() == key)
