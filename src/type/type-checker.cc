@@ -327,9 +327,28 @@ namespace type
   }
   void TypeChecker::operator()(ast::CallExp& e)
   {
-    //FIXME
+    //FIXME (Alan)
+    std::cout <<" /* CallExp */" << std::endl;
+    auto type = e.def_get()->type_get();
+    auto arg = dynamic_cast<const Function*>(type);
+    if (!arg)
+      error(e, "function is not declared");
+    auto it = arg->formals_get().begin();
+    auto end = arg->formals_get().end();
     for (auto& exp : e.seq_get())
+    {
       exp->accept(*this);
+      if(! it->type_get().compatible_with(*exp->type_get()) || it == end)
+      {
+        std::cout << "bbhgvhggh" << std::endl;
+        type_mismatch(e, "assigned", *exp->type_get(),
+        "expected", it->type_get()); 
+      }
+      it++;
+    }
+    if (it != end)
+      error(e, "missing argument");
+    e.type_set(&arg->result_get());
   }
   void TypeChecker::operator()(ast::LetExp& e)
   {
@@ -339,7 +358,11 @@ namespace type
   void TypeChecker::operator()(ast::SeqExp& e)
   {
     for (auto& exp : e.seq_get())
+    {
       exp->accept(*this);
+      if (! error_)
+        exit(44);
+    }
     if (e.seq_get().size() > 0)
       e.type_set(e.seq_get().back()->type_get());
     else
@@ -410,7 +433,6 @@ namespace type
   TypeChecker::visit_dec_body<ast::FunctionDec>(ast::FunctionDec& e)
   {
     visit_routine_body<Function>(e);
-    e.type_set(&(Void::instance()));
     if (e.body_get())
       e.body_get()->accept(*this);
     // Check for Nil types in the function body.
