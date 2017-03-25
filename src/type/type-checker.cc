@@ -174,12 +174,21 @@ namespace type
       }
     }
   }
+
   void TypeChecker::operator()(ast::SubscriptVar& e)
   {
     //type(e.var_get());
     //type(e.exp_get());
   }
 
+  void TypeChecker::operator()(ast::CastVar& e)
+  {
+    //type(e.var_get());
+    //type(e.exp_get());
+  }
+
+  
+  
   
   // FIXME: Some code was deleted here.
 
@@ -286,6 +295,43 @@ namespace type
 
   }
   // FIXME: Some code was deleted here.
+
+
+  void TypeChecker::operator()(ast::IfExp& e)
+  {
+    //FIXME
+  }
+  void TypeChecker::operator()(ast::ArrayExp& e)
+  {
+    //FIXME
+  }
+  void TypeChecker::operator()(ast::CallExp& e)
+  {
+    //FIXME
+  }
+  void TypeChecker::operator()(ast::LetExp& e)
+  {
+    //FIXME
+  }
+  void TypeChecker::operator()(ast::SeqExp& e)
+  {
+    //FIXME
+  }
+  
+  // LOOP
+  
+  void TypeChecker::operator()(ast::ForExp& e)
+  {
+    //FIXME
+  }
+  void TypeChecker::operator()(ast::BreakExp& e)
+  {
+    //FIXME
+  }
+  void TypeChecker::operator()(ast::WhileExp& e)
+  {
+    //FIXME
+  }
 
 
   /*-----------------.

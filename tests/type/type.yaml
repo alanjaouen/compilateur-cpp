@@ -2,7 +2,7 @@ assign-loop-var.tig: 0
 field-in-not-record.tig: 0
 funarg-type-mismatch.tig: 0
 missing-arg.tig: 0
-nil-equal-nil.tig: 0
+nil-equal-nil.tig: 5
 typesof-then-else-differ.tig: 5
 body-of-while-not-unit.tig: 5
 hi-expr-is-not-int.tig: 5

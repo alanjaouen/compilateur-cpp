@@ -150,7 +150,8 @@ namespace type
     void operator()(ast::SimpleVar& e) override;
     void operator()(ast::FieldVar& e) override;
     void operator()(ast::SubscriptVar& e) override;
-    
+    void operator()(ast::CastExp& e) override;
+
 
 // FIXME: Some code was deleted here (Other Var nodes).
 
@@ -169,7 +170,18 @@ namespace type
     void operator()(ast::RecordExp& e) override;
     void operator()(ast::OpExp& e) override;
     void operator()(ast::AssignExp& e) override;
+    void operator()(ast::IfExp& e) override;
+    void operator()(ast::ArrayExp& e) override;
+    void operator()(ast::CallExp& e) override;
+    void operator()(ast::LetExp& e) override;
+    void operator()(ast::SeqExp& e) override;
 
+    
+    void operator()(ast::ForExp& e) override;
+    void operator()(ast::BreakExp& e) override;
+    void operator()(ast::WhileExp& e) override;
+        
+    
   // FIXME: Some code was deleted here (Other Exp nodes).
 
     // ---------------- //
