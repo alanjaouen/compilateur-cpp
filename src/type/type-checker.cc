@@ -183,8 +183,9 @@ namespace type
 
   void TypeChecker::operator()(ast::CastVar& e)
   {
-    //type(e.var_get());
-    //type(e.exp_get());
+    type(e.var_get());
+    type(e.ty_get());
+    type_set(e.var_get(), e.ty_get().type_get());
   }
 
   
@@ -385,7 +386,7 @@ namespace type
   
   void TypeChecker::operator()(ast::ForExp& e)
   {
-    //FIXME
+    
   }
   void TypeChecker::operator()(ast::BreakExp& e)
   {
