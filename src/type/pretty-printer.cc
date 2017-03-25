@@ -106,9 +106,9 @@ namespace type
     {
       ostr_ << *i;
       if ((i+1) != e.end())
-        ostr_ << ",";
+        ostr_ << ", ";
     }
-    ostr_ << " }";
+    ostr_ << " }" << std::endl;
   }
 
   void
