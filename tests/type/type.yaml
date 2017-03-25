@@ -30,3 +30,4 @@ function-void-return-int.tig: 5
 function-int-return-void.tig: 5
 function-wrong-arg.tig: 5
 if-without-else.tig: 5
+cond-of-while-not-unit.tig: 5

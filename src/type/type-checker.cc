@@ -390,11 +390,13 @@ namespace type
   }
   void TypeChecker::operator()(ast::BreakExp& e)
   {
-    //FIXME
+    e.type_set(&Void::instance());
   }
+
   void TypeChecker::operator()(ast::WhileExp& e)
   {
     type(e.test_get());
+    check_type(e.test_get(), "\e[91mWhile condition\e[0m MUST be \e[92mint\e[0m", Int::instance());
     type(e.body_get());
     check_type(e.body_get(), "While body MUST be void", Void::instance());
     e.type_set(&Void::instance());

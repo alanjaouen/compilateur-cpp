@@ -1,0 +1,2 @@
+/* error : cond of while not int */
+while ("couille") do (5+6;())
