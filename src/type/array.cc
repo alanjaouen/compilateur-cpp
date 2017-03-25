@@ -15,4 +15,5 @@ namespace type
     : type_(type)
   {}
 
+  
 } // namespace type

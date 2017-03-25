@@ -18,6 +18,10 @@ namespace type
     virtual ~Array() = default;
     Array(const Type& type);
 
+    void accept(ConstVisitor& v) const override;
+    
+    void accept(Visitor& v) override;
+
     const Type& type_get() const;
     
   private:

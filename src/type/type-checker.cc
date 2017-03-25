@@ -323,9 +323,23 @@ namespace type
     }
     e.type_set(e.then_get().type_get());
   }
+
   void TypeChecker::operator()(ast::ArrayExp& e)
   {
-    //FIXME
+    std::cout << "/* arrayExp */" << std::endl;
+    type(e.type_get());
+    type(e.l_exp_get());
+    type(e.r_exp_get());
+    auto res = dynamic_cast<const Array*>(&(e.type_get().def_get()->type_get()->actual()));
+    if (!res)
+      std::cout << "/* error dynamic cast ArrayExp */" << std::endl;
+    else
+      {
+	std::cout << "/* array type check */" << std::endl;
+	check_type(e.l_exp_get(), "type mismatch", Int::instance());
+	check_type(e.r_exp_get(), "type mismatch", res->type_get());
+      }
+    e.type_set(res);
   }
   void TypeChecker::operator()(ast::CallExp& e)
   {
@@ -600,7 +614,8 @@ namespace type
   {
   // FIXED by forest_b
     e.base_type_get().accept(*this);
-    type_default(e, e.base_type_get().type_get());
+    auto a = new Array(*e.base_type_get().type_get());
+    type_default(e, a);
   }
 
 } // namespace type

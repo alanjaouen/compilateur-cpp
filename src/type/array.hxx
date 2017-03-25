@@ -16,5 +16,18 @@ namespace type
   {
     return type_;
   }
+
   
+  inline void
+  Array::accept(ConstVisitor& v) const
+  {
+    // v(*this);
+  }
+    /// Accept a non-const visitor \a v.
+  inline void
+  Array::accept(Visitor& v)
+  {
+    // v(*this);
+  }
+
 } // namespace type
