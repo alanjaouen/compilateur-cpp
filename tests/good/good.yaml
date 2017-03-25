@@ -46,7 +46,6 @@ if-and-in-condition.tig: 0
 if-in-while.tig: 0
 if-or-in-condition-parenthesis.tig: 0
 if-or-in-condition.tig: 0
-if-without-else.tig: 0
 int-to-stirng-var-redec-in-let.tig: 0
 int-var-redec-in-let.tig: 0
 multiple-int-var-redec-in-let.tig: 0

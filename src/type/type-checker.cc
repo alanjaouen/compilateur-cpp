@@ -393,7 +393,10 @@ namespace type
   }
   void TypeChecker::operator()(ast::WhileExp& e)
   {
-    //FIXME
+    type(e.test_get());
+    type(e.body_get());
+    check_type(e.body_get(), "While body MUST be void", Void::instance());
+    e.type_set(&Void::instance());
   }
 
 
