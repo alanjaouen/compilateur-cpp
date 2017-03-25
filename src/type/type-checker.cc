@@ -418,7 +418,7 @@ namespace type
       {
 	// FIXME: Some code was deleted here.
     std::cout << "/* COOOOOL */" << std::endl;
-        print_type_our(*e.type_get());
+//        print_type_our(*e.type_get());
 
       }
   }

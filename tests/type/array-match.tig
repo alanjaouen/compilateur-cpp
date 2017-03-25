@@ -1,0 +1,8 @@
+let
+  type tab_of_int = array of int
+  var tab : tab_of_int := tab_of_int[15] of 0
+  var tab2 : tab_of_int := tab_of_int[15] of 0
+
+in
+  tab = tab2;
+end

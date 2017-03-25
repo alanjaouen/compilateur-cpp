@@ -1,0 +1,6 @@
+let
+  type bob = int      
+  var a : bob := 3
+in
+        a
+end
