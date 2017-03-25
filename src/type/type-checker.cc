@@ -135,8 +135,30 @@ namespace type
   TypeChecker::operator()(ast::SimpleVar& e)
   {
   // FIXME: Some code was deleted here.
+    type_default(e, e.def_get()->type_get());
   }
-
+  void TypeChecker::operator()(ast::FieldVar& e)
+  {
+    type(e.lvalue_get());
+    auto ty = dynamic_cast<const Record*>(e.lvalue_get().type_get());
+    if (ty == nullptr)
+      error(e, "is not a record");
+    else
+    {
+      auto ctype = ty->field_type(e.name_get());
+      if (ctype == nullptr)
+        error(e, ("unknown field " + e.name_get().get()));
+      else
+        type_default(e, ctype);
+    }
+  }
+  void TypeChecker::operator()(ast::SubscriptVar& e)
+  {
+    //type(e.var_get());
+    //type(e.exp_get());
+  }
+    
+  
   // FIXME: Some code was deleted here.
 
 
@@ -180,7 +202,8 @@ namespace type
     // If there are any record initializations, set the `record_type_`
     // of the `Nil` to the expected type.
     // FIXED by caradi_c
-    auto res = dynamic_cast<Record*>(e.id_get().def_get());
+    type(e.id_get());
+    auto res = dynamic_cast<const Record*>(e.id_get().def_get()->created_type_get());
     for (auto i : res->fields_get())
       std::cout << i.name_get() << '\n';
     std::cout << std::endl;
@@ -189,7 +212,7 @@ namespace type
   void
   TypeChecker::operator()(ast::OpExp& e)
   {
-    std::cout<< "her"<<std::endl;
+    std::cout<< "/*her*/"<<std::endl;
   // FIXME: Some code was deleted here.
     type(e.left_get());
     type(e.right_get());
