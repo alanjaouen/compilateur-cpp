@@ -391,9 +391,16 @@ namespace type
   TypeChecker::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
   {
   // FIXME: Some code was deleted here.
+    Function *p;
+    if (e.result_get())
+      p = new Function(type(e.formals_get()), *type(*e.result_get()));
+    else
+      p = new Function(type(e.formals_get()), Void::instance());
+
+
     Named *ptr = new Named(e.name_get());
-    e.type_set(ptr);
-    e.created_type_set(ptr);
+    e.type_set(p);
+    e.created_type_set(p);
   }
 
 
@@ -410,6 +417,9 @@ namespace type
     if (!error_ && e.body_get())
       {
 	// FIXME: Some code was deleted here.
+    std::cout << "/* COOOOOL */" << std::endl;
+        print_type_our(*e.type_get());
+
       }
   }
 
@@ -448,8 +458,16 @@ namespace type
             type_mismatch(e,"variable declaration",*e.type_name_get()->def_get()->type_get(),
                           "variable initialization", *(e.init_get()->type_get()));
     }
-    else /*Si c'est ni un type primitif, ni un type creer, ni un sans type*/
-      e.type_set(&(Void::instance()));
+    else if (e.type_name_get())/*Si c'est ni un type primitif, ni un type creer, ni un sans type*/
+    {
+      e.type_name_get()->accept(*this);
+      e.type_set(e.type_name_get()->type_get());
+    }
+    else
+    {
+      std::cout<< "ggg" << std::endl;
+      e.type_set(&Void::instance());
+    }
   }
 
 
@@ -556,7 +574,7 @@ namespace type
         std::cout << ", ";
     }
     std::cout << " }*/" << std::endl;    
-    std::cout<<"/* couille */"<< std::endl;
+    e.created_type_set(ptr);
   }
 
   void
