@@ -18,7 +18,7 @@ namespace type
   const Type&
   Attribute::type_get() const
   {
-  // FIXMED: forest_b
+  // FIXED: forest_b
     return *def_->type_get();
 
   }

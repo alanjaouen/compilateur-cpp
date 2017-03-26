@@ -22,7 +22,7 @@ namespace type
     type_set(type);
   }
 
-  // FIXME: Some code was deleted here (Inherited functions).
+  // FIXED: Some code was deleted here (Inherited functions).
 
   void Named::accept(ConstVisitor& v) const
   {
@@ -34,7 +34,7 @@ namespace type
     v(*this);
   }
 
-  // FIXME: Some code was deleted here (Sound).
+  // FIXED: Some code was deleted here (Sound).
   bool Named::sound() const
   {
     std::set<const Type*> sept;
@@ -48,7 +48,7 @@ namespace type
     return true;
   }
 
-  // FIXME: Some code was deleted here (Special implementation of "compatible_with" for Named).
+  // FIXED: Some code was deleted here (Special implementation of "compatible_with" for Named).
   bool Named::compatible_with(const Type& other) const
   {
     return type_->compatible_with(other);

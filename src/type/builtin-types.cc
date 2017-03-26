@@ -11,7 +11,7 @@
 namespace type
 {
 
-  // FIXME: Some code was deleted here (Void, Int, and String).
+  // FIXED: Some code was deleted here (Void, Int, and String).
 
   void String::accept(ConstVisitor& v) const
   {

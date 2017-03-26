@@ -13,7 +13,7 @@ namespace type
   /// Array types.
   class Array : public Type
   {
-  // FIXME: fixed by Alan
+  // FIXED: fixed by Alan
   public:
     virtual ~Array() = default;
     Array(const Type& type);

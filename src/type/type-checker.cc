@@ -134,7 +134,7 @@ namespace type
   void
   TypeChecker::operator()(ast::SimpleVar& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED: Some code was deleted here.
     if (e.def_get()->type_get())
       type_default(e, e.def_get()->type_get());
     else if (e.def_get())
@@ -185,13 +185,6 @@ namespace type
     type(e.ty_get());
     type_set(e.var_get(), e.ty_get().type_get());
   }
-
-  
-  
-  
-  // FIXME: Some code was deleted here.
-
-
 
   /*-----------------.
   | Visiting /Exp/.  |
@@ -263,7 +256,7 @@ namespace type
 
     if (auto nil = to_nil(*e.left_get().type_get())) /* if nil OP EXP */
     {
-      if (dynamic_cast<const Record*>(e.right_get().type_get()))
+      if (nil->compatible_with(e.right_get().type_get()->actual())) 
         nil->set_record_type(*e.right_get().type_get());
       else
         type_mismatch(e, "right operand", *e.left_get().type_get(),
@@ -272,7 +265,7 @@ namespace type
 
     if (auto nil = to_nil(*e.right_get().type_get())) /* if EXP OP nil */
     {
-      if (dynamic_cast<const Record*>(e.left_get().type_get()))
+      if (nil->compatible_with(e.left_get().type_get()->actual()))
         nil->set_record_type(*e.left_get().type_get());
       else
         type_mismatch(e, "right operand", *e.right_get().type_get(),
@@ -306,7 +299,6 @@ namespace type
                       "expected", *(e.exp_get().type_get()));
     }
   }
-  // FIXME: Some code was deleted here.
 
   void TypeChecker::operator()(ast::IfExp& e)
   {
@@ -341,7 +333,7 @@ namespace type
   }
   void TypeChecker::operator()(ast::CallExp& e)
   {
-    //FIXME (Alan)
+    //FIXED (Alan)
     auto type = e.def_get()->type_get();
     auto arg = dynamic_cast<const Function*>(type);
     if (!arg)
@@ -433,7 +425,7 @@ namespace type
   void
   TypeChecker::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED: Some code was deleted here.
     Function *p;
     if (e.result_get())
       p = new Function(type(e.formals_get()), *type(*e.result_get()));
@@ -453,9 +445,10 @@ namespace type
     // Check for Nil types in the function body.
     if (!error_ && e.body_get())
       {
-	// FIXME: Some code was deleted here.
+	// FIXED: Some code was deleted here.
     std::cout << "/* COOOOOL */" << std::endl;
-//        print_type_our(*e.type_get());
+        if (auto nill = to_nil(*e.body_get()->type_get()))
+          nill->set_record_type(*e.result_get()->type_get());
 
       }
   }
@@ -579,7 +572,7 @@ namespace type
   void
   TypeChecker::operator()(ast::NameTy& e)
   {
-  // FIXME: Some code was deleted here (Recognize user defined types, and built-in types).
+  // FIXED: Some code was deleted here (Recognize user defined types, and built-in types).
     if (e.name_get() == "string")
       e.type_set(&String::instance());
     else if (e.name_get() == "int")
@@ -591,7 +584,7 @@ namespace type
   void
   TypeChecker::operator()(ast::RecordTy& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED: Some code was deleted here.
     Record *ptr = new Record;
 
     for (auto i : e.recs_get())

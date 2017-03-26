@@ -27,7 +27,7 @@ namespace type
     v(*this);
   }
 
-  // FIXME: Some code was deleted here (Field manipulators).
+  // FIXED: Some code was deleted here (Field manipulators).
   const Type*
   Record::field_type(const misc::symbol key) const
   {
@@ -52,7 +52,7 @@ namespace type
 
   // int
   // field_index(const misc::symbol key)
-  // FIXME: Some code was deleted here (Special implementation of "compatible_with" for Record).
+  // FIXED: Some code was deleted here (Special implementation of "compatible_with" for Record).
   bool
   Record::compatible_with(const Type& other) const
   {

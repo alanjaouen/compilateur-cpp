@@ -31,7 +31,8 @@ namespace type
 
   bool Nil::compatible_with(const Type& other) const
   {
-  // FIXME: Some code was deleted here.
+  // FIXED: Some code was deleted here.
+    return dynamic_cast<const Record*>(&other);
   }
 
   const Type*

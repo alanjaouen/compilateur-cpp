@@ -92,7 +92,7 @@ namespace type
   void
   TypeChecker::visit_routine_body(Routine_Node& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED: Some code was deleted here.
     const Routine_Type* a = dynamic_cast<const Routine_Type*>(e.type_get());
     if (e.body_get())
       check_types(e,"result type", a->result_get() , "body type",  *type(*e.body_get()));                  

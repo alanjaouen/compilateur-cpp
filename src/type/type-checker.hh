@@ -153,7 +153,7 @@ namespace type
     void operator()(ast::CastVar& e) override;
 
 
-// FIXME: Some code was deleted here (Other Var nodes).
+// FIXED: Some code was deleted here (Other Var nodes).
 
 
 
@@ -182,7 +182,7 @@ namespace type
     void operator()(ast::WhileExp& e) override;
         
     
-  // FIXME: Some code was deleted here (Other Exp nodes).
+  // FIXED: Some code was deleted here (Other Exp nodes).
 
     // ---------------- //
     // Visiting /Dec/.  //

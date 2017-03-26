@@ -9,7 +9,7 @@
 
 namespace type
 {
-// FIXME: Some code was deleted here (Other types : String, Int, Void).
+// FIXED: Some code was deleted here (Other types : String, Int, Void).
 
   template <class D>
   class Singleton
