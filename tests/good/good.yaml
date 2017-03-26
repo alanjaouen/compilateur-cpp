@@ -43,7 +43,7 @@ while.tig: 0
 function-in-let.tig: 0
 if-and-in-condition-parenthesis.tig: 5
 if-in-while.tig: 5
-if-or-in-condition.tig: 0
+if-or-in-condition.tig: 5
 int-to-stirng-var-redec-in-let.tig: 0
 int-var-redec-in-let.tig: 0
 multiple-int-var-redec-in-let.tig: 0

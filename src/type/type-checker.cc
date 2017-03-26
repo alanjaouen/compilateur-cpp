@@ -453,7 +453,6 @@ namespace type
     if (!error_ && e.body_get())
       {
 	// FIXED: Some code was deleted here.
-    std::cout << "/* COOOOOL */" << std::endl;
         if (auto nill = to_nil(*e.body_get()->type_get()))
           nill->set_record_type(*e.result_get()->type_get());
 
@@ -557,6 +556,8 @@ namespace type
     Named *ptr = new Named(e.name_get(), e.ty_get().type_get());
     e.type_set(ptr);
     e.created_type_set(ptr);
+    /*if(ptr->sound())
+      error(e, "Endless type recursion");*/
 
   }
 
