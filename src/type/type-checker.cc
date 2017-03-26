@@ -163,7 +163,8 @@ namespace type
       if (ctype == nullptr)
         error(e, ("unknown field " + e.name_get().get()));
       else
-        type_default(e, ctype);
+        e.type_set(ctype);
+
     }
   }
 
@@ -171,7 +172,7 @@ namespace type
   {
     type(e.var_get());
     type(e.index_get());
-    check_type(e.index_get(), "type mismatch, expected int", Int::instance());
+    check_type(e.index_get(), "type mismatch SubscriptVar, expected int", Int::instance());
     auto gg = dynamic_cast<const Array*>(&e.var_get().type_get()->actual());
     if (!gg)
       error(e," is not a array");
@@ -292,6 +293,8 @@ namespace type
   {
     type(e.var_get());
     type(e.exp_get());
+    e.type_set(&Void::instance());
+
     auto svar = dynamic_cast<ast::SimpleVar*>(&e.var_get());
     if (svar != nullptr
         && var_read_only_.find(svar->def_get()) != var_read_only_.end())
@@ -302,14 +305,13 @@ namespace type
         type_mismatch(e, "assigned", *(e.var_get().type_get()),
                       "expected", *(e.exp_get().type_get()));
     }
-    e.type_set(&Void::instance());
   }
   // FIXME: Some code was deleted here.
 
   void TypeChecker::operator()(ast::IfExp& e)
   {
     type(e.test_get());
-    check_type(e.test_get(), "type mismatch", Int::instance());
+    check_type(e.test_get(), "type mismatch IfExp", Int::instance());
 //    type(e.then_get())
     if (e.else_get())
       check_types(e, "then clause type ", e.then_get(), "else clause type",
@@ -332,8 +334,8 @@ namespace type
       error(e," is not a array");
     else
     {
-    	check_type(e.l_exp_get(), "type mismatch", Int::instance());
-    	check_type(e.r_exp_get(), "type mismatch", res->type_get());
+    	check_type(e.l_exp_get(), "type mismatch ArrayExp", Int::instance());
+    	check_type(e.r_exp_get(), "type mismatch ArrayExp", res->type_get());
     }
     e.type_set(res);
   }
