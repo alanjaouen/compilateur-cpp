@@ -524,8 +524,8 @@ void TypeChecker::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
   Named* ptr = new Named(e.name_get(), e.ty_get().type_get());
   e.type_set(ptr);
   e.created_type_set(ptr);
-  /*if(ptr->sound())
-    error(e, "Endless type recursion");*/
+  if(!ptr->sound())
+    error(e, "Endless type recursion");
 }
 
 /*------------------.
