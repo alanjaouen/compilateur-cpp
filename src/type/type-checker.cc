@@ -148,13 +148,13 @@ namespace type
         type_default(e, &String::instance());
       else if (e.name_get() == "int")
         type_default(e, &Int::instance());
-      else
     }
   }
   void TypeChecker::operator()(ast::FieldVar& e)
   {
     type(e.lvalue_get());
-    auto ty = dynamic_cast<const Record*>(e.lvalue_get().type_get());
+    type_default(e, &Void::instance());
+    auto ty = dynamic_cast<const Record*>(&e.lvalue_get().type_get()->actual());
     if (ty == nullptr)
       error(e, "is not a record");
     else
@@ -165,7 +165,6 @@ namespace type
       else
         type_default(e, ctype);
     }
-    type_default(e, &Void::instance());
   }
 
   void TypeChecker::operator()(ast::SubscriptVar& e)
