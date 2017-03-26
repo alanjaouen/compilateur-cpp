@@ -12,8 +12,8 @@ namespace type
   inline bool
   operator==(const Type& lhs, const Type& rhs)
   {
-  // FIXME: Some code was deleted here.
-    return &lhs.actual() == &rhs.actual();
+  // FIXED: (Alan) Some code was deleted here.
+    return &lhs.actual() == &rhs.actual(); 
   }
 
   inline bool

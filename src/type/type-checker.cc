@@ -177,8 +177,14 @@ namespace type
 
   void TypeChecker::operator()(ast::SubscriptVar& e)
   {
-    //type(e.var_get());
-    //type(e.exp_get());
+    type(e.var_get());
+    type(e.index_get());
+    check_type(e.index_get(), "type mismatch, expected int", Int::instance());
+      std::cout << "/* SubscriptVar */" << std::endl;
+    auto gg = dynamic_cast<const Array*>(&e.var_get().type_get()->actual());
+    if (!gg)
+      error(e," is not a array");
+    e.type_set(&gg->type_get());
   }
 
   void TypeChecker::operator()(ast::CastVar& e)
