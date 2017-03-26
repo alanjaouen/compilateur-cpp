@@ -328,7 +328,7 @@ namespace type
     type(e.r_exp_get());
     auto res = dynamic_cast<const Array*>(&(e.type_get().def_get()->type_get()->actual()));
     if (!res)
-      std::cout << "/* error dynamic cast ArrayExp */" << std::endl;
+      error(e," is not a array");
     else
     {
     	check_type(e.l_exp_get(), "type mismatch", Int::instance());
