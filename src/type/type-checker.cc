@@ -294,6 +294,13 @@ namespace type
       error(e, "for loop var is read only");
     else
     {
+      if (auto nil = to_nil(*e.exp_get().type_get()))
+      {
+        if (auto nil2 = to_nil(e.var_get().type_get()->actual()))
+          nil->set_record_type(nil2->record_type_get()->actual());
+        else nil->set_record_type(e.var_get().type_get()->actual());
+        return;
+      }
       if (! e.var_get().type_get()->actual().compatible_with(e.exp_get().type_get()->actual()))
         type_mismatch(e, "assigned", *(e.var_get().type_get()),
                       "expected", *(e.exp_get().type_get()));
@@ -327,7 +334,7 @@ namespace type
     else
     {
     	check_type(e.l_exp_get(), "type mismatch ArrayExp", Int::instance());
-    	check_type(e.r_exp_get(), "type mismatch ArrayExp", res->type_get());
+    	check_type(e.r_exp_get(), "type mismatch ArrayExp", res->type_get().actual());
     }
     e.type_set(res);
   }
@@ -483,7 +490,11 @@ namespace type
       }
       else /*type créé*/
     	  if(e.type_name_get()->def_get()->type_get()->compatible_with(*e.init_get()->type_get()))
-            e.type_set(e.init_get()->type_get());
+        {
+          if (auto nil = to_nil(*e.init_get()->type_get()))
+            nil->set_record_type(e.type_name_get()->def_get()->type_get()->actual());
+          e.type_set(e.init_get()->type_get());
+        }
           else
             type_mismatch(e,"variable declaration",*e.type_name_get()->def_get()->type_get(),
                           "variable initialization", *(e.init_get()->type_get()));
