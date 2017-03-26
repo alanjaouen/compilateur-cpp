@@ -103,7 +103,7 @@ namespace type
                            const std::string& exp2, const Type& type2)
   {
   // FIXED by forest_b
-    if (!(type1.compatible_with(type2)))
+    if (!(type1.compatible_with(type2.actual())))
       type_mismatch(loc, exp1, type1, exp2, type2);
   }
 
@@ -117,7 +117,7 @@ namespace type
     const auto a = type(type1);
     const auto b = type(type2);
     // FIXED by forest_b
-    if (!(a->compatible_with(*b)))
+    if (!(a->compatible_with(b->actual())))
       type_mismatch(loc, exp1, *a, exp2, *b);
 
   }
@@ -294,7 +294,7 @@ namespace type
       error(e, "for loop var is read only");
     else
     {
-      if (! e.var_get().type_get()->compatible_with(*e.exp_get().type_get()))
+      if (! e.var_get().type_get()->actual().compatible_with(e.exp_get().type_get()->actual()))
         type_mismatch(e, "assigned", *(e.var_get().type_get()),
                       "expected", *(e.exp_get().type_get()));
     }
@@ -343,7 +343,7 @@ namespace type
     for (auto& exp : e.seq_get())
     {
       exp->accept(*this);
-      if(! it->type_get().compatible_with(*exp->type_get()) || it == end)
+      if(! it->type_get().compatible_with(exp->type_get()->actual()) || it == end)
       {
         type_mismatch(e, "assigned", *exp->type_get(),
         "expected", it->type_get()); 
