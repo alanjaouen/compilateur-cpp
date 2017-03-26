@@ -175,8 +175,8 @@ namespace type
     check_type(e.index_get(), "type mismatch SubscriptVar, expected int", Int::instance());
     auto gg = dynamic_cast<const Array*>(&e.var_get().type_get()->actual());
     if (!gg)
-      error(e," is not a array");
-    e.type_set(&gg->type_get());
+      error(e," is not an array");
+    else e.type_set(&gg->type_get());
   }
 
   void TypeChecker::operator()(ast::CastVar& e)
@@ -475,7 +475,11 @@ namespace type
     	e.init_get()->accept(*this);
 
       if (!e.type_name_get()) /* pas de type specifier on affecte automatiquement le type */
-        e.type_set(e.init_get()->type_get());
+      {
+        if (auto nil = to_nil(*e.init_get()->type_get()))
+          error(e, "initialization is nil with no type specifier");
+        else e.type_set(e.init_get()->type_get());
+      }
 
       else if (!e.type_name_get()->def_get()) /* type primitif */
       {

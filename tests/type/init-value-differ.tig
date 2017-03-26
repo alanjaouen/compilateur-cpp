@@ -1,7 +1,7 @@
 /* error : type constraint and init value differ */
 let
 		type bob = int
-        var a : bob := 4
+        var a : bob := "4"
 in
         a
 end
