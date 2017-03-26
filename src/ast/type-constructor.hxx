@@ -10,8 +10,8 @@
 
 namespace ast
 {
-  // FIXED by forest_b
-  inline void TypeConstructor::created_type_set(const type::Type* e)
+// FIXED by forest_b
+inline void TypeConstructor::created_type_set(const type::Type* e)
 {
   new_type_ = e;
 }
@@ -19,6 +19,5 @@ inline const type::Type* TypeConstructor::created_type_get() const
 {
   return new_type_;
 }
-  
-} // namespace ast
 
+} // namespace ast

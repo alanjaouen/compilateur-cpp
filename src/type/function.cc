@@ -39,7 +39,6 @@ namespace type
   // FIXED by forest_b
   bool Function::compatible_with(const Type&) const
   {
-    throw "ceci n'es pas acceptable";
     return false;
   }
   

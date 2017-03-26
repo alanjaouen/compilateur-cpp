@@ -9,18 +9,15 @@
 
 namespace ast
 {
+// FIXED by forest_b
+inline void Typable::type_set(const type::Type* e)
+{
+  type_ = e;
+}
 
-  // FIXED by forest_b
-  inline void Typable::type_set(const type::Type* e)
-  {
-    type_ = e;
-  }
+inline const type::Type* Typable::type_get() const
+{
+  return type_;
+}
 
-  inline const type::Type* Typable::type_get() const
-  {
-    return type_;
-  }
-
-  
 } // namespace ast
-

@@ -5,41 +5,37 @@
 
 #pragma once
 
-#include <type/fwd.hh>
 #include <ast/fwd.hh>
+#include <type/fwd.hh>
 
 namespace ast
 {
+/** \class ast::Typable
+ ** \brief Hold a type information.
+ **
+ ** A Typable node holds a type information (type::Type) about
+ ** this node.  This can be:
+ ** \li the type of the node itself, if it is a Exp or a Ty, or
+ ** \li the type of of the declared object, in case of a Dec.
+ */
 
+class Typable
+{
+public:
+  Typable() = default;
+  Typable(const type::Type* type);
+  ~Typable() = default;
 
-  /** \class ast::Typable
-   ** \brief Hold a type information.
-   **
-   ** A Typable node holds a type information (type::Type) about
-   ** this node.  This can be:
-   ** \li the type of the node itself, if it is a Exp or a Ty, or
-   ** \li the type of of the declared object, in case of a Dec.
-   */
+  void type_set(const type::Type*);
+  const type::Type* type_get() const;
 
-  class Typable
-  {
-  public:
+  virtual void accept(ConstVisitor& v) const = 0;
+  virtual void accept(Visitor& v) = 0;
 
-    Typable() = default;
-    Typable(const type::Type* type);
-    ~Typable() = default;
-
-    void type_set (const type::Type*);
-    const type::Type* type_get () const;
-
-    virtual void accept (ConstVisitor& v) const = 0;
-    virtual void accept (Visitor& v) = 0;
-    
-  private:
-    const type::Type* type_ = nullptr;
-  };
+private:
+  const type::Type* type_ = nullptr;
+};
 
 } // namespace ast
 
 #include <ast/typable.hxx>
-
