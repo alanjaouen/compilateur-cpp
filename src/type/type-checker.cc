@@ -152,7 +152,6 @@ namespace type
   }
   void TypeChecker::operator()(ast::FieldVar& e)
   {
-    std::cout<<"/* fieldvar */" <<std::endl;
     type(e.lvalue_get());
     auto ty = dynamic_cast<const Record*>(e.lvalue_get().type_get());
     if (ty == nullptr)
@@ -161,17 +160,9 @@ namespace type
     {
       auto ctype = ty->field_type(e.name_get());
       if (ctype == nullptr)
-      {
-        std::cout<<"/* unknown field */" <<std::endl;
-
         error(e, ("unknown field " + e.name_get().get()));
-      }
       else
-      {
-        std::cout<<"/* know field */" <<std::endl;
-
         type_default(e, ctype);
-      }
     }
   }
 
@@ -180,7 +171,6 @@ namespace type
     type(e.var_get());
     type(e.index_get());
     check_type(e.index_get(), "type mismatch, expected int", Int::instance());
-      std::cout << "/* SubscriptVar */" << std::endl;
     auto gg = dynamic_cast<const Array*>(&e.var_get().type_get()->actual());
     if (!gg)
       error(e," is not a array");
@@ -289,8 +279,6 @@ namespace type
 
     if (!error_)
     {
-  // FIXME: Some code was deleted here.
-      std::cout<< "/*!error_*/"<<std::endl;
       if (! e.left_get().type_get()->compatible_with(*e.right_get().type_get()))
         type_mismatch(e, "right operand", *(e.right_get().type_get()),
         "expected", *(e.left_get().type_get()));
@@ -319,7 +307,6 @@ namespace type
 
   void TypeChecker::operator()(ast::IfExp& e)
   {
-    std::cout << "/* ifexp */" << std::endl;
     type(e.test_get());
     check_type(e.test_get(), "type mismatch", Int::instance());
 //    type(e.then_get())
@@ -336,7 +323,6 @@ namespace type
 
   void TypeChecker::operator()(ast::ArrayExp& e)
   {
-    std::cout << "/* arrayExp */" << std::endl;
     type(e.type_get());
     type(e.l_exp_get());
     type(e.r_exp_get());
@@ -344,17 +330,15 @@ namespace type
     if (!res)
       std::cout << "/* error dynamic cast ArrayExp */" << std::endl;
     else
-      {
-	std::cout << "/* array type check */" << std::endl;
-	check_type(e.l_exp_get(), "type mismatch", Int::instance());
-	check_type(e.r_exp_get(), "type mismatch", res->type_get());
-      }
+    {
+    	check_type(e.l_exp_get(), "type mismatch", Int::instance());
+    	check_type(e.r_exp_get(), "type mismatch", res->type_get());
+    }
     e.type_set(res);
   }
   void TypeChecker::operator()(ast::CallExp& e)
   {
     //FIXME (Alan)
-    std::cout <<" /* CallExp */" << std::endl;
     auto type = e.def_get()->type_get();
     auto arg = dynamic_cast<const Function*>(type);
     if (!arg)
@@ -480,7 +464,6 @@ namespace type
   void
   TypeChecker::operator()(ast::VarDec& e)
   {
-    std::cout << "/*" <<e.name_get() << "*/"<< std::endl;
     // FIXED: caradi_c - Alan
     if (e.init_get())
     {
@@ -513,10 +496,7 @@ namespace type
       e.type_set(e.type_name_get()->type_get());
     }
     else
-    {
-      std::cout<< "ggg" << std::endl;
       e.type_set(&Void::instance());
-    }
   }
 
 
@@ -615,14 +595,6 @@ namespace type
       ptr->field_add(i->name_get(),*i->type_name_get().type_get());
     }
     e.type_set(ptr);
-    std::cout << "/*{ ";
-    for(auto i = ptr->begin(); i != ptr->end(); i++)
-    {
-      std::cout << *i;
-      if ((i+1) != ptr->end())
-        std::cout << ", ";
-    }
-    std::cout << " }*/" << std::endl;    
     e.created_type_set(ptr);
   }
 
