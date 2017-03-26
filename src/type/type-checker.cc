@@ -148,6 +148,7 @@ namespace type
         type_default(e, &String::instance());
       else if (e.name_get() == "int")
         type_default(e, &Int::instance());
+      else
     }
   }
   void TypeChecker::operator()(ast::FieldVar& e)
@@ -164,6 +165,7 @@ namespace type
       else
         type_default(e, ctype);
     }
+    type_default(e, &Void::instance());
   }
 
   void TypeChecker::operator()(ast::SubscriptVar& e)
@@ -282,8 +284,8 @@ namespace type
       if (! e.left_get().type_get()->compatible_with(*e.right_get().type_get()))
         type_mismatch(e, "right operand", *(e.right_get().type_get()),
         "expected", *(e.left_get().type_get()));
-      e.type_set(e.left_get().type_get());
     }
+    e.type_set(&Int::instance());
   }
 
   void
@@ -300,8 +302,8 @@ namespace type
       if (! e.var_get().type_get()->compatible_with(*e.exp_get().type_get()))
         type_mismatch(e, "assigned", *(e.var_get().type_get()),
                       "expected", *(e.exp_get().type_get()));
-      e.type_set(&Void::instance());
     }
+    e.type_set(&Void::instance());
   }
   // FIXME: Some code was deleted here.
 
@@ -385,6 +387,7 @@ namespace type
     check_type(e.hi_get(), "loop bound type mismatch ", Int::instance());
     var_read_only_.insert(&e.vardec_get());
     type(e.body_get());
+    type_default(e, &Void::instance());
   }
   void TypeChecker::operator()(ast::BreakExp& e)
   {
@@ -465,6 +468,7 @@ namespace type
   TypeChecker::operator()(ast::VarDec& e)
   {
     // FIXED: caradi_c - Alan
+    
     if (e.init_get())
     {
     	e.init_get()->accept(*this);
