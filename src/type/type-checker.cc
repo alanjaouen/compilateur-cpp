@@ -363,6 +363,7 @@ void TypeChecker::operator()(ast::ForExp& e)
   check_type(e.hi_get(), "loop bound type mismatch ", Int::instance());
   var_read_only_.insert(&e.vardec_get());
   type(e.body_get());
+  check_type(e.body_get(), "body type is not void", Void::instance());
   type_default(e, &Void::instance());
 }
 void TypeChecker::operator()(ast::BreakExp& e)

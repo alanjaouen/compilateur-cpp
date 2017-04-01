@@ -1,0 +1,7 @@
+/* error : nb field doesn't match */
+
+let
+        type rectype = {name : string , id : int}
+        var rec1 := rectype {name="Name"}
+in
+end

@@ -31,3 +31,10 @@ function-int-return-void.tig: 5
 function-wrong-arg.tig: 5
 if-without-else.tig: 5
 cond-of-while-not-unit.tig: 5
+for-body-not-unit.tig: 5
+function-wrong-nb-args2.tig: 5
+function-wrong-nb-args.tig: 5
+void+int.tig: 5
+void+void.tig: 5 
+bad-nb-field-record2.tig : 5
+bad-nb-field-record.tig : 5
