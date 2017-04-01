@@ -137,7 +137,12 @@ namespace astclone
   void
   Cloner::operator()(const ast::IfExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    const Location& location = e.location_get();
+    Exp* test = recurse(e.test_get());
+    Exp* then = recurse(e.then_get());
+    Exp* telse = recurse(e.else_get());
+    result_= new IfExp(location, test, then, telse);
   }
 
   void
@@ -151,7 +156,11 @@ namespace astclone
   void
   Cloner::operator()(const ast::LetExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    const Location& loc = e.location_get();
+    DecsList* dec = recurse(e.decs_get());
+    Exp* in = recurse(e.seq_get());
+    result_ = new LetExp(loc, dec, in);
   }
 
   void
@@ -231,7 +240,11 @@ namespace astclone
   void
   Cloner::operator()(const ast::StringExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    const Location& location = e.location_get();
+    std::string str = value_get();
+    auto strexp = new StringExp(location, str);
+    result_ = strexp;
   }
 
   void
