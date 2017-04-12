@@ -1,0 +1,7 @@
+## frame module.
+src_libtc_la_SOURCES +=				\
+  %D%/fwd.hh					\
+  %D%/libframe.hh				\
+  %D%/access.hh %D%/access.hxx %D%/access.cc	\
+  %D%/frame.hh %D%/frame.cc
+

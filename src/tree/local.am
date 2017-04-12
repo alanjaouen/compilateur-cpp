@@ -1,0 +1,28 @@
+## tree module.
+EXTRA_DIST += %D%/README.txt %D%/tiger_tree.i
+
+src_libtc_la_SOURCES +=					\
+  %D%/all.hh						\
+  %D%/fwd.hh						\
+  %D%/libtree.hh %D%/libtree.cc				\
+  %D%/trees.hh %D%/trees.cc				\
+  %D%/tree.hh %D%/tree.hxx %D%/tree.cc			\
+  %D%/exp.hh						\
+  %D%/stm.hh						\
+  %D%/cjump.hh %D%/cjump.hxx %D%/cjump.cc		\
+  %D%/label.hh %D%/label.hxx %D%/label.cc		\
+  %D%/name.hh %D%/name.hxx %D%/name.cc			\
+  %D%/binop.hh %D%/binop.hxx %D%/binop.cc		\
+  %D%/const.hh %D%/const.hxx %D%/const.cc		\
+  %D%/iterator.hh %D%/iterator.hxx			\
+  %D%/mem.hh %D%/mem.hxx %D%/mem.cc			\
+  %D%/sxp.hh %D%/sxp.hxx %D%/sxp.cc			\
+  %D%/call.hh %D%/call.cc				\
+  %D%/eseq.hh %D%/eseq.hxx %D%/eseq.cc			\
+  %D%/jump.hh %D%/jump.hxx %D%/jump.cc			\
+  %D%/move.hh %D%/move.hxx %D%/move.cc			\
+  %D%/seq.hh %D%/seq.hxx %D%/seq.cc			\
+  %D%/temp.hh %D%/temp.hxx %D%/temp.cc			\
+  %D%/fragment.hh %D%/fragment.hxx %D%/fragment.cc	\
+  %D%/fragments.hh %D%/fragments.cc			\
+  %D%/visitor.hh %D%/visitor.hxx

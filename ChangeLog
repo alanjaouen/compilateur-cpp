@@ -1,3 +1,124 @@
+2017-04-11  Moray Baruh  <baruh_m@yaka.epita.fr>
+
+	style: translate: clean record exp translation
+
+	* translate/translation.cc: Here.
+
+2017-04-11  Moray Baruh  <baruh_m@yaka.epita.fr>
+
+	style: translation: clean string op exp translation
+
+	* translation.cc: Here.
+
+2017-04-11  Moray Baruh  <baruh_m@yaka.epita.fr>
+
+	style: translation: remove extra spaces before parenthesis
+
+	* translation.cc: Here.
+
+2017-04-11  Moray Baruh  <baruh_m@yaka.epita.fr>
+
+	style: translation: clean up op exp translation
+
+	Remove big switch and goto statements in op exp translation.
+
+	* src/translate/translation.cc: Here.
+
+2017-04-11  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: translate: no space before function parameters
+
+	* src/translate/exp.cc: Here.
+	* src/translate/exp.hh: Here.
+	* src/translate/translation.cc: Here.
+	* src/translate/translator.cc: Here.
+	* src/translate/translator.hh: Here.
+	* src/tree/fragment.cc: Here.
+
+2017-04-11  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: temp: no space before function call
+
+	* src/temp/test-temp.cc: Here.
+
+2017-04-11  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: fix typos
+
+	* src/translate/exp.hh: Here.
+
+2017-04-11  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: tree: constructors should be in .cc
+
+	* src/tree/binop.cc,
+	* src/tree/binop.hxx,
+	* src/tree/cjump.cc,
+	* src/tree/cjump.hxx,
+	* src/tree/const.cc,
+	* src/tree/const.hxx,
+	* src/tree/eseq.cc,
+	* src/tree/eseq.hxx,
+	* src/tree/fragment.cc,
+	* src/tree/fragment.hxx,
+	* src/tree/jump.cc,
+	* src/tree/jump.hxx,
+	* src/tree/label.cc,
+	* src/tree/label.hxx,
+	* src/tree/mem.cc,
+	* src/tree/mem.hxx,
+	* src/tree/move.cc,
+	* src/tree/move.hxx,
+	* src/tree/name.cc,
+	* src/tree/name.hxx,
+	* src/tree/seq.cc,
+	* src/tree/seq.hxx,
+	* src/tree/sxp.cc,
+	* src/tree/sxp.hxx,
+	* src/tree/temp.cc,
+	* src/tree/temp.hxx,
+	* src/tree/tree.cc,
+	* src/tree/tree.hxx: Here.
+
+2017-04-09  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: llvmtranslate: put empty braces on same line
+
+	* src/llvmtranslate/escapes-collector.cc,
+	* src/llvmtranslate/llvm-type-visitor.cc: Here.
+
+2017-04-09  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: llvmtranslate: use empty() method
+
+	* src/llvmtranslate/translator.cc: Here.
+
+2017-04-09  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	style: llvmtranslate: fix typo
+
+	* src/llvmtranslate/escapes-collector.hh: Here.
+
+2017-04-07  Guillaume Marques  <marque_o@yaka.epita.fr>
+
+	configure: remove unnecessary llc prerequisite
+
+	As of d39026aa we no longer use it.
+
+	* configure.ac: Here.
+
+2017-03-03  Etienne Renault  <renault@lrde.epita.fr>
+
+	Bump version number
+
+	* configure.ac: here.
+
+2017-03-03  Etienne Renault  <renault@lrde.epita.fr>
+
+	Version 1.57 for 2019-tc-4.0
+
+	* .last-cl-gen, ChangeLog, NEWS.txt, configure.ac: here.
+
 2017-03-03  Etienne Renault  <renault@lrde.epita.fr>
 
 	Version 1.57 for 2019-tc-4.0
@@ -47784,4 +47905,4 @@ coding: utf-8
 ispell-local-dictionary: "american"
 End:
 
-$Id: e61b063b3ea752e12b03dc30f7c59b28b35a7782 $
+$Id: eeaa26d196db8240240a15e294c99a2fe6e07ba3 $
