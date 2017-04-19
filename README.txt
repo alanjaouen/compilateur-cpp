@@ -1,6 +1,6 @@
 
 Number of suppressed lines, suppressed chunks, average chunks size:
-.                             : 4855 320  15
+.                             : 5486 417  13
     lib                       :  287  14  20
         misc                  :  287  14  20
             scoped-map.hh     :   71   2  35
@@ -9,7 +9,7 @@ Number of suppressed lines, suppressed chunks, average chunks size:
             test-symbol.cc    :    1   1   1
             unique.hxx        :    8   5   1
             variant.hxx       :    3   1   3
-    src                       : 4568 306  14
+    src                       : 5199 403  12
         ast                   : 1551  70  22
             array-exp.cc      :   26   1  26
             array-exp.hh      :   41   1  41
@@ -30,7 +30,7 @@ Number of suppressed lines, suppressed chunks, average chunks size:
             field-var.cc      :   23   1  23
             field-var.hh      :   40   1  40
             field-var.hxx     :   34   1  34
-            function-dec.hh~  :    2   1   2
+            function-dec.hh   :    2   1   2
             if-exp.cc         :   26   1  26
             if-exp.hh         :   49   1  49
             if-exp.hxx        :   34   1  34
@@ -98,6 +98,10 @@ Number of suppressed lines, suppressed chunks, average chunks size:
             pruner.hh         :    9   1   9
             tasks.cc          :   10   2   5
             tasks.hh          :    8   2   4
+        llvmtranslate         :  253  42   6
+            escapes-collector.cc:   43   8   5
+            llvm-type-visitor.cc:    5   4   1
+            translator.cc     :  205  30   6
         object                :  457  74   6
             binder.cc         :   32   3  10
             desugar-visitor.cc:  105  38   2
@@ -120,6 +124,16 @@ Number of suppressed lines, suppressed chunks, average chunks size:
             scantiger.ll      :   18   3   6
             tasks.cc          :    1   1   1
             tiger-parser.cc   :    7   1   7
+        temp                  :   51  16   3
+            identifier.hxx    :   51  16   3
+        translate             :  274  38   7
+            exp.cc            :   47   6   7
+            level.cc          :    3   1   3
+            translation.cc    :  118  10  11
+            translation.hh    :    6   1   6
+            translator.cc     :  100  20   5
+        tree                  :   53   1  53
+            fragment.cc       :   53   1  53
         type                  :  877  67  13
             array.cc          :   15   1  15
             array.hh          :   23   1  23

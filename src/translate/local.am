@@ -1,0 +1,13 @@
+## translate module.
+src_libtc_la_SOURCES +=				\
+  %D%/fwd.hh					\
+  %D%/access.hh %D%/access.hxx %D%/access.cc	\
+  %D%/exp.hh %D%/exp.hxx %D%/exp.cc		\
+  %D%/translation.hh %D%/translation.cc		\
+  %D%/level.hh %D%/level.hxx %D%/level.cc	\
+  %D%/translator.hh %D%/translator.cc		\
+  %D%/libtranslate.cc %D%/libtranslate.hh
+
+EXTRA_DIST += %D%/tiger_translate.i
+
+TASKS += %D%/tasks.hh %D%/tasks.cc

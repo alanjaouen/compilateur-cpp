@@ -23,16 +23,26 @@ namespace ast
 
     /// FunctionDec.
   class FunctionDec : public Dec, public TypeConstructor
+  {
+
+  public:
+    /// Return the list of formals' escapes.
+    std::vector<bool> escapes_get() const
     {
-        public:
-            /** \name Ctor & dtor.
-             ** \{ */
-            /// Construct a FunctionDec node.
-            FunctionDec(const Location& location, const misc::symbol& name,
-                    VarDecs* formals, NameTy* result, Exp* body);
-            /// Destroy a FunctionDec node.
-            virtual ~FunctionDec();
-            /** \} */
+      std::vector<bool> res;
+  // FIXME: Some code was deleted here.
+      return res;
+    }
+
+  public:
+    /** \name Ctor & dtor.
+     ** \{ */
+    /// Construct a FunctionDec node.
+    FunctionDec(const Location& location, const misc::symbol& name,
+                VarDecs* formals, NameTy* result, Exp* body);
+    /// Destroy a FunctionDec node.
+    virtual ~FunctionDec();
+    /** \} */
 
             /**
              * \name Visitors entry point.

@@ -1,0 +1,15 @@
+## temp module.
+src_libtc_la_SOURCES +=				\
+  %D%/fwd.hh					\
+  %D%/identifier.hh %D%/identifier.hxx		\
+  %D%/temp.hh %D%/temp.cc			\
+  %D%/temp-set.hh %D%/temp-set.cc		\
+  %D%/label.hh %D%/label.cc			\
+  %D%/libtemp.hh %D%/libtemp.cc
+
+check_PROGRAMS += %D%/test-temp
+%C%_test_temp_LDADD = src/libtc.la
+
+EXTRA_DIST += %D%/tiger_temp.i
+
+TASKS += %D%/tasks.hh %D%/tasks.cc
