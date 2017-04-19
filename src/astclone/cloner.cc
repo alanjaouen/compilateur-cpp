@@ -24,7 +24,12 @@ namespace astclone
   void
   Cloner::operator()(const ast::ArrayExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    const Location& location = e.location_get();
+    NameTy* type = recurse(e.type_get());
+    Exp* l = recurse(e.l_exp_get());
+    Exp* r = recurse(e.r_exp_get());
+    result_ = new ArrayExp(location, type, l, r);
   }
 
   void
@@ -38,19 +43,33 @@ namespace astclone
   void
   Cloner::operator()(const ast::AssignExp& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_b
+    const Location& location = e.location_get();
+    Var* lvalue = recurse(e.var_get());
+    Exp* exp = recurse(e.exp_get());
+    result_ = new AssignExp(location, lvalue, exp);
   }
 
   void
   Cloner::operator()(const ast::BreakExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    const Location& location = e.location_get();
+    result_ = new BreakExp(location);
   }
 
   void
   Cloner::operator()(const ast::CallExp& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_b
+    const Location& location = e.location_get();
+    misc::symbol name = e.name_get();
+    exps_type* exps = new exps_type();
+    for (auto a : e.seq_get())
+    {
+      exps->push_back(recurse(*a));
+    }
+    result_ = new CallExp(location, name, exps);
   }
 
   void
@@ -109,7 +128,10 @@ namespace astclone
   void
   Cloner::operator()(const ast::FieldVar& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    const Location& location = e.location_get();
+    Var* lvalue = recurse(e.lvalue_get());
+    result_ = new FieldVar(location, lvalue, e.name_get());
   }
 
   void
@@ -220,13 +242,27 @@ namespace astclone
   void
   Cloner::operator()(const ast::RecordTy& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_b
+    const Location& location = e.location_get();
+    fields_type* fields = new fields_type();
+    for (auto a : e.recs_get())
+    {
+      fields->push_back(recurse(*a));
+    }
+    result_ = new RecordTy(location, fields);
   }
 
   void
   Cloner::operator()(const ast::SeqExp& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_b
+    const Location& location = e.location_get();
+    exps_type* exps = new exps_type();
+    for (auto a : e.seq_get())
+    {
+      exps->push_back(recurse(*a));
+    }
+    result_ = new SeqExp(location, exps);
   }
 
   void
@@ -242,7 +278,7 @@ namespace astclone
   {
   // FIXED forest_b
     const Location& location = e.location_get();
-    std::string str = value_get();
+    std::string str = e.value_get();
     auto strexp = new StringExp(location, str);
     result_ = strexp;
   }
@@ -272,7 +308,8 @@ namespace astclone
     const misc::symbol& name = e.name_get();
     NameTy* type_name = recurse(e.type_name_get());
     Exp* init = recurse(e.init_get());
-  // FIXME: Some code was deleted here (Cloned node instantiation).
+  // FIXED forest_b
+    result_ = new VarDec(location, name, type_name, init);
   }
 
   void
@@ -294,19 +331,22 @@ namespace astclone
   void
   Cloner::operator()(const ast::MethodDecs& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    decs_visit<ast::MethodDecs>(e);
   }
 
   void
   Cloner::operator()(const ast::TypeDecs& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    decs_visit<ast::TypeDecs>(e);
   }
 
   void
   Cloner::operator()(const ast::VarDecs& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    decs_visit<ast::VarDecs>(e);
   }
 
 
