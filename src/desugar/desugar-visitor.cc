@@ -29,6 +29,10 @@ namespace desugar
   DesugarVisitor::operator()(const ast::OpExp& e)
   {
   // FIXME: Some code was deleted here.
+    //const std::string str = "42";
+    //parse::Tweast t = parse::Tweast(str);
+    if (e.left_get().type_get() == &type::String::instance())
+      result_ = parse::parse("strcmp(a, b ) "+ str(e.oper_get()) + " 0");    
   }
 
 
@@ -76,6 +80,10 @@ namespace desugar
   DesugarVisitor::operator()(const ast::ForExp& e)
   {
   // FIXME: Some code was deleted here.
+     
+     //parse::tweast t = tweast("let ");
+     //result_ = parse::parse(t);
+
   }
 
 
