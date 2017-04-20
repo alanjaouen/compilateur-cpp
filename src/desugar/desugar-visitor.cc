@@ -29,10 +29,31 @@ namespace desugar
   DesugarVisitor::operator()(const ast::OpExp& e)
   {
   // FIXME: Some code was deleted here.
-    //const std::string str = "42";
-    //parse::Tweast t = parse::Tweast(str);
-    if (e.left_get().type_get() == &type::String::instance())
-      result_ = parse::parse("strcmp(a, b ) "+ str(e.oper_get()) + " 0");    
+    if (e.left_get().type_get() == &type::String::instance()
+      && e.right_get().type_get() == &type::String::instance())
+    {
+      if (e.oper_get() == ast::OpExp::Oper::eq)
+      {   
+        auto res = parse::parse(
+          parse::Tweast() <<"streq(" << recurse(e.left_get()) << "," << recurse(e.right_get()) << ")");
+        result_ = boost::get<ast::Exp*>(res);
+      }
+      else
+      {
+        auto res = parse::parse(
+          parse::Tweast() <<"strcmp(" << recurse(e.left_get()) << "," << recurse(e.right_get()) << ") " << str(e.oper_get()) << " 0");
+        result_ = boost::get<ast::Exp*>(res);
+      }
+    }
+    else
+    {
+      //FIXME call cancerous supertype()
+      const ast::Location& location = e.location_get();
+      ast::Exp* left = recurse(e.left_get());
+      ast::OpExp::Oper oper = e.oper_get();
+      ast::Exp* right = recurse(e.right_get());
+      result_ = new ast::OpExp(location, left, oper, right);
+    }
   }
 
 
