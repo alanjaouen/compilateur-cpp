@@ -220,7 +220,7 @@ namespace astclone
   void
   Cloner::operator()(const ast::ObjectExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // UNFIX
   }
 
   void
@@ -236,7 +236,16 @@ namespace astclone
   void
   Cloner::operator()(const ast::RecordExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    const Location& location = e.location_get();
+    NameTy* name = recurse(e.id_get());
+    fieldinits_type* fields = new fieldinits_type();
+    for (auto a : e.fini_get())
+    {
+      fields->push_back(recurse(*a));
+    }
+
+    result_ = new RecordExp(location, name, fields);
   }
 
   void

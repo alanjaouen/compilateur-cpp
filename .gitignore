@@ -1,7 +1,12 @@
 build-aux/*
 Makefile
 build
-
+*.output
+*.bak
+*.dir
+*.xml
+*.mk
+*.html
 ### Autotools ###
 # http://www.gnu.org/software/automake
 
