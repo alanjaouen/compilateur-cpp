@@ -13,7 +13,6 @@ namespace ast
   /// Escapable.
   class Escapable
   {
-  // FIXME: Some code was deleted here.
   public:
         Escapable();
     /// Destroy a Escapable node.

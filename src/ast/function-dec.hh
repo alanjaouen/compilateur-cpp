@@ -30,7 +30,6 @@ namespace ast
     std::vector<bool> escapes_get() const
     {
       std::vector<bool> res;
-  // FIXME: Some code was deleted here.
       return res;
     }
 

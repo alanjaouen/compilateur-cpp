@@ -10,7 +10,6 @@
 namespace ast
 {
 
-  // FIXME: Some code was deleted here.
 	
   inline bool
   Escapable::is_escaped_get() const
