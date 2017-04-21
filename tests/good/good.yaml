@@ -63,3 +63,5 @@ vardec-in-let.tig: 0
 let-functioncall.tig: 0
 nil-op-reccord.tig: 0
 reccord-op-nil.tig: 0
+string-desugar-eq.tig: 0
+string-desugar-lt.tig: 0
