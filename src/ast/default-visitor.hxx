@@ -88,6 +88,8 @@ void GenDefaultVisitor<Const>::operator()(const_t<RecordExp>& e)
   e.id_get().accept(*this);
   //            e.fini_get().accept(*this);
   // faire une boucle for car le truc est devenu un vector
+  for(auto i: e.fini_get())
+    i->accept(*this);
 }
 
 template <template <typename> class Const>
