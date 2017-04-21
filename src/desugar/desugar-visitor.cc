@@ -46,14 +46,7 @@ namespace desugar
       }
     }
     else
-    {
-      //FIXME call cancerous supertype()
-      const ast::Location& location = e.location_get();
-      ast::Exp* left = recurse(e.left_get());
-      ast::OpExp::Oper oper = e.oper_get();
-      ast::Exp* right = recurse(e.right_get());
-      result_ = new ast::OpExp(location, left, oper, right);
-    }
+      super_type::operator()(e);
   }
 
 
