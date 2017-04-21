@@ -90,21 +90,24 @@ namespace temp
   const typename Identifier<Traits_>::value_type&
   Identifier<Traits_>::value_get() const
   {
-  // FIXME: Some code was deleted here.
+    //FIXED by forest_b
+    return value_;
   }
 
   template <template <typename Tag_> class Traits_>
   const std::string&
   Identifier<Traits_>::prefix_get() const
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    return *prefix_;
   }
 
   template <template <typename Tag_> class Traits_>
   int
   Identifier<Traits_>::rank_get() const
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    return rank_;
   }
 
 
@@ -119,42 +122,52 @@ namespace temp
   bool
   Identifier<Traits_>::operator==(const Identifier<Traits_>& rhs) const
   {
-  // FIXME: Some code was deleted here.
+   // FIXED forest_b
+    return rank_get() == rhs.rank_get()
+      && boost::apply_visitor(IdentifierEqualToVisitor(), value_, rhs.value_get());
   }
 
   template <template <typename Tag_> class Traits_>
   bool
   Identifier<Traits_>::operator!=(const Identifier<Traits_>& rhs) const
   {
-  // FIXME: Some code was deleted here.
+    // FIXED by forest_b
+    return !(rank_get() == rhs.rank_get()
+             && boost::apply_visitor(IdentifierEqualToVisitor(), value_, rhs.value_get()));
+
   }
 
   template <template <typename Tag_> class Traits_>
   bool
   Identifier<Traits_>::operator<(const Identifier<Traits_>& rhs) const
   {
-  // FIXME: Some code was deleted here.
+    // FIXED by forest_b
+    return rank_get() < rhs.rank_get() && boost::apply_visitor(IdentifierLessThanVisitor(), value_, rhs.value_get());
   }
 
   template <template <typename Tag_> class Traits_>
   bool
   Identifier<Traits_>::operator<=(const Identifier<Traits_>& rhs) const
   {
-  // FIXME: Some code was deleted here.
+    // FIXED by forest_b
+    return *this < rhs || *this == rhs;
   }
 
   template <template <typename Tag_> class Traits_>
   bool
   Identifier<Traits_>::operator>(const Identifier<Traits_>& rhs) const
   {
-  // FIXME: Some code was deleted here.
+  // FIXED by forest_b
+    return rank_get() > rhs.rank_get() && boost::apply_visitor(IdentifierLessThanVisitor(), rhs.value_get(), value_);
+
   }
 
   template <template <typename Tag_> class Traits_>
   bool
   Identifier<Traits_>::operator>=(const Identifier<Traits_>& rhs) const
   {
-  // FIXME: Some code was deleted here.
+    // FIXED by forest_b
+    return *this > rhs || *this == rhs;
   }
 
 
@@ -162,6 +175,22 @@ namespace temp
   | Variant visitor.  |
   `------------------*/
 
-  // FIXME: Some code was deleted here.
+  // FIXED ? forest_b
+  template <template <typename Elt_> class Cmp_>
+  template <typename T, typename U>
+  bool  IdentifierCompareVisitor<Cmp_>::operator()(const T&, const U&) const
+  {
+    //FIXME
+  }
 
+  template <template <typename Elt_> class Cmp_>
+  template <typename T>
+  bool  IdentifierCompareVisitor<Cmp_>::operator()(const T& lhs, const T& rhs) const
+  {
+    //FIXME
+    auto cmp = Cmp_<T>();
+    return cmp(lhs, rhs);
+  }
+
+  
 } // namespace temp
