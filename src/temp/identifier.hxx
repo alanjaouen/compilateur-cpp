@@ -58,17 +58,26 @@ namespace temp
 
   template <template <typename Tag_> class Traits_>
   Identifier<Traits_>::Identifier(const std::string& str)
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    : value_(str)
+    , prefix_(&Traits_<misc::symbol>::prefix)
+    , rank_(Traits_<misc::symbol>::rank)
   {}
 
   template <template <typename Tag_> class Traits_>
   Identifier<Traits_>::Identifier(const char* str)
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    : value_(str)
+    , prefix_(&Traits_<misc::symbol>::prefix)
+    , rank_(Traits_<misc::symbol>::rank)
   {}
 
   template <template <typename Tag_> class Traits_>
   Identifier<Traits_>::Identifier(const Identifier<Traits_>& id)
   // FIXME: Some code was deleted here.
+    : value_(id.value_get())
+    , prefix_(&id.prefix_get())
+    , rank_(id.rank_get())
   {}
 
 

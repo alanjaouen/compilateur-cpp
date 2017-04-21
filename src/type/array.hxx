@@ -16,12 +16,12 @@ inline const Type& Array::type_get() const
   return type_;
 }
 
-inline void Array::accept(ConstVisitor& v) const
+inline void Array::accept(ConstVisitor&) const
 {
   // v(*this);
 }
 /// Accept a non-const visitor \a v.
-inline void Array::accept(Visitor& v)
+inline void Array::accept(Visitor&)
 {
   // v(*this);
 }
