@@ -1,81 +1,99 @@
+src/ast/function-dec.hh
+src/llvmtranslate/escapes-collector.cc
+src/llvmtranslate/escapes-collector.cc
+src/llvmtranslate/escapes-collector.cc
+src/llvmtranslate/escapes-collector.cc
+src/llvmtranslate/escapes-collector.cc
+src/llvmtranslate/escapes-collector.cc
+src/llvmtranslate/escapes-collector.cc
+src/llvmtranslate/escapes-collector.cc
+src/llvmtranslate/llvm-type-visitor.cc
+src/llvmtranslate/llvm-type-visitor.cc
+src/llvmtranslate/llvm-type-visitor.cc
+src/llvmtranslate/llvm-type-visitor.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
+src/llvmtranslate/translator.cc
 
-[]  lib/misc/test-symbol.cc
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
+src/temp/identifier.hxx
 
-BINDER:
-[]  src/bind/binder.cc
-[]  src/bind/binder.hh
-[]  src/bind/binder.hxx
-
-AST:
-[]  src/ast/pretty-printer.cc
-[x]  src/ast/escapable.cc
-[x]  src/ast/escapable.hh
-[x]  src/ast/escapable.hxx
-[x]  src/ast/typable.cc
-[x]  src/ast/typable.hh
-[x]  src/ast/typable.hxx
-[x]  src/ast/type-constructor.cc
-[x]  src/ast/type-constructor.hh
-[x]  src/ast/type-constructor.hxx
-
-OBJECT:
-[]  src/object/binder.cc
-[]  src/object/libobject.cc
-[]  src/object/libobject.hh
-[]  src/object/tasks.cc
-[]  src/object/desugar-visitor.cc
-[]  src/object/overfun-binder.cc
-[]  src/object/overfun-binder.hh
-[]  src/object/overfun-type-checker.cc
-[]  src/object/overfun-type-checker.hh
-[]  src/object/renamer.cc
-[]  src/object/type-checker.cc
-
-
-[]  src/astclone/cloner.cc
-
-[]  src/callgraph/call-graph-visitor.cc
-
-[]  src/desugar/bounds-checking-visitor.cc
-[]  src/desugar/bounds-checking-visitor.hh
-[]  src/desugar/desugar-visitor.cc
-[]  src/desugar/libdesugar.cc
-[]  src/desugar/tasks.cc
-[]  src/desugar/tasks.hh
-
-[]  src/inlining/inliner.cc
-[]  src/inlining/inliner.hh
-[]  src/inlining/pruner.cc
-[]  src/inlining/pruner.hh
-[]  src/inlining/tasks.cc
-[]  src/inlining/tasks.hh
-
-[]  src/overload/binder.cc
-[]  src/overload/type-checker.cc
-[]  src/overload/type-checker.hh
-
-
-TYPE:
-[]  src/type/array.cc
-[]  src/type/array.hh
-[]  src/type/array.hxx
-[]  src/type/attribute.hxx
-[~]  src/type/builtin-types.cc
-[~]  src/type/builtin-types.hh
-[]  src/type/class.cc
-[]  src/type/class.hh
-[]  src/type/default-visitor.hxx
-[]  src/type/function.cc
-[]  src/type/function.hh
-[]  src/type/method.cc
-[]  src/type/method.hh
-[]  src/type/named.cc
-[]  src/type/named.hxx
-[]  src/type/nil.cc
-[]  src/type/pretty-printer.cc
-[]  src/type/record.cc
-[]  src/type/record.hh
-[]  src/type/type-checker.cc
-[]  src/type/type-checker.hh
-[]  src/type/type-checker.hxx
-[]  src/type/type.hxx
+src/translate/exp.cc
+src/translate/exp.cc
+src/translate/exp.cc
+src/translate/exp.cc
+src/translate/exp.cc
+src/translate/exp.cc
+src/translate/level.cc
+src/translate/translation.cc
+src/translate/translation.cc
+src/translate/translation.cc
+src/translate/translation.cc
+src/translate/translation.cc
+src/translate/translation.cc
+src/translate/translation.cc
+src/translate/translation.cc
+src/translate/translation.cc
+src/translate/translation.cc
+src/translate/translation.hh
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc
+src/translate/translator.cc  
+src/translate/translator.cc  
+src/tree/fragment.cc  
