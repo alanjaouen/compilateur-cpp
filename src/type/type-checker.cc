@@ -207,7 +207,10 @@ void TypeChecker::operator()(ast::RecordExp& e)
   e.id_get().accept(*this);
   auto named = dynamic_cast<const Named*>(e.id_get().def_get()->type_get());
   auto res = dynamic_cast<const Record*>(named->type_get());
-  /*for (auto i : res->fields_get())
+  if (res->fields_get().size() != e.fini_get().size())
+    error(e, "record number fields mismatch");
+
+/*for (auto i : res->fields_get())
     std::cout << i.name_get() << '\n';
   std::cout << std::endl;*/
   e.type_set(res);
@@ -321,6 +324,9 @@ void TypeChecker::operator()(ast::CallExp& e)
   auto arg = dynamic_cast<const Function*>(type);
   if (!arg)
     error(e, "function is not declared");
+  auto formals = (arg->formals_get());
+  if (formals.fields_get().size() != e.seq_get().size())
+    error(e, "wrong number of arguments");
   auto it = arg->formals_get().begin();
   auto end = arg->formals_get().end();
   for (auto& exp : e.seq_get())
@@ -335,6 +341,7 @@ void TypeChecker::operator()(ast::CallExp& e)
   }
   if (it != end)
     error(e, "missing argument");
+  
   e.type_set(&arg->result_get());
 }
 void TypeChecker::operator()(ast::LetExp& e)
@@ -440,10 +447,8 @@ void TypeChecker::operator()(ast::VarDec& e)
   {
     e.init_get()->accept(*this);
 
-    if (
-      !e
-         .type_name_get()) /* pas de type specifier on affecte automatiquement
-                              le type */
+    if (!e.type_name_get()) /* pas de type specifier on affecte automatiquement
+                               le type */
     {
       if (auto nil = to_nil(*e.init_get()->type_get()))
         error(e, "initialization is nil with no type specifier");
@@ -476,9 +481,9 @@ void TypeChecker::operator()(ast::VarDec& e)
                     *e.type_name_get()->def_get()->type_get(),
                     "variable initialization", *(e.init_get()->type_get()));
   }
-  else if (
-    e.type_name_get()) /*Si c'est ni un type primitif, ni un type creer, ni un
-                          sans type*/
+  else if (e.type_name_get()) /*Si c'est ni un type primitif, ni un type creer,
+                                 ni un
+                                 sans type*/
   {
     e.type_name_get()->accept(*this);
     e.type_set(e.type_name_get()->type_get());
