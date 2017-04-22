@@ -74,7 +74,7 @@ namespace temp
 
   template <template <typename Tag_> class Traits_>
   Identifier<Traits_>::Identifier(const Identifier<Traits_>& id)
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
     : value_(id.value_get())
     , prefix_(&id.prefix_get())
     , rank_(id.rank_get())
@@ -85,14 +85,25 @@ namespace temp
   std::ostream&
   Identifier<Traits_>::dump(std::ostream& ostr) const
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    ostr << "rank: " << rank_get()
+         << " prefix: " << *prefix_
+         << " value: " << boost::get<misc::symbol>(value_)
+         << std::endl;
   }
 
   template <template <typename Tag_> class Traits_>
   std::string
   Identifier<Traits_>::string_get() const
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    std::string res = "rank: ";
+    res += rank_;
+    res += " prefix: ";
+    res += prefix_get();
+    res += " value: ";
+    res += boost::get<misc::symbol>(value_);
+    return res;
   }
 
   template <template <typename Tag_> class Traits_>
@@ -124,7 +135,10 @@ namespace temp
   Identifier<Traits_>&
   Identifier<Traits_>::operator=(const Identifier<Traits_>& rhs)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    value_ = rhs.value_;
+    rank_ = rhs.rank_;
+    prefix_ = rhs.prefix_;
   }
 
   template <template <typename Tag_> class Traits_>
