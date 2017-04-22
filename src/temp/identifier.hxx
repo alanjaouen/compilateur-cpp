@@ -59,18 +59,14 @@ namespace temp
   template <template <typename Tag_> class Traits_>
   Identifier<Traits_>::Identifier(const std::string& str)
   // FIXED forest_b
-    : value_(str)
-    , prefix_(&Traits_<misc::symbol>::prefix)
-    , rank_(Traits_<misc::symbol>::rank)
-  {}
+    : Identifier(misc::symbol(str))
+  {  }
 
   template <template <typename Tag_> class Traits_>
   Identifier<Traits_>::Identifier(const char* str)
   // FIXED forest_b
-    : value_(str)
-    , prefix_(&Traits_<misc::symbol>::prefix)
-    , rank_(Traits_<misc::symbol>::rank)
-  {}
+    : Identifier(misc::symbol(str))
+  {  }
 
   template <template <typename Tag_> class Traits_>
   Identifier<Traits_>::Identifier(const Identifier<Traits_>& id)
@@ -86,10 +82,7 @@ namespace temp
   Identifier<Traits_>::dump(std::ostream& ostr) const
   {
   // FIXED forest_b
-    ostr << "rank: " << rank_get()
-         << " prefix: " << *prefix_
-         << " value: " << boost::get<misc::symbol>(value_)
-         << std::endl;
+    ostr << boost::get<misc::symbol>(value_);
   }
 
   template <template <typename Tag_> class Traits_>
@@ -165,7 +158,7 @@ namespace temp
   Identifier<Traits_>::operator<(const Identifier<Traits_>& rhs) const
   {
     // FIXED by forest_b
-    return rank_get() < rhs.rank_get() && boost::apply_visitor(IdentifierLessThanVisitor(), value_, rhs.value_get());
+    return rank_get() < rhs.rank_get() || boost::apply_visitor(IdentifierLessThanVisitor(), value_, rhs.value_get());
   }
 
   template <template <typename Tag_> class Traits_>
@@ -181,7 +174,7 @@ namespace temp
   Identifier<Traits_>::operator>(const Identifier<Traits_>& rhs) const
   {
   // FIXED by forest_b
-    return rank_get() > rhs.rank_get() && boost::apply_visitor(IdentifierLessThanVisitor(), rhs.value_get(), value_);
+    return rank_get() > rhs.rank_get() && !boost::apply_visitor(IdentifierLessThanVisitor(), value_, rhs.value_);
 
   }
 
@@ -204,13 +197,14 @@ namespace temp
   bool  IdentifierCompareVisitor<Cmp_>::operator()(const T&, const U&) const
   {
     //FIXME
+    return false;
   }
 
   template <template <typename Elt_> class Cmp_>
   template <typename T>
   bool  IdentifierCompareVisitor<Cmp_>::operator()(const T& lhs, const T& rhs) const
   {
-    //FIXME
+    //FIXED forest_b
     auto cmp = Cmp_<T>();
     return cmp(lhs, rhs);
   }
