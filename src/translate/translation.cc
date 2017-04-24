@@ -56,7 +56,8 @@ namespace translate
   rExp
   int_exp(int i)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    return new Ex(new tree::Const(i));
   }
 
   rExp
