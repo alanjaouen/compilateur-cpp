@@ -21,13 +21,34 @@ namespace translate
   tree::rExp
   Cx::un_ex()
   {
-  // FIXME: Some code was deleted here.
+    temp::Temp result;
+    temp::Label t;
+    temp::Label f;
+    temp::Label join;
+
+    tree::rSeq s = new tree::Seq
+    {
+      this->un_cx(t, f),
+      new tree::Label(t),
+      new tree::Move(new tree::Temp(result), new tree::Const(1)),
+      new tree::Jump(new tree::Name(join)),
+      new tree::Label(f),
+      new tree::Move(new tree::Temp(result), new tree::Const(0)),
+      new tree::Label(join)
+    };
+    return new tree::Eseq(s, new tree::Temp(result));
+
+
+// FIXED forest_b
   }
 
   tree::rStm
   Cx::un_nx()
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_b
+    return Nx(new tree::Seq(
+                new tree::Sxp(left_),
+                new tree::Sxp(right_))).un_nx();
   }
 
   tree::rStm
@@ -60,7 +81,7 @@ namespace translate
   tree::rStm
   Ex::un_nx()
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_b
     return Nx(
               new tree::Sxp(exp_)).un_nx();
   }

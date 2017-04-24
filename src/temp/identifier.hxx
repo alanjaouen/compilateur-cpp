@@ -83,6 +83,7 @@ namespace temp
   {
   // FIXED forest_b
     ostr << boost::get<misc::symbol>(value_);
+    return ostr;
   }
 
   template <template <typename Tag_> class Traits_>
@@ -132,6 +133,7 @@ namespace temp
     value_ = rhs.value_;
     rank_ = rhs.rank_;
     prefix_ = rhs.prefix_;
+    return *this;
   }
 
   template <template <typename Tag_> class Traits_>
