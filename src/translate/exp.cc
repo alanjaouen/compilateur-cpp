@@ -53,13 +53,16 @@ namespace translate
   tree::rExp
   Ex::un_ex()
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    return exp_;
   }
 
   tree::rStm
   Ex::un_nx()
   {
   // FIXME: Some code was deleted here.
+    return Nx(
+              new tree::Sxp(exp_)).un_nx();
   }
 
   tree::rStm
