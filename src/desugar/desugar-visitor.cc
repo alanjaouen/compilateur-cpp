@@ -95,15 +95,14 @@ namespace desugar
   {
   // FIXED : by Alan
 
-
-
     auto res = parse::parse(
       parse::Tweast() <<"let " <<
-     " var lo := " << recurse(e.vardec_get().init_get()) <<
-     " var hi := " << recurse(e.hi_get()) <<
-     " var "<< e.vardec_get().name_get() << " := lo " <<
-     "in if "<< e.vardec_get().name_get() << " <= hi then while 1 do (" << recurse(e.body_get()) <<
-     "; if "<< e.vardec_get().name_get() << " = hi then break; "<< e.vardec_get().name_get() << " := "<< e.vardec_get().name_get() << " + 1 ) end");
+      " var lo := " << recurse(e.vardec_get().init_get()) <<
+      " var "<< e.vardec_get().name_get() << " := lo " <<
+      " var hi := " << recurse(e.hi_get()) <<
+      "in if "<< e.vardec_get().name_get() << " <= hi then while 1 do (" << recurse(e.body_get()) <<
+      "; if "<< e.vardec_get().name_get() << " = hi then break; "<< e.vardec_get().name_get() <<
+      " := "<< e.vardec_get().name_get() << " + 1 ) end");
 
     result_ = boost::get<ast::Exp*>(res);
   }
