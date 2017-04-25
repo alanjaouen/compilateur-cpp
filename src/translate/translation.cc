@@ -64,8 +64,8 @@ namespace translate
   string_exp(const std::string& s, tree::Fragment*& f)
   {
   // FIXED: alan et clyde 
-    f = new DataFrag(new Identifier(), s);
-    return new Ex(new tree::Name(f.label_get()));
+    // f = new DataFrag(new Identifier(), s);
+    //return new Ex(new tree::Name(f->label_get()));
   }
 
   rExp

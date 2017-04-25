@@ -169,7 +169,24 @@ namespace translate
   tree::rStm
   Ix::un_nx()
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    temp::Temp result;
+    temp::Label t;
+    temp::Label f;
+    temp::Label join;
+
+    tree::rSeq s = new tree::Seq
+    {
+      cond_->un_cx(t, f),
+      new tree::Label(t),
+      iftrue_->un_nx(),
+      new tree::Jump(new tree::Name(join)),
+        new tree::Label(f),
+        iffalse_->un_nx(),
+       new tree::Label(join)
+    };
+    return s;
+
   }
 
   tree::rStm
