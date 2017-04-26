@@ -170,7 +170,6 @@ namespace translate
   Ix::un_nx()
   {
   // FIXED forest_b
-    temp::Temp result;
     temp::Label t;
     temp::Label f;
     temp::Label join;
@@ -192,7 +191,24 @@ namespace translate
   tree::rStm
   Ix::un_cx(const temp::Label& t_outer, const temp::Label& f_outer)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    temp::Temp result;
+    temp::Label t;
+    temp::Label f;
+    temp::Label join;
+
+    tree::rSeq s = new tree::Seq
+    {
+      cond_->un_cx(t, f),
+      new tree::Label(t),
+      iftrue_->un_nx(),
+        new tree::Label(f),
+        iffalse_->un_nx(),
+       new tree::Label(join)
+    };
+    return s;
+
+    
   }
 
   std::ostream&
