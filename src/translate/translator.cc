@@ -67,7 +67,8 @@ namespace translate
     std::vector<rExp> res;
     for (const T* i : es)
       {
-  // FIXME: Some code was deleted here.
+        // FIXED forest_b
+        res.push_back(translate(*i));
       }
     return res;
   }
@@ -86,12 +87,16 @@ namespace translate
   void
   Translator::operator()(const ast::FieldVar& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    const type::Record* type = dynamic_cast<const type::Record*>(e.lvalue_get().type_get());
+      
+    exp_ = field_var(translate(e.lvalue_get()), type->field_index(e.name_get()));
   }
   void
   Translator::operator()(const ast::SubscriptVar& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    exp_ = subscript_var(translate(e.var_get()), translate(e.index_get()));
   }
 
   void
@@ -112,25 +117,34 @@ namespace translate
   void
   Translator::operator()(const ast::IntExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    exp_ = int_exp(e.value_get());
   }
 
   void
   Translator::operator()(const ast::StringExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    tree::Fragment* f = nullptr; 
+    exp_ = string_exp(e.value_get(), f);
+    fragments_->push_back(f);
   }
 
   void
   Translator::operator()(const ast::RecordExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    auto es = translate(e.fini_get());
+    exp_ = record_exp(es);
   }
 
   void
   Translator::operator()(const ast::CallExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    auto vect = translate(e.seq_get());
+
+    exp_ = call_exp(fun_label_[e.def_get()], vect);
   }
 
   void
@@ -138,45 +152,60 @@ namespace translate
   {
     rExp l = translate(e.left_get());
     rExp r = translate(e.right_get());
-
-  // FIXME: Some code was deleted here (The translation depends upon the type of the arguments).
+    exp_ = op_exp(e.oper_get(), l, r);
+  // FIXED: Some code was deleted here (The translation depends upon the type of the arguments).
   }
 
   void
   Translator::operator()(const ast::SeqExp& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_B
+    auto vect = translate(e.seq_get());
+    exp_ = seq_exp(vect);
   }
 
   void
   Translator::operator()(const ast::AssignExp& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_b
+    auto src = translate(e.var_get());
+    auto dst = translate(e.exp_get());
+    exp_ = assign_exp(dst, src);
   }
 
   void
   Translator::operator()(const ast::IfExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    auto test = translate(e.test_get());
+    auto then_clause = translate(e.then_get());
+    auto else_clause = translate(*e.else_get()); // pay attention if else doesn't exist
+    exp_ = if_exp(test, then_clause, else_clause);
   }
 
   void
   Translator::operator()(const ast::WhileExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    temp::Label l;
+    loop_end_label_[&e] =  l;
+    exp_ = while_exp(translate(e.test_get()), translate(e.body_get()), l);
+    
   }
 
 
   void
   Translator::operator()(const ast::ForExp& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_b
+    unreachable();
   }
 
   void
   Translator::operator()(const ast::BreakExp& e)
   {
-  // FIXME: Some code was deleted here.
+    // FIXED forest_b
+    exp_ = break_exp(loop_end_label_[e.loop_get()]);
   }
 
   void
@@ -190,6 +219,7 @@ namespace translate
     // Chain the declarations (initializations) with the body.
     bool void_instance;
   // FIXME: Some code was deleted here (Initialize void_instance).
+    
     if (void_instance)
       exp_ = seq_exp(exps_.top());
     else
@@ -200,7 +230,8 @@ namespace translate
   void
   Translator::operator()(const ast::ArrayExp& e)
   {
-  // FIXME: Some code was deleted here.
+  // FIXED forest_b
+    exp_ = array_exp(translate(e.l_exp_get()), translate(e.r_exp_get()));
   }
 
 
