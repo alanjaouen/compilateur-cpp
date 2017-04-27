@@ -130,25 +130,27 @@ namespace translate
     switch (oper)
       {
       case ast::OpExp::add:
-        new Ex(new tree::Binop(tree::Binop::add, left->un_ex(), right->un_ex()));
+        return new Ex(new tree::Binop(tree::Binop::add, left->un_ex(), right->un_ex()));
       case ast::OpExp::sub:
-        new Ex(new tree::Binop(tree::Binop::sub, left->un_ex(), right->un_ex()));
+        return new Ex(new tree::Binop(tree::Binop::sub, left->un_ex(), right->un_ex()));
       case ast::OpExp::mul:
-        new Ex(new tree::Binop(tree::Binop::mul, left->un_ex(), right->un_ex()));
+        return new Ex(new tree::Binop(tree::Binop::mul, left->un_ex(), right->un_ex()));
       case ast::OpExp::div:
-        new Ex(new tree::Binop(tree::Binop::div, left->un_ex(), right->un_ex()));
+        return new Ex(new tree::Binop(tree::Binop::div, left->un_ex(), right->un_ex()));
       case ast::OpExp::eq:
-        new Cx(tree::Cjump::eq, left->un_ex(), right->un_ex());
+        return new Cx(tree::Cjump::eq, left->un_ex(), right->un_ex());
       case ast::OpExp::ne:
-        new Cx(tree::Cjump::ne, left->un_ex(), right->un_ex());
+        return new Cx(tree::Cjump::ne, left->un_ex(), right->un_ex());
       case ast::OpExp::lt:
-        new Cx(tree::Cjump::lt, left->un_ex(), right->un_ex());
+        return new Cx(tree::Cjump::lt, left->un_ex(), right->un_ex());
       case ast::OpExp::le:
-        new Cx(tree::Cjump::le, left->un_ex(), right->un_ex());
+        return new Cx(tree::Cjump::le, left->un_ex(), right->un_ex());
       case ast::OpExp::gt:
-        new Cx(tree::Cjump::gt, left->un_ex(), right->un_ex());
+        return new Cx(tree::Cjump::gt, left->un_ex(), right->un_ex());
       case ast::OpExp::ge:
-        new Cx(tree::Cjump::ge, left->un_ex(), right->un_ex());
+        return new Cx(tree::Cjump::ge, left->un_ex(), right->un_ex());
+      default:
+        unreachable();
       }
   }
 

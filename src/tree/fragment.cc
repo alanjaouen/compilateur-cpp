@@ -83,7 +83,13 @@ namespace tree
   ProcFrag::dump(std::ostream& o) const
   {
   // FIXME: Some code was deleted here.
-
+    o << "# Routine: _main" << misc::iendl
+      << "label main" << misc::iendl 
+      << "# Prologue" << misc::iendl
+      << "#body"  << misc::iendl
+      << *body_ << misc::iendl
+      << "#epilogue" << misc::iendl
+      << "label end" << misc::iendl;
     return o;
   }
 
