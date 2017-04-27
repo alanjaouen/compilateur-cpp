@@ -21,7 +21,7 @@ namespace translate
   tree::rExp
   Cx::un_ex()
   {
-    temp::Temp result;
+    temp::Temp result = temp::Temp();
     temp::Label t;
     temp::Label f;
     temp::Label join;
@@ -148,7 +148,7 @@ namespace translate
   {
     // The value computed by both branches is wanted, save it in
     // RESULT.
-    temp::Temp result;
+    temp::Temp result = temp::Temp();
     temp::Label t;
     temp::Label f;
     temp::Label join;
@@ -192,17 +192,15 @@ namespace translate
   Ix::un_cx(const temp::Label& t_outer, const temp::Label& f_outer)
   {
   // FIXED forest_b
-    temp::Temp result;
-    temp::Label t;
-    temp::Label f;
+    temp::Temp result = temp::Temp();
     temp::Label join;
 
     tree::rSeq s = new tree::Seq
     {
-      cond_->un_cx(t, f),
-      new tree::Label(t),
+      cond_->un_cx(t_outer, f_outer),
+      new tree::Label(t_outer),
       iftrue_->un_nx(),
-        new tree::Label(f),
+        new tree::Label(f_outer),
         iffalse_->un_nx(),
        new tree::Label(join)
     };

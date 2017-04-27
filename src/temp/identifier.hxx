@@ -82,7 +82,7 @@ namespace temp
   Identifier<Traits_>::dump(std::ostream& ostr) const
   {
   // FIXED forest_b
-    ostr << boost::get<misc::symbol>(value_);
+    ostr << *prefix_ << value_;  // boost::get<misc::symbol>(value_);
     return ostr;
   }
 

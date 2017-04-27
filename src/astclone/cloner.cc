@@ -186,9 +186,10 @@ namespace astclone
   }
 
   void
-  Cloner::operator()(const ast::MethodCallExp& e)
+  Cloner::operator()(const ast::MethodCallExp&)
   {
   // FIXME: Some code was deleted here.
+    throw "unreachable";
   }
 
   void
@@ -218,9 +219,10 @@ namespace astclone
   }
 
   void
-  Cloner::operator()(const ast::ObjectExp& e)
+  Cloner::operator()(const ast::ObjectExp&)
   {
   // UNFIX
+    throw "unreachable";
   }
 
   void
