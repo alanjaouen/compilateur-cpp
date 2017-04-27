@@ -82,7 +82,7 @@ namespace translate
     int record_size = fields.size() * frame::word_size;
     rExp malloc_call = call_exp("malloc", int_exp(record_size));
     init->emplace_back(new tree::Move(rec, malloc_call->un_ex()));
-
+\
   // FIXME: Some code was deleted here (Issue a move for each field of the record).
 
     return new Ex(new tree::Eseq(init, rec));
@@ -99,6 +99,7 @@ namespace translate
   rExp
   call_exp(const temp::Label& label, std::vector<rExp> args)
   {
+    
   // FIXME: Some code was deleted here.
   }
 
@@ -144,14 +145,23 @@ namespace translate
   // Try to produce simple code for simple cases.
   rExp
   eseq_exp(std::vector<rExp>& exps)
-  {
-  // FIXME: Some code was deleted here.
+  {// FIXED by caradi_c
+    if (exps.size() != 0)
+      {
+	std::vector<tree::rTree> eres;
+	for (auto i : exps)
+	  eres.emplace_back(i->un_nx());
+	rExp res = exps.back();
+        tree::Eseq* e = new tree::Eseq(new tree::Seq(eres), res->un_ex());
+	return new Ex(e);
+      }
   }
 
   rExp
   assign_exp(rExp dst, rExp src)
-  {
-  // FIXME: Some code was deleted here.
+  {// FIXMED by caradi_c
+    tree::rMove a = new tree::Move(dst->un_ex(), src->un_ex());
+    return new Nx(a);
   }
 
   rExp
