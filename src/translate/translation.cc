@@ -121,8 +121,6 @@ namespace translate
   // FIXME: Some code was deleted here.
   }
 
-
-
   // Avoid useless structures.
   rExp
   seq_exp(std::vector<rExp>& exps)
@@ -175,7 +173,13 @@ namespace translate
   rExp
   while_exp(rExp test, rExp body, const temp::Label& ldone)
   {
-  // FIXME: Some code was deleted here.
+    temp::Label start;
+    tree::Seq* while_stm = new tree::Seq
+      {
+	new tree::Label(start),
+	body->un_nx(),
+	Cx(tree::Cjump::ne, test->un_ex(), new tree::Const(0)).un_cx(ldone, start)
+      };
   }
 
   // FIXME: Some code was deleted here (for_exp -- "for" loop translation).
