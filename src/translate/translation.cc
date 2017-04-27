@@ -38,8 +38,14 @@ namespace translate
 
   rExp
   subscript_var(rExp var_exp, rExp index_exp)
-  {
-  // FIXME: Some code was deleted here.
+  {// FIXMED by caradi_c
+    tree::rExp address = new tree::Binop(tree::Binop::add,
+                                         var_exp->un_ex(),
+                                         new tree::Binop(tree::Binop::mul,
+                                                         new tree::Const
+                                                         (frame::word_size),
+                                                         index_exp->un_ex()));
+    return new Ex(new tree::Mem(address));
   }
 
 
@@ -149,12 +155,12 @@ namespace translate
   {// FIXED by caradi_c
     if (exps.size() != 0)
       {
-	std::vector<tree::rTree> eres;
-	for (auto i : exps)
-	  eres.emplace_back(i->un_nx());
-	rExp res = exps.back();
+        std::vector<tree::rTree> eres;
+        for (auto i : exps)
+          eres.emplace_back(i->un_nx());
+        rExp res = exps.back();
         tree::Eseq* e = new tree::Eseq(new tree::Seq(eres), res->un_ex());
-	return new Ex(e);
+        return new Ex(e);
       }
   }
 
@@ -179,9 +185,9 @@ namespace translate
     temp::Label start;
     tree::Seq* while_stm = new tree::Seq
       {
-	new tree::Label(start),
-	body->un_nx(),
-	Cx(tree::Cjump::ne, test->un_ex(), new tree::Const(0)).un_cx(ldone, start)
+        new tree::Label(start),
+        body->un_nx(),
+        Cx(tree::Cjump::ne, test->un_ex(), new tree::Const(0)).un_cx(ldone, start)
       };
   }
 
