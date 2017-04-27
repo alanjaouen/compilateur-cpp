@@ -98,9 +98,12 @@ namespace translate
 
   rExp
   call_exp(const temp::Label& label, std::vector<rExp> args)
-  {
-    
-  // FIXME: Some code was deleted here.
+  {// FIXMED by caradi_c
+    std::vector<tree::rExp> res;
+    for (auto i : args)
+      res.emplace_back(i->un_ex());
+    tree::Call* cres = new tree::Call(new tree::Name(label), res);
+    return new Ex(cres);
   }
 
   rExp
