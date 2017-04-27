@@ -212,14 +212,16 @@ namespace translate
   Translator::operator()(const ast::LetExp& e)
   {
     exps_.push(std::vector<rExp>());
-
+    // FIXED forest_b
     // Chain the initialization code and then the body.
-  // FIXME: Some code was deleted here.
-
+    super_type::operator()(e.decs_get());
+    auto v = translate(e.seq_get());
+    exps_.top().push_back(v);
+    
     // Chain the declarations (initializations) with the body.
     bool void_instance;
-  // FIXME: Some code was deleted here (Initialize void_instance).
-    
+  // FIXED forest_b
+    void_instance = e.type_get() == &type::Void::instance();
     if (void_instance)
       exp_ = seq_exp(exps_.top());
     else
@@ -354,7 +356,9 @@ namespace translate
        For the moment, use the quick n' dirty solution: assertion().  */
     assertion(level_);
 
-  /* FIXME: Some code was deleted here. */
+  /* FIXED forest_b */
+    auto access = level_->local_alloc(e.is_escaped_get());
+    var_access_[&e] = access;
   }
 
 } // namespace translate
