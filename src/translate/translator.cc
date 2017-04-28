@@ -179,7 +179,9 @@ namespace translate
   // FIXED forest_b
     auto test = translate(e.test_get());
     auto then_clause = translate(e.then_get());
-    auto else_clause = translate(*e.else_get()); // pay attention if else doesn't exist
+    rExp else_clause = nullptr;
+    if (e.else_get() != nullptr)
+      else_clause = translate(*e.else_get()); // pay attention if else doesn't exist
     exp_ = if_exp(test, then_clause, else_clause);
   }
 
