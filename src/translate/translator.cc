@@ -182,6 +182,8 @@ namespace translate
     rExp else_clause = nullptr;
     if (e.else_get() != nullptr)
       else_clause = translate(*e.else_get()); // pay attention if else doesn't exist
+    else
+      else_clause = nil_exp();
     exp_ = if_exp(test, then_clause, else_clause);
   }
 
@@ -189,9 +191,8 @@ namespace translate
   Translator::operator()(const ast::WhileExp& e)
   {
   // FIXED forest_b
-    temp::Label l;
-    loop_end_label_[&e] =  l;
-    exp_ = while_exp(translate(e.test_get()), translate(e.body_get()), l);
+    
+    exp_ = while_exp(translate(e.test_get()), translate(e.body_get()), loop_end_label_[&e]);
     
   }
 
