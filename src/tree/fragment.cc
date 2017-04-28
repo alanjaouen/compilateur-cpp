@@ -86,9 +86,9 @@ namespace tree
     o << "# Routine: _main" << misc::iendl
       << "label main" << misc::iendl 
       << "# Prologue" << misc::iendl
-      << "#body"  << misc::iendl
+      << "# Body"  << misc::iendl
       << *body_ << misc::iendl
-      << "#epilogue" << misc::iendl
+      << "# Epilogue" << misc::iendl
       << "label end" << misc::iendl;
     return o;
   }

@@ -213,6 +213,7 @@ namespace translate
         body->un_nx(),
         Cx(tree::Cjump::ne, test->un_ex(), new tree::Const(0)).un_cx(ldone, start)
       };
+    return Ex(*while_stm);
   }
 
   // FIXME: Some code was deleted here (for_exp -- "for" loop translation).

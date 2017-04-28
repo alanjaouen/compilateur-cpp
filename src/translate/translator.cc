@@ -125,7 +125,7 @@ namespace translate
   Translator::operator()(const ast::StringExp& e)
   {
   // FIXED forest_b
-    tree::Fragment* f = nullptr; 
+    tree::Fragment* f = nullptr;
     exp_ = string_exp(e.value_get(), f);
     fragments_->push_back(f);
   }
