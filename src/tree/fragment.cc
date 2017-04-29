@@ -82,14 +82,25 @@ namespace tree
   std::ostream&
   ProcFrag::dump(std::ostream& o) const
   {
-  // FIXME: Some code was deleted here.
-    o << "# Routine: _main" << misc::iendl
-      << "label main" << misc::iendl 
-      << "# Prologue" << misc::iendl
-      << "# Body"  << misc::iendl
+    
+    // FIXME: Some code was deleted here.
+    o << "# Routine: " << name_ << misc::iendl
+      << "label " << label_ << misc::iendl
+      << "# Prologue" << misc::iendl;
+    if (frame_->get_current_frame_size())
+    {
+      o << "move " <<  misc::incendl
+        << "temp " << save_fp_ <<  misc::iendl
+       << "temp fp"  << misc::decendl;
+    }
+    o << "# Body"  << misc::iendl
       << *body_ << misc::iendl
-      << "# Epilogue" << misc::iendl
-      << "label end" << misc::iendl;
+      << "# Epilogue" << misc::iendl;
+    if (frame_->get_current_frame_size())
+    {
+      
+    }
+    o  << "label end" << misc::iendl;
     return o;
   }
 

@@ -143,7 +143,7 @@ namespace translate
   {
   // FIXED forest_b
     auto vect = translate(e.seq_get());
-
+    //vect.insert(vect.begin(), static_link(fun_level_[e.def_get()], level_));
     exp_ = call_exp(fun_label_[e.def_get()], vect);
   }
 
@@ -161,6 +161,7 @@ namespace translate
   {
     // FIXED forest_B
     auto vect = translate(e.seq_get());
+    //exps_.push(vect);
     exp_ = seq_exp(vect);
   }
 
@@ -362,6 +363,8 @@ namespace translate
   /* FIXED forest_b */
     auto access = level_->local_alloc(e.is_escaped_get());
     var_access_[&e] = access;
+    auto dst = simple_var(*access, *level_);
+    exp_ = assign_exp(dst, init);
   }
 
 } // namespace translate

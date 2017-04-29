@@ -24,8 +24,10 @@ namespace translate
     : parent_(parent)
     , frame_(new frame::Frame(name))
   {
-  // FIXME: Some code was deleted here (Allocate a formal for the static link).
-
+  // FIXED forest_b
+    if (parent_)
+      formal_alloc(true);
+    
     // Install translate::Accesses for all the formals.
     for (const bool b : formal_escapes)
       formal_alloc(b);
