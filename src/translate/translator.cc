@@ -144,7 +144,9 @@ namespace translate
   {
   // FIXED forest_b
     auto vect = translate(e.seq_get());
-    //vect.insert(vect.begin(), static_link(fun_level_[e.def_get()], level_));
+    if (fun_level_[e.def_get()] != nullptr)
+      vect.insert(vect.begin(), static_link(fun_level_[e.def_get()], level_));
+
     exp_ = call_exp(fun_label_[e.def_get()], vect);
   }
 
@@ -162,7 +164,7 @@ namespace translate
   {
     // FIXED forest_B
     auto vect = translate(e.seq_get());
-    //exps_.push(vect);
+//    exps_.push(vect);
     exp_ = seq_exp(vect);
   }
 

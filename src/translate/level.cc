@@ -30,7 +30,7 @@ namespace translate
     
     // Install translate::Accesses for all the formals.
     for (const bool b : formal_escapes)
-      formal_alloc(b);
+      formal_alloc(true);
   }
 
   Level::~Level()
