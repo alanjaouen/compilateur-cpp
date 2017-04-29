@@ -88,7 +88,8 @@ namespace translate
   Translator::operator()(const ast::FieldVar& e)
   {
   // FIXED forest_b
-    const type::Record* type = dynamic_cast<const type::Record*>(e.lvalue_get().type_get());
+//    auto record = dynamic_cast<const type::Named*>(e.type_get());
+    const type::Record* type = dynamic_cast<const type::Record*>(&e.lvalue_get().type_get()->actual());
       
     exp_ = field_var(translate(e.lvalue_get()), type->field_index(e.name_get()));
   }
@@ -171,7 +172,7 @@ namespace translate
     // FIXED forest_b
     auto src = translate(e.var_get());
     auto dst = translate(e.exp_get());
-    exp_ = assign_exp(dst, src);
+    exp_ = assign_exp(src, dst);
   }
 
   void
