@@ -30,6 +30,9 @@ namespace ast
     std::vector<bool> escapes_get() const
     {
       std::vector<bool> res;
+      auto vect = formals_->decs_get();
+      for (unsigned i = 0; i < vect.size(); i++)
+        res.push_back(vect[i]->is_escaped_get());
       return res;
     }
 
