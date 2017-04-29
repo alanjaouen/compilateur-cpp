@@ -89,16 +89,34 @@ namespace tree
       << "# Prologue" << misc::iendl;
     if (frame_->get_current_frame_size())
     {
-      o << "move " <<  misc::incendl
+      o << "move" <<  misc::incendl
         << "temp " << save_fp_ <<  misc::iendl
-       << "temp fp"  << misc::decendl;
+        << "temp fp"  << misc::decendl;
+      
+      o  << "move" << misc::incendl
+         << "temp fp" << misc::iendl
+         << "temp sp" << misc::decendl;
+      o  << "move" << misc::incendl
+         << "temp sp" << misc::iendl
+         << "binop sub" << misc::incendl
+         << "temp sp" << misc::iendl
+         << "const " << frame_->get_current_frame_size() << misc::decendl
+         << misc::decendl;
     }
     o << "# Body"  << misc::iendl
       << *body_ << misc::iendl
       << "# Epilogue" << misc::iendl;
     if (frame_->get_current_frame_size())
     {
+
+      o  << "move" << misc::incendl
+         << "temp sp" << misc::iendl
+         << "temp fp" << misc::decendl;
       
+      o << "move" <<  misc::incendl
+        << "temp fp" <<  misc::iendl
+        << "temp " << save_fp_  << misc::decendl;
+
     }
     o  << "label end" << misc::iendl;
     return o;

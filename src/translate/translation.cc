@@ -42,9 +42,9 @@ namespace translate
     tree::rExp address = new tree::Binop(tree::Binop::add,
                                          var_exp->un_ex(),
                                          new tree::Binop(tree::Binop::mul,
+                                                         index_exp->un_ex(),
                                                          new tree::Const
-                                                         (frame::word_size),
-                                                         index_exp->un_ex()));
+                                                         (frame::word_size)));
     return new Ex(new tree::Mem(address));
   }
 
@@ -186,6 +186,7 @@ namespace translate
         tree::Eseq* e = new tree::Eseq(new tree::Seq(eres), res->un_ex());
         return new Ex(e);
       }
+    return new Nx(new tree::Seq());
   }
 
   rExp
