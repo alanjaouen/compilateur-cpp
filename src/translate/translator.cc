@@ -165,7 +165,10 @@ namespace translate
     // FIXED forest_B
     auto vect = translate(e.seq_get());
 //    exps_.push(vect);
-    exp_ = seq_exp(vect);
+    if (e.type_get() == &type::Void::instance())
+      exp_ = seq_exp(vect);
+    else
+      exp_ = eseq_exp(vect);
   }
 
   void

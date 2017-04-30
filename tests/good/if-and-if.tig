@@ -1,6 +1,10 @@
-function sup_of_3(one : int, two : int, three : int) =
+let
+  function sup_of_3(one : int, two : int, three : int) =
     let
         var four : int := two + two
     in
         if two > one then if three > two then three := four - one
     end
+in
+sup_of_3(1,2,3)
+  end 
