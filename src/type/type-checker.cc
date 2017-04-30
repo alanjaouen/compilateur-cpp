@@ -209,10 +209,14 @@ void TypeChecker::operator()(ast::RecordExp& e)
   auto res = dynamic_cast<const Record*>(named->type_get());
   if (res->fields_get().size() != e.fini_get().size())
     error(e, "record number fields mismatch");
-
+//  type(e.fini_get());
 /*for (auto i : res->fields_get())
     std::cout << i.name_get() << '\n';
   std::cout << std::endl;*/
+  for(auto i : e.fini_get())
+  {
+    type(i->init_get()); 
+  }
   e.type_set(res);
 }
 
@@ -525,12 +529,9 @@ template <>
 void TypeChecker::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
 {
   // FIXED: (Alan) Some code was deleted here.
-  e.ty_get().accept(*this);
-  delete e.type_get();
-  Named* ptr = new Named(e.name_get(), e.ty_get().type_get());
-  e.type_set(ptr);
-  e.created_type_set(ptr);
-  if(!ptr->sound())
+  auto name = dynamic_cast<const type::Named*>(e.type_get());
+  name->type_set(type(e.ty_get()));
+  if(!name->sound())
     error(e, "Endless type recursion");
 }
 
@@ -571,13 +572,7 @@ void TypeChecker::operator()(ast::NameTy& e)
 void TypeChecker::operator()(ast::RecordTy& e)
 {
   // FIXED: Some code was deleted here.
-  Record* ptr = new Record;
-
-  for (auto i : e.recs_get())
-  {
-    type(i->type_name_get());
-    ptr->field_add(i->name_get(), *i->type_name_get().type_get());
-  }
+  auto ptr = type(e.recs_get());
   e.type_set(ptr);
   e.created_type_set(ptr);
 }

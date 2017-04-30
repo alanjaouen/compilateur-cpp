@@ -20,7 +20,7 @@ namespace translate
     TASK_GROUP("5. Translation to High Level Intermediate Representation");
 
     /// Translate the AST to HIR.
-    TASK_DECLARE("hir-compute", "translate to HIR", hir_compute, "desugar-for desugar-string-cmp desugar");
+    TASK_DECLARE("hir-compute", "translate to HIR", hir_compute, "typed desugar-for desugar-string-cmp desugar");
 
     /// Translate the AST to HIR.
     TASK_DECLARE("H|hir-display", "display the HIR",
