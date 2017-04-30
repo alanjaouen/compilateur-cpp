@@ -6,6 +6,7 @@ import click
 import os
 import subprocess
 import sys
+import tempfile
 import yaml
 
 
@@ -23,6 +24,9 @@ def options(args):
                         "enabled (valgrind)")
     parser.add_argument("-o", "--output", metavar="FILE", default=sys.stdout,
                         help="write output of tests in FILE")
+    parser.add_argument("-H", "--havm", default="",
+                        help="execute output of the tests in havm, H must be" +
+                        " given to -p")
     requiredNamed = parser.add_argument_group('required arguments')
 
     requiredNamed.add_argument("--my", metavar="FILE",
@@ -38,11 +42,11 @@ def options(args):
         return
     if options.category != []:
         parse_config('config.yaml', options.category, options.sanity,
-                     options.output, options.my, options.options)
+                     options.output, options.my, options.options, options.havm)
     else:
         parse_config('config.yaml', list_category('config.yaml'),
                      options.sanity, options.output, options.my,
-                     options.options)
+                     options.options, options.havm)
 
 
 def list_category(yaml_file):
@@ -82,7 +86,7 @@ def errormsg(percent, category, mycmd, msg):
 
 
 def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
-                 options):
+                 options, havm):
     """Parsing configfile."""
     with open(yaml_file, 'r') as f:
         config = yaml.load(f)
@@ -136,6 +140,8 @@ def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
                         pstdout, pstderr = p[0].communicate()
                         if sanity:
                             status = get_status(p[0].returncode, 0)
+                        elif havm:
+                            status = get_status(p[0].returncode, 0)
                         else:
                             status = get_status(p[0].returncode, p[1])
                         if status[0] != 0:
@@ -143,6 +149,16 @@ def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
                         else:
                             output += colored(p[2] + p[3] + ": PASS:\n" +
                                               status[1], 'green')
+                            if havm:
+                                tmp = tempfile.NamedTemporaryFile()
+                                tmp.write(pstdout)
+                                cmd = "havm --" + havm + " " + tmp.name
+                                havm_proc = subprocess.run(
+                                                    cmd, shell=True,
+                                                    stdout=subprocess.PIPE,
+                                                    stderr=subprocess.PIPE)
+                                tmp.close()
+                                output += havm_proc.stdout
                             ptest.update(1)
                         output += "\n"
                         processes.remove(p)
