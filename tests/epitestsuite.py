@@ -157,8 +157,11 @@ def parse_config(yaml_file, categories_list, sanity, foutput, my_path,
                                                     cmd, shell=True,
                                                     stdout=subprocess.PIPE,
                                                     stderr=subprocess.PIPE)
+                                output += "\nstdout:\n"
+                                output += havm_proc.stdout.decode("utf-8")
+                                output += "\nstderr:\n"
+                                output += havm_proc.stderr.decode("utf-8")
                                 tmp.close()
-                                output += havm_proc.stdout
                             ptest.update(1)
                         output += "\n"
                         processes.remove(p)
