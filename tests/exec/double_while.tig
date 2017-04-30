@@ -1,0 +1,20 @@
+let
+  var i := 0
+in
+  while i < 10
+  do
+    (
+      print_int (i);
+      print ("\n");
+      i := i + 1
+    );
+  i:= 10;
+  while  i < 20
+  do
+  (
+    print_int (i);
+    print ("\n");
+    i := i + 1
+  )
+
+end

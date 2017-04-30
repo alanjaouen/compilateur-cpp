@@ -1,0 +1,19 @@
+let
+  var i := 0
+  var j := 10
+in 
+while i < 10
+  do
+    (
+      print_int (i);
+      print ("\n");
+      while j < 15
+      do
+        (
+          print_int (j);
+          print ("\n");
+          j := j + 1
+        );
+      i := i + 1
+    )
+end

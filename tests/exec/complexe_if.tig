@@ -1,0 +1,1 @@
+if if 11 < 22 then 33 < 44 else 55 < 66 then print("OK\n")

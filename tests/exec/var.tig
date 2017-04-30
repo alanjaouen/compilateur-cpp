@@ -1,0 +1,10 @@
+let
+  var a := 1
+  var b := 2
+  var c := 3
+in
+  a := 2;
+  c := a + b + c;
+  print_int(c);
+  print("\n")
+end

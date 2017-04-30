@@ -1,0 +1,6 @@
+let
+  type ints = array of int
+  var  ints := ints [51] of 42
+in
+  print_int(ints[ints[0]]); print("\n")
+  end

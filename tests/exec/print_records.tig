@@ -1,0 +1,6 @@
+let
+  type list = { h: int, t: list }
+  var list := list { h = 1, t =  nil }
+in
+  print_int(list.h); print("\n")
+  end
