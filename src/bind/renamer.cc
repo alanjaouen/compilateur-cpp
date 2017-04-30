@@ -16,34 +16,46 @@ namespace bind
   //fix by caradi_c
   void Renamer::operator()(ast::VarDec& e)
   {
-    auto a = new_name(e);
-    e.name_set(a);
+    if (new_names_.find(&e) == new_names_.end())
+      {
+	auto a = new_name(e);
+	e.name_set(a);
+	new_names_[&e] = a;
+      }
     super_type::operator()(e);
   }
 
   void Renamer::operator()(ast::FunctionDec& e)
   {
-    auto a = new_name(e);
-    e.name_set(a);
+    if (new_names_.find(&e) == new_names_.end())
+      {
+	auto a = new_name(e);
+	e.name_set(a);
+	new_names_[&e] = a;
+      }
     super_type::operator()(e);
   }
 
   void Renamer::operator()(ast::TypeDec& e)
   {
-    auto a = new_name(e);
-    e.name_set(a);
+    if (new_names_.find(&e) == new_names_.end())
+      {
+	auto a = new_name(e);
+	e.name_set(a);
+	new_names_[&e] = a;
+      }
     super_type::operator()(e);
   }
 
   void Renamer::operator()(ast::SimpleVar& e)
   {
-    e.name_set(e.def_get()->name_get());
+    e.name_set(new_names_[e.def_get()]);
     super_type::operator()(e);
   }
 
   void Renamer::operator()(ast::CallExp& e)
   {
-    e.name_set(e.def_get()->name_get());
+    e.name_set(new_names_[e.def_get()]);
     super_type::operator()(e);
   }
 
@@ -51,8 +63,17 @@ namespace bind
   {
     if (e.def_get())
       {
-        e.name_set(e.def_get()->name_get());
-        super_type::operator()(e);
+	if (new_names_.find(e.def_get()) != new_names_.end())
+	  {
+	    e.name_set(new_names_[e.def_get()]);
+	    super_type::operator()(e);
+	  }
+	else
+	  {
+	    super_type::operator()(e.def_get());
+	    e.name_set(new_names_[e.def_get()]);
+	    super_type::operator()(e);
+	  }
       }
   }
 
