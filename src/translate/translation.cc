@@ -88,9 +88,13 @@ namespace translate
     int record_size = fields.size() * frame::word_size;
     rExp malloc_call = call_exp("malloc", int_exp(record_size));
     init->emplace_back(new tree::Move(rec, malloc_call->un_ex()));
-\
-  // FIXME: Some code was deleted here (Issue a move for each field of the record).
-
+    // FIXED: Some code was deleted here (Issue a move for each field of the record).
+    unsigned i = 0;
+    for (auto f : fields)
+      {
+    	init->emplace_back(new tree::Move(new tree::Mem(new tree::Binop(tree::Binop::add, rec, new tree::Const(i))), f->un_ex()));
+	i += frame::word_size;
+      }
     return new Ex(new tree::Eseq(init, rec));
   }
 
