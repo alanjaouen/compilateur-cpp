@@ -49,14 +49,32 @@ namespace bind
 
   void Renamer::operator()(ast::SimpleVar& e)
   {
-    e.name_set(new_names_[e.def_get()]);
-    super_type::operator()(e);
+    if (new_names_.find(e.def_get()) != new_names_.end())
+      {
+	e.name_set(new_names_[e.def_get()]);
+	super_type::operator()(e);
+      }
+    else
+      {
+	super_type::operator()(e.def_get());
+	e.name_set(new_names_[e.def_get()]);
+	super_type::operator()(e);
+      }
   }
 
   void Renamer::operator()(ast::CallExp& e)
   {
-    e.name_set(new_names_[e.def_get()]);
-    super_type::operator()(e);
+    if (new_names_.find(e.def_get()) != new_names_.end())
+      {
+	e.name_set(new_names_[e.def_get()]);
+	super_type::operator()(e);
+      }
+    else
+      {
+	super_type::operator()(e.def_get());
+	e.name_set(new_names_[e.def_get()]);
+	super_type::operator()(e);
+      }
   }
 
   void Renamer::operator()(ast::NameTy& e)
