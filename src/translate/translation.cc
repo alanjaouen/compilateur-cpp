@@ -212,10 +212,13 @@ namespace translate
     tree::rSeq while_stm = new tree::Seq
       {
         new tree::Label(prologue),
-        Cx(tree::Cjump::ne, test->un_ex(), new tree::Const(0)).un_cx(start, ldone),
+//        Cx(tree::Cjump::ne, test->un_ex(), new tree::Const(0)).un_cx(start, ldone),
+        test->un_cx(start, ldone),
         new tree::Label(start),
         body->un_nx(),
-        new tree::Jump(new tree::Name(prologue)),
+        test->un_cx(start, ldone), // opti encore plus ouf N+1 cjump 
+//        Cx(tree::Cjump::ne, test->un_ex(), new tree::Const(0)).un_cx(start, ldone), // opti de ouf de n jump  
+//      new tree::Jump(new tree::Name(prologue)),
         new tree::Label(ldone)
       };
     return new Nx(while_stm);
