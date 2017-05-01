@@ -15,5 +15,5 @@ categories:
     /syntax.yaml
   type:
     /type.yaml
-#  tests:
-#    /tests.yaml
+  exec:
+    /exec.yaml
