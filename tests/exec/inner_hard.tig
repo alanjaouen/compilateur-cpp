@@ -1,0 +1,12 @@
+let
+  var v := 1
+  function outer() : int =
+    let
+      function inner() : int = v
+    in
+      inner()
+    end
+  function sister() : int = outer()
+in
+  sister()
+  end

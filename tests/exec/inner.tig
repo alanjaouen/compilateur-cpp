@@ -1,0 +1,8 @@
+let
+  var toto := 1
+  function outer() : int =
+    let function inner() : int = toto
+    in inner() end
+in
+  outer()
+  end
